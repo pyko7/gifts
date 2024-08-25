@@ -1,7 +1,4 @@
-export type User = {
-  name?: string
-  email: string
-  password: string
-  createdAt: Date
-  updatedAt: Date
-}
+import { users } from '../db/schemas/user'
+
+export type User = typeof users.$inferSelect
+export type NewUser = typeof users.$inferInsert

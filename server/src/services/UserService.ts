@@ -1,15 +1,17 @@
 import { generateRandomNumber } from '../utils/_utils'
+import { DrizzleError, eq } from 'drizzle-orm'
 import { users } from '../db/schemas/user'
-import { DrizzleError } from 'drizzle-orm'
 import { User } from '../utils/types'
 import { db } from '../db/drizzle'
 import bcrypt from 'bcrypt'
 
 class UserService {
-  name?: string
-  email: string
-  password: string
+  id: string | null
+  name: string | null
+  email: string | null
+  password: string | null
   constructor(user: User) {
+    this.id = user.id
     this.name = user.name
     this.email = user.email
     this.password = user.password
@@ -36,6 +38,20 @@ class UserService {
     } catch (error) {
       if (error instanceof Error || error instanceof DrizzleError) {
         throw new Error(`[UserService - createUser]: ${error.message}`)
+      }
+      return error
+    }
+  }
+  //TODO: CREATE THIS FUNCTION
+  static async updateUser(data: User) {
+    try {
+      await db
+        .update(users)
+        .set({ ...data })
+        .where(eq(users.id, data.id))
+    } catch (error) {
+      if (error instanceof Error || error instanceof DrizzleError) {
+        throw new Error(`[UserService - updateUser]: ${error.message}`)
       }
       return error
     }
