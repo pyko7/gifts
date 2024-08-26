@@ -9,10 +9,13 @@ class GiftController {
 
   createGift = async (c: Context) => {
     try {
-      const req = await c.req.json()
       const userId = getUserId(c)
-      const gift: Gift = { ...req, userId }
-      const giftService = new GiftService(gift)
+      const req = await c.req.json()
+
+      if (!req) throw new Error('No request provided')
+
+      const computedGift: Gift = { ...req, userId }
+      const giftService = new GiftService(computedGift)
 
       await giftService.createGift()
 
@@ -27,33 +30,27 @@ class GiftController {
       )
     }
   }
+
   updateGift = async (c: Context) => {
     try {
-      const giftId = c.req.param('id')
-      // eslint-disable-next-line no-undef
-      const secret = process.env.COOKIE_SECRET
-      if (!secret) {
-        throw new Error('Missing secret')
-      }
+      const { userId, giftId } = c.req.param()
+
+      if (!giftId) throw new Error('Missing parameter')
+
       const req = await c.req.json()
 
-      const userId = getUserId(c)
+      if (!req) throw new Error('No request provided')
 
-      if (!userId) {
-        return c.text(
-          '[GiftController - updateGift]: Invalid session token',
-          401
-        )
-      }
+      // eslint-disable-next-line no-undef
+      const secret = process.env.COOKIE_SECRET
 
-      const gift: Gift = {
-        ...req,
-        id: giftId,
-        userId
-      }
+      if (!secret) throw new Error('Missing secret')
 
-      const giftService = new GiftService(gift)
+      const computedGift: Gift = { ...req, id: giftId, userId }
+      const giftService = new GiftService(computedGift)
+
       await giftService.updateGift()
+
       return c.text('Gift successfully updated', 200)
     } catch (error) {
       if (error instanceof Error || error instanceof DrizzleError) {
@@ -67,14 +64,9 @@ class GiftController {
   }
   deleteGift = async (c: Context) => {
     try {
-      const giftId = c.req.param('id')
-      const userId = getUserId(c)
-      if (!userId) {
-        return c.text(
-          '[GiftController - updateGift]: Invalid session token',
-          401
-        )
-      }
+      const { userId, giftId } = c.req.param()
+
+      if (!userId || !giftId) throw new Error('Missing parameter')
 
       await GiftService.deleteGift(userId, giftId)
 
