@@ -15,11 +15,7 @@ auth.post(
   jwt({
     // eslint-disable-next-line no-undef
     secret: process.env.JWT_SECRET ?? '',
-    cookie: {
-      key: 'session',
-      // eslint-disable-next-line no-undef
-      secret: process.env.COOKIE_SECRET ?? ''
-    }
+    cookie: 'session'
   }),
   authController.logout
 )
