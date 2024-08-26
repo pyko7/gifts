@@ -10,12 +10,14 @@ class UserService {
   name: string | null
   email: string | null
   password: string | null
+
   constructor(user: User) {
     this.id = user.id
     this.name = user.name
     this.email = user.email
     this.password = user.password
   }
+
   static async createUser(email: string, password: string) {
     try {
       // eslint-disable-next-line no-undef
@@ -39,21 +41,38 @@ class UserService {
       if (error instanceof Error || error instanceof DrizzleError) {
         throw new Error(`[UserService - createUser]: ${error.message}`)
       }
-      return error
+      throw new Error(
+        '[UserService - createUser]: An unexpected error has occurred'
+      )
     }
   }
-  //TODO: CREATE THIS FUNCTION
-  static async updateUser(data: User) {
+
+  static async updateUser(user: User, userId: string) {
     try {
       await db
         .update(users)
-        .set({ ...data })
-        .where(eq(users.id, data.id))
+        .set({ ...user })
+        .where(eq(users.id, userId))
     } catch (error) {
       if (error instanceof Error || error instanceof DrizzleError) {
         throw new Error(`[UserService - updateUser]: ${error.message}`)
       }
-      return error
+      throw new Error(
+        '[UserService - updateUser]: An unexpected error has occurred'
+      )
+    }
+  }
+
+  static async deleteUser(userId: string) {
+    try {
+      await db.delete(users).where(eq(users.id, userId))
+    } catch (error) {
+      if (error instanceof Error || error instanceof DrizzleError) {
+        throw new Error(`[UserService - deleteUser]: ${error.message}`)
+      }
+      throw new Error(
+        '[UserService - deleteUser]: An unexpected error has occurred'
+      )
     }
   }
 }

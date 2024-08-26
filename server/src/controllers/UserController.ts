@@ -1,5 +1,7 @@
 import UserService from '../services/UserService'
+import { getUserId } from '../utils/user/_utils'
 import { DrizzleError } from 'drizzle-orm'
+import { deleteCookie } from 'hono/cookie'
 import { Context } from 'hono'
 
 class UserController {
@@ -12,12 +14,63 @@ class UserController {
       return c.text('User successfully created', 201)
     } catch (error) {
       if (error instanceof Error || error instanceof DrizzleError) {
-        console.log('err here')
         return c.text(error.message, 400)
       }
       return c.text(
         '[UserController - createUser]: Error while creating the user',
         400
+      )
+    }
+  }
+  updateUser = async (c: Context) => {
+    try {
+      // eslint-disable-next-line no-undef
+      const secret = process.env.COOKIE_SECRET
+      if (!secret) {
+        throw new Error('Missing secret')
+      }
+      const user = await c.req.json()
+      const userId = getUserId(c)
+
+      if (!userId) {
+        return c.text(
+          '[UserController - updateUser]: Invalid session token',
+          401
+        )
+      }
+
+      await UserService.updateUser(user, userId)
+      return c.text('User successfully updated', 200)
+    } catch (error) {
+      if (error instanceof Error || error instanceof DrizzleError) {
+        return c.text(error.message, 400)
+      }
+      return c.text(
+        '[UserController - updateUser]: Error while updating the user',
+        500
+      )
+    }
+  }
+  deleteUser = async (c: Context) => {
+    try {
+      const userId = getUserId(c)
+      if (!userId) {
+        return c.text(
+          '[UserController - updateUser]: Invalid session token',
+          401
+        )
+      }
+      await UserService.deleteUser(userId)
+      deleteCookie(c, 'session')
+      c.text('User successfully deleted', 200)
+      return c.redirect('/')
+    } catch (error) {
+      if (error instanceof Error || error instanceof DrizzleError) {
+        return c.text(error.message, 400)
+      }
+      return c.text(
+        '[UserController - updateUser]: Error while deleting the user',
+        500
       )
     }
   }
