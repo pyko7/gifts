@@ -1,0 +1,1 @@
+ALTER TABLE "gifts" ADD COLUMN "created_at" timestamp (3) with time zone DEFAULT now();

@@ -8,6 +8,13 @@
       "when": 1724520679766,
       "tag": "0000_lively_titania",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1724666007929,
+      "tag": "0001_lyrical_proteus",
+      "breakpoints": true
     }
   ]
 }

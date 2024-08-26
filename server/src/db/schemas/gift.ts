@@ -1,12 +1,4 @@
-import {
-  serial,
-  text,
-  pgTable,
-  pgEnum,
-  integer,
-  timestamp,
-  uuid
-} from 'drizzle-orm/pg-core'
+import { text, pgTable, pgEnum, timestamp, uuid } from 'drizzle-orm/pg-core'
 import { relations } from 'drizzle-orm'
 import { users } from './user'
 
@@ -22,7 +14,7 @@ export const gifts = pgTable('gifts', {
   price: text('price'),
   state: stateEnum('state'),
   wishRate: wishRateEnum('wishRate'),
-  createdAt: timestamp('updated_at', {
+  createdAt: timestamp('created_at', {
     mode: 'date',
     precision: 3,
     withTimezone: true
