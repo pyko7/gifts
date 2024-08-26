@@ -49,10 +49,14 @@ class UserService {
 
   static async updateUser(user: User, userId: string) {
     try {
-      await db
+      const result = await db
         .update(users)
         .set({ ...user })
         .where(eq(users.id, userId))
+        .returning()
+      if (result.length === 0) {
+        throw new Error('Update failed, no user found ')
+      }
     } catch (error) {
       if (error instanceof Error || error instanceof DrizzleError) {
         throw new Error(`[UserService - updateUser]: ${error.message}`)
@@ -65,7 +69,13 @@ class UserService {
 
   static async deleteUser(userId: string) {
     try {
-      await db.delete(users).where(eq(users.id, userId))
+      const result = await db
+        .delete(users)
+        .where(eq(users.id, userId))
+        .returning()
+      if (result.length === 0) {
+        throw new Error('Deletion failed, no user found ')
+      }
     } catch (error) {
       if (error instanceof Error || error instanceof DrizzleError) {
         throw new Error(`[UserService - deleteUser]: ${error.message}`)
