@@ -1,11 +1,61 @@
+import { Gift, ReserveGift } from '../types/gifts'
 import GiftService from '../services/GiftService'
 import { getUserId } from '../utils/user/_utils'
 import { DrizzleError } from 'drizzle-orm'
-import { Gift } from '../types/gifts'
 import { Context } from 'hono'
 
 class GiftController {
   constructor() {}
+
+  getUserGifts = async (c: Context) => {
+    try {
+      const userId = c.req.param('userId')
+
+      if (!userId)
+        return c.text('[GiftController - getUserGifts]: Missing parameter', 400)
+
+      const result = await GiftService.getUserGifts(userId)
+      if (!result) {
+        return c.text('[GiftController - getUserGifts]: No gifts found', 400)
+      }
+
+      c.text('Gift successfully got', 200)
+      return c.json(result)
+    } catch (error) {
+      if (error instanceof Error || error instanceof DrizzleError) {
+        return c.text(error.message, 400)
+      }
+      return c.text(
+        '[GiftController - getUserGifts]: Error while getting the gifts',
+        500
+      )
+    }
+  }
+
+  getGiftById = async (c: Context) => {
+    try {
+      const giftId = c.req.param('giftId')
+
+      if (!giftId)
+        return c.text('[GiftController - getGiftById]: Missing parameter', 400)
+
+      const result = await GiftService.getGiftById(giftId)
+      if (!result) {
+        return c.text('[GiftController - getGiftById]: No gifts found', 400)
+      }
+
+      c.text('Gift successfully got', 200)
+      return c.json(result)
+    } catch (error) {
+      if (error instanceof Error || error instanceof DrizzleError) {
+        return c.text(error.message, 400)
+      }
+      return c.text(
+        '[GiftController - getGiftById]: Error while getting the gift',
+        500
+      )
+    }
+  }
 
   createGift = async (c: Context) => {
     try {
@@ -62,11 +112,12 @@ class GiftController {
       )
     }
   }
+
   deleteGift = async (c: Context) => {
     try {
       const { userId, giftId } = c.req.param()
 
-      if (!userId || !giftId) throw new Error('Missing parameter')
+      if (!giftId) throw new Error('Missing parameter')
 
       await GiftService.deleteGift(userId, giftId)
 
@@ -77,6 +128,38 @@ class GiftController {
       }
       return c.text(
         '[GiftController - updateGift]: Error while deleting the user',
+        500
+      )
+    }
+  }
+
+  reserveGift = async (c: Context) => {
+    try {
+      const giftId = c.req.param('giftId')
+      if (!giftId) throw new Error('Missing parameter')
+
+      const userId = getUserId(c)
+
+      if (!userId)
+        return c.text('[GiftController - reserveGift]: Wrong userId', 401)
+
+      const req = await c.req.json()
+      if (!req) throw new Error('No request provided')
+
+      const computedReservation: ReserveGift = {
+        giftId,
+        reservedById: userId,
+        state: req.state
+      }
+
+      GiftService.reserveGift(computedReservation)
+      return c.text('Reservation successfully made', 200)
+    } catch (error) {
+      if (error instanceof Error || error instanceof DrizzleError) {
+        return c.text(error.message, 400)
+      }
+      return c.text(
+        '[GiftController - reserveGift]: Error while making the reservation',
         500
       )
     }
