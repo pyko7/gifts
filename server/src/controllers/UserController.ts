@@ -26,6 +26,8 @@ class UserController {
     try {
       // eslint-disable-next-line no-undef
       const secret = process.env.COOKIE_SECRET
+      const param = c.req.param('id')
+
       if (!secret) {
         throw new Error('Missing secret')
       }
@@ -37,6 +39,10 @@ class UserController {
           '[UserController - updateUser]: Invalid session token',
           401
         )
+      }
+
+      if (param !== userId) {
+        return c.text('[UserController - updateUser]: Invalid userId', 401)
       }
 
       await UserService.updateUser(user, userId)
