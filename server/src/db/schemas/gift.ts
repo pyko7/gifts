@@ -14,6 +14,7 @@ export const gifts = pgTable('gifts', {
   price: text('price'),
   state: stateEnum('state'),
   wishRate: wishRateEnum('wishRate'),
+  reservedById: uuid('reservedById'),
   createdAt: timestamp('created_at', {
     mode: 'date',
     precision: 3,
@@ -28,9 +29,13 @@ export const gifts = pgTable('gifts', {
     .$onUpdate(() => new Date())
 })
 
-export const postsRelations = relations(gifts, ({ one }) => ({
+export const giftsRelation = relations(gifts, ({ one }) => ({
   user: one(users, {
     fields: [gifts.userId],
+    references: [users.id]
+  }),
+  reservedByIdId: one(users, {
+    fields: [gifts.reservedById],
     references: [users.id]
   })
 }))
