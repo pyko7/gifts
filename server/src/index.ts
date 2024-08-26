@@ -1,6 +1,7 @@
 import { serve } from '@hono/node-server'
 import { auth } from './routes/auth'
 import { user } from './routes/user'
+import { gift } from './routes/gift'
 import { jwt } from 'hono/jwt'
 import { Hono } from 'hono'
 import 'dotenv/config'
@@ -17,6 +18,7 @@ app.use(
   })
 )
 app.route('/user', user)
+app.route('/gift', gift)
 
 const port = 3000
 console.log(`Server is running on port ${port}`)
