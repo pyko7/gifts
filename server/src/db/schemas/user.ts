@@ -3,10 +3,10 @@ import { relations } from 'drizzle-orm'
 import { gifts } from './gift'
 
 export const users = pgTable('users', {
-  id: uuid('id').defaultRandom().primaryKey(),
+  id: uuid('id').defaultRandom().primaryKey().notNull(),
   name: text('name').unique(),
-  email: text('email').unique(),
-  password: text('password'),
+  email: text('email').unique().notNull(),
+  password: text('password').notNull(),
   createdAt: timestamp('created_at', {
     mode: 'date',
     precision: 3,

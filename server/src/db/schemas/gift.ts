@@ -6,13 +6,13 @@ export const stateEnum = pgEnum('state', ['available', 'unavailable'])
 export const wishRateEnum = pgEnum('wishRate', ['1', '2', '3', '4', '5'])
 
 export const gifts = pgTable('gifts', {
-  id: uuid('id').defaultRandom().primaryKey(),
-  userId: uuid('userId'),
-  name: text('name'),
+  id: uuid('id').defaultRandom().primaryKey().notNull(),
+  userId: uuid('userId').notNull(),
+  name: text('name').notNull(),
   url: text('url'),
-  description: text('description'),
-  price: text('price'),
-  state: stateEnum('state'),
+  description: text('description').notNull(),
+  price: text('price').notNull(),
+  state: stateEnum('state').default('available'),
   wishRate: wishRateEnum('wishRate'),
   reservedById: uuid('reservedById'),
   createdAt: timestamp('created_at', {

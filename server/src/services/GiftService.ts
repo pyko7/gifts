@@ -49,15 +49,12 @@ class GiftService {
 
   async createGift() {
     try {
-      const state: StateEnum = 'available'
-
       const gift = {
         userId: this.userId,
         name: this.name,
         url: this.url,
         description: this.description,
         price: this.price,
-        state,
         wishRate: this.wishRate
       }
 
