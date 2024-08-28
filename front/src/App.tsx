@@ -1,11 +1,11 @@
 import { FC } from "react";
 import CommonLayout from "./components/common/layout/Layout";
-import SignIn from "./pages/auth/SignIn";
+import AuthPage from "@pages/auth/AuthPage";
 
 const App: FC = () => {
   return (
     <CommonLayout>
-      <SignIn />
+      <AuthPage mode="login" />
     </CommonLayout>
   );
 };

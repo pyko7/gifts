@@ -1,38 +1,37 @@
+import { FC } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { Box, Button, Text } from "@chakra-ui/react";
-import { SavableSignInValues, SignInFormProps } from "./_props";
-import { defaultValues } from "./_utils";
+import { Box, Button } from "@chakra-ui/react";
+import { useMutation } from "@tanstack/react-query";
+import { SavableAuthValues, AuthFormProps, AuthUseFormProps } from "./_props";
+import { defaultValues, login, signup } from "./_utils";
 import Email from "./fields/Email";
 import Password from "./fields/Password";
-import text from "../../../../../utils/text.json";
-import sxs from "../_styles";
+import text from "../../../../utils/text.json";
+import sxs from "./_styles";
 import formSxs from "./_styles";
-import { useMutation } from "@tanstack/react-query";
 
-const SignInForm = () => {
-  const form = useForm<SignInFormProps>({
+const AuthForm: FC<AuthFormProps> = ({ mode }) => {
+  const buttonName = text.auth[mode].button;
+  const form = useForm<AuthUseFormProps>({
     defaultValues,
     mode: "onChange",
   });
 
   const mutation = useMutation({
-    mutationFn: (user: SavableSignInValues) => {
-      return fetch("http://localhost:3000/auth/login", {
-        method: "POST",
-        body: JSON.stringify(user),
-      });
+    mutationFn: mode === "login" ? login : signup,
+    onSuccess(data, variables, context) {
+      console.log({ data, variables, context });
     },
     onError(error, variables, context) {
       console.log({ error, variables, context });
     },
   });
 
-  const onSubmit = async (data: SignInFormProps) => {
-    const userData: SavableSignInValues = {
+  const onSubmit = async (data: AuthUseFormProps) => {
+    const userData: SavableAuthValues = {
       email: data.email,
       password: data.password,
     };
-    console.log("ça mute");
     mutation.mutate(userData);
   };
 
@@ -43,7 +42,7 @@ const SignInForm = () => {
         <Password />
         <Box sx={sxs.buttonContainer}>
           <Button sx={sxs.button} onClick={form.handleSubmit(onSubmit)}>
-            {text.auth.login.button}
+            {buttonName}
           </Button>
         </Box>
       </Box>
@@ -51,4 +50,4 @@ const SignInForm = () => {
   );
 };
 
-export default SignInForm;
+export default AuthForm;

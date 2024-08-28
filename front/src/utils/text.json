@@ -4,6 +4,11 @@
       "title": "Heureux de vous revoir",
       "subtitle": "Entrer vos informations afin de vous connecter",
       "button": "Se connecter"
+    },
+    "signup": {
+      "title": "Bienvenue",
+      "subtitle": "Entrer vos informations afin de vous inscrire",
+      "button": "S'inscire"
     }
   }
 }
