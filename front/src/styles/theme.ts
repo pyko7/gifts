@@ -28,4 +28,30 @@ const colors = {
   },
 };
 
-export const theme = extendTheme({ colors });
+export const theme = extendTheme({
+  colors,
+  components: {
+    Input: {
+      baseStyle: {
+        field: {
+          borderColor: "main.700",
+          borderWidth: 1,
+          background: "transparent",
+          _placeholder: {
+            color: "main.50 !important",
+          },
+          ":hover": {
+            borderColor: "main.500",
+          },
+          ":focus": {
+            borderColor: "main.500",
+          },
+        },
+      },
+      defaultProps: {
+        //used to clear default style
+        variant: null,
+      },
+    },
+  },
+});
