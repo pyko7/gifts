@@ -1,0 +1,9 @@
+{
+  "auth": {
+    "login": {
+      "title": "Heureux de vous revoir",
+      "subtitle": "Entrer vos informations afin de vous connecter",
+      "button": "Se connecter"
+    }
+  }
+}
