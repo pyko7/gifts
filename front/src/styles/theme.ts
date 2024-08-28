@@ -38,12 +38,15 @@ export const theme = extendTheme({
           borderWidth: 1,
           background: "transparent",
           _placeholder: {
-            color: "main.50 !important",
+            color: "main.50",
           },
-          ":hover": {
+          _invalid: {
+            borderColor: "error.600",
+          },
+          _hover: {
             borderColor: "main.500",
           },
-          ":focus": {
+          _focus: {
             borderColor: "main.500",
           },
         },

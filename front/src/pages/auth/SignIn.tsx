@@ -1,5 +1,5 @@
 import { Box, Stack, Text } from "@chakra-ui/react";
-import AuthForm from "../../components/features/form/authForm/AuthForm";
+import SignInForm from "../../components/features/form/authForm/signInForm/SignInForm";
 import text from "../../utils/text.json";
 import sxs from "./_styles";
 
@@ -11,9 +11,7 @@ const SignIn = () => {
           <Text sx={sxs.title}>{text.auth.login.title}</Text>
           <Text sx={sxs.subtitle}>{text.auth.login.subtitle}</Text>
         </Stack>
-        <Box sx={sxs.formContainer}>
-          <AuthForm />
-        </Box>
+        <SignInForm />
       </Box>
     </Box>
   );

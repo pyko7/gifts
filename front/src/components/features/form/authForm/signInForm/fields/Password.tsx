@@ -1,12 +1,15 @@
-import { Input, InputGroup, InputRightElement } from "@chakra-ui/react";
 import { FC } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { AuthFormProps } from "../_props";
-import ButtonIcon from "../../../../common/button/ButtonIcon/ButtonIcon";
+import { Input, InputGroup, InputRightElement } from "@chakra-ui/react";
 import { CloseIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import ButtonIcon from "@components/common/button/buttonIcon/ButtonIcon";
+import ErrorMessage from "@components/common/errorMessage/ErrorMessage";
+import { SignInFormProps } from "../_props";
+import { isPasswordValid } from "@utils/validation";
+import sxs from "../_styles";
 
 const Password: FC = () => {
-  const { watch, setValue } = useFormContext<AuthFormProps>();
+  const { watch, setValue } = useFormContext<SignInFormProps>();
   const passwordInputMode = watch("passwordInputMode");
 
   const handleClick = () => {
@@ -24,9 +27,15 @@ const Password: FC = () => {
   return (
     <Controller
       name="password"
-      render={({ field }) => (
-        <InputGroup>
+      rules={{
+        required: "Le mot de passe est manquant",
+        validate: isPasswordValid,
+      }}
+      render={({ field, formState: { errors } }) => (
+        <InputGroup sx={sxs.inputGroup}>
           <Input
+            required
+            isInvalid={Boolean(errors.password)}
             type={passwordInputMode}
             placeholder="Mot de passe"
             {...field}
@@ -42,6 +51,9 @@ const Password: FC = () => {
             <InputRightElement>
               <ButtonIcon CustomIcon={CloseIcon} onClick={handleClear} />
             </InputRightElement>
+          )}
+          {errors.password?.message && (
+            <ErrorMessage message={String(errors.password?.message)} />
           )}
         </InputGroup>
       )}
