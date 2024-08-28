@@ -5,6 +5,9 @@ export const isEmailValid = (email: string) => {
 };
 
 export const isPasswordValid = (password: string) => {
+  if (password.length < 8) {
+    return "Le mot de passe doit contenir au moins 8 caractères";
+  }
   const regex = new RegExp(
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
   );
