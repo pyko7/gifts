@@ -16,3 +16,7 @@ export const isPasswordValid = (password: string) => {
     ? undefined
     : "Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre ainsi qu'un caractère spécial";
 };
+
+export const isNameValid = (name: string) => {
+  return name && name.trim().length > 0 ? undefined : "Veuillez entrer un nom";
+};

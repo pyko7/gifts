@@ -1,4 +1,4 @@
-import makeSx from "../../../../utils/makeSx";
+import makeSx from "../../../utils/makeSx";
 
 export default makeSx({
   buttonContainer: {

@@ -1,23 +1,26 @@
 import { FC } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { Box, Button } from "@chakra-ui/react";
-import { useMutation } from "@tanstack/react-query";
-import { SavableAuthValues, AuthFormProps, AuthUseFormProps } from "./_props";
-import { defaultValues, login, signup } from "./_utils";
-import Email from "../fields/Email";
-import Password from "../fields/Password";
+import {
+  CompleteProfileUseFormProps,
+  SavableCompleteProfileUseFormValues,
+} from "./_props";
+import { completeProfile, defaultValues } from "./_utils";
+import Name from "../fields/Name";
 import text from "../../../../utils/text.json";
 import sxs from "../_styles";
+import formSxs from "../_styles";
+import { useMutation } from "@tanstack/react-query";
 
-const AuthForm: FC<AuthFormProps> = ({ mode }) => {
-  const buttonName = text.auth[mode].button;
-  const form = useForm<AuthUseFormProps>({
+const CompleteProfileForm: FC = () => {
+  const buttonName = text.auth.completeProfile.button;
+  const form = useForm<CompleteProfileUseFormProps>({
     defaultValues,
     mode: "onChange",
   });
 
   const mutation = useMutation({
-    mutationFn: mode === "login" ? login : signup,
+    mutationFn: completeProfile,
     onSuccess(data, variables, context) {
       console.log({ data, variables, context });
     },
@@ -26,19 +29,17 @@ const AuthForm: FC<AuthFormProps> = ({ mode }) => {
     },
   });
 
-  const onSubmit = async (data: AuthUseFormProps) => {
-    const userData: SavableAuthValues = {
-      email: data.email,
-      password: data.password,
+  const onSubmit = async (data: CompleteProfileUseFormProps) => {
+    const userData: SavableCompleteProfileUseFormValues = {
+      name: data.name,
     };
     mutation.mutate(userData);
   };
 
   return (
     <FormProvider {...form}>
-      <Box as="form" sx={sxs.formContainer}>
-        <Email />
-        <Password />
+      <Box as="form" sx={formSxs.formContainer}>
+        <Name />
         <Box sx={sxs.buttonContainer}>
           <Button sx={sxs.button} onClick={form.handleSubmit(onSubmit)}>
             {buttonName}
@@ -49,4 +50,4 @@ const AuthForm: FC<AuthFormProps> = ({ mode }) => {
   );
 };
 
-export default AuthForm;
+export default CompleteProfileForm;

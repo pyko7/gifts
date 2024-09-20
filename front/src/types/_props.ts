@@ -1,1 +1,5 @@
-export type AuthPageModeEnum = "login" | "signup";
+export type AuthPageModeEnum =
+  | "login"
+  | "signup"
+  | "forgotPassword"
+  | "completeProfile";

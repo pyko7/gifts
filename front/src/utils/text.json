@@ -9,6 +9,16 @@
       "title": "Bienvenue",
       "subtitle": "Entrer vos informations afin de vous inscrire",
       "button": "S'inscire"
+    },
+    "forgotPassword": {
+      "title": "Réinitialiser le mot de passe",
+      "subtitle": "Entrer votre adresse email afin de réinitialiser le mot de passe",
+      "button": "Réinitialiser"
+    },
+    "completeProfile": {
+      "title": "Compléter votre profil",
+      "subtitle": "Entrer vos informations afin de compléter votre profil",
+      "button": "Valider"
     }
   }
 }

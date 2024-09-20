@@ -1,5 +1,7 @@
 import { AuthUseFormProps, SavableAuthValues } from "./_props";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export const defaultValues: AuthUseFormProps = {
   email: "",
   password: "",
@@ -7,7 +9,7 @@ export const defaultValues: AuthUseFormProps = {
 };
 
 export const login = async (user: SavableAuthValues) => {
-  const res = await fetch("http://localhost:3000/auth/login", {
+  const res = await fetch(API_URL, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -21,7 +23,7 @@ export const login = async (user: SavableAuthValues) => {
 };
 
 export const signup = async (user: SavableAuthValues) => {
-  const res = await fetch("http://localhost:3000/auth/signup", {
+  const res = await fetch(API_URL, {
     headers: {
       "Content-Type": "application/json",
     },

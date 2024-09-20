@@ -1,11 +1,11 @@
 import { FC } from "react";
 import { Box, Stack, Text } from "@chakra-ui/react";
 import { AuthPageProps } from "./_props";
-import AuthForm from "@components/features/form/authForm/AuthForm";
+import CompleteProfileForm from "@components/features/form/completeProfileForm/CompleteProfileForm";
 import text from "@utils/text.json";
 import sxs from "./_styles";
 
-const AuthPage: FC<AuthPageProps> = ({ mode }) => {
+const AuthPage: FC<AuthPageProps> = ({ mode, formCompon }) => {
   const title = text.auth[mode].title;
   const subtitle = text.auth[mode].subtitle;
   return (
@@ -15,7 +15,10 @@ const AuthPage: FC<AuthPageProps> = ({ mode }) => {
           <Text sx={sxs.title}>{title}</Text>
           <Text sx={sxs.subtitle}>{subtitle}</Text>
         </Stack>
-        <AuthForm mode={mode} />
+        {/* <AuthForm mode={mode} /> */}
+        {/* <ForgotPasswordForm /> */}
+
+        <CompleteProfileForm />
       </Box>
     </Box>
   );
