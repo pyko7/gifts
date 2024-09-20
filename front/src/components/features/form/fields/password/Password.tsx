@@ -29,7 +29,6 @@ const Password: FC<PasswordProps> = ({
       name={name}
       rules={{
         required: "Le mot de passe est manquant",
-        //TODO: FIX VALIDATION
         validate: isPasswordValid,
       }}
       render={({ field, formState: { errors } }) => (
@@ -59,8 +58,8 @@ const Password: FC<PasswordProps> = ({
               <ButtonIcon CustomIcon={CloseIcon} onClick={handleClear} />
             </InputRightElement>
           )}
-          {errors.password?.message && (
-            <ErrorMessage message={String(errors.password?.message)} />
+          {errors?.[field.name]?.message && (
+            <ErrorMessage message={String(errors?.[field.name]?.message)} />
           )}
         </InputGroup>
       )}
