@@ -4,6 +4,8 @@ import { AuthPageProps } from "./_props";
 import CompleteProfileForm from "@components/features/form/completeProfileForm/CompleteProfileForm";
 import text from "@utils/text.json";
 import sxs from "./_styles";
+import ForgotPasswordForm from "@components/features/form/forgotPasswordForm/ForgotPasswordForm";
+import ResetPasswordForm from "@components/features/form/resetPasswordForm/ResetPasswordForm";
 
 const AuthPage: FC<AuthPageProps> = ({ mode, formCompon }) => {
   const title = text.auth[mode].title;
@@ -17,8 +19,9 @@ const AuthPage: FC<AuthPageProps> = ({ mode, formCompon }) => {
         </Stack>
         {/* <AuthForm mode={mode} /> */}
         {/* <ForgotPasswordForm /> */}
+        <ResetPasswordForm />
 
-        <CompleteProfileForm />
+        {/* <CompleteProfileForm /> */}
       </Box>
     </Box>
   );

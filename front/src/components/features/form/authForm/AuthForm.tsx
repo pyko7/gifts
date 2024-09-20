@@ -5,7 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { SavableAuthValues, AuthFormProps, AuthUseFormProps } from "./_props";
 import { defaultValues, login, signup } from "./_utils";
 import Email from "../fields/Email";
-import Password from "../fields/Password";
+import Password from "../fields/password/Password";
 import text from "../../../../utils/text.json";
 import sxs from "../_styles";
 

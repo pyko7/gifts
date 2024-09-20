@@ -4,31 +4,32 @@ import { Input, InputGroup, InputRightElement } from "@chakra-ui/react";
 import { CloseIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import ButtonIcon from "@components/common/button/buttonIcon/ButtonIcon";
 import ErrorMessage from "@components/common/errorMessage/ErrorMessage";
-import { AuthUseFormProps } from "../authForm/_props";
 import { isPasswordValid } from "@utils/validation";
-import sxs from "../_styles";
+import sxs from "../../_styles";
+import { PasswordProps, UsePasswordFormContext } from "./_props";
 
-const Password: FC = () => {
-  const { watch, setValue } = useFormContext<AuthUseFormProps>();
-  const passwordInputMode = watch("passwordInputMode");
+const Password: FC<PasswordProps> = ({
+  name = "password",
+  placeholder = "Mot de passe",
+}) => {
+  const { watch, setValue } = useFormContext<UsePasswordFormContext>();
 
-  const handleClick = () => {
-    if (passwordInputMode === "password") {
-      setValue("passwordInputMode", "text");
-    } else {
-      setValue("passwordInputMode", "password");
-    }
+  const watched = {
+    password: watch("passwordInputMode"),
+    newPassword: watch("newPasswordInputMode"),
+    confirmNewPassword: watch("confirmNewPasswordInputMode"),
   };
 
   const handleClear = () => {
-    setValue("password", "");
+    setValue(name, "");
   };
 
   return (
     <Controller
-      name="password"
+      name={name}
       rules={{
         required: "Le mot de passe est manquant",
+        //TODO: FIX VALIDATION
         validate: isPasswordValid,
       }}
       render={({ field, formState: { errors } }) => (
@@ -36,15 +37,21 @@ const Password: FC = () => {
           <Input
             required
             isInvalid={Boolean(errors.password)}
-            type={passwordInputMode}
-            placeholder="Mot de passe"
+            type={watched[field.name]}
+            placeholder={placeholder}
             {...field}
           />
           <InputRightElement mr={field.value ? 8 : 0}>
-            {passwordInputMode === "password" ? (
-              <ButtonIcon CustomIcon={ViewIcon} onClick={handleClick} />
+            {watched[field.name] === "password" ? (
+              <ButtonIcon
+                CustomIcon={ViewIcon}
+                onClick={() => setValue(`${field.name}InputMode`, "text")}
+              />
             ) : (
-              <ButtonIcon CustomIcon={ViewOffIcon} onClick={handleClick} />
+              <ButtonIcon
+                CustomIcon={ViewOffIcon}
+                onClick={() => setValue(`${field.name}InputMode`, "password")}
+              />
             )}
           </InputRightElement>
           {field.value?.length > 0 && (

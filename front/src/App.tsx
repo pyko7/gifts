@@ -5,7 +5,7 @@ import AuthPage from "@pages/auth/AuthPage";
 const App: FC = () => {
   return (
     <CommonLayout>
-      <AuthPage mode="completeProfile" />
+      <AuthPage mode="resetPassword" />
     </CommonLayout>
   );
 };
