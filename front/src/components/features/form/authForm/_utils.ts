@@ -23,7 +23,7 @@ export const login = async (user: SavableAuthValues) => {
 };
 
 export const signup = async (user: SavableAuthValues) => {
-  const res = await fetch(API_URL, {
+  const res = await fetch(`${API_URL}/auth/signup`, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -31,7 +31,8 @@ export const signup = async (user: SavableAuthValues) => {
     body: JSON.stringify(user),
   });
   if (!res.ok) {
-    throw new Error(res.statusText);
+    const errorMessage = await res.text();
+    throw new Error(errorMessage);
   }
   return res;
 };

@@ -11,6 +11,9 @@ import sxs from "../_styles";
 
 const AuthForm: FC<AuthFormProps> = ({ mode }) => {
   const buttonName = text.auth[mode].button;
+  const apiUniqueEmailError = text.api.error.signup.uniqueEmail;
+  const uniqueEmailErrorMessage = text.error.auth.signup.emailAlreadyExists;
+
   const form = useForm<AuthUseFormProps>({
     defaultValues,
     mode: "onChange",
@@ -21,8 +24,11 @@ const AuthForm: FC<AuthFormProps> = ({ mode }) => {
     onSuccess(data, variables, context) {
       console.log({ data, variables, context });
     },
-    onError(error, variables, context) {
-      console.log({ error, variables, context });
+    onError(error) {
+      if (error.message === apiUniqueEmailError)
+        form.setError("email", {
+          message: uniqueEmailErrorMessage,
+        });
     },
   });
 

@@ -25,5 +25,19 @@
       "subtitle": "Entrer vos informations afin de compléter votre profil",
       "button": "Confirmer"
     }
+  },
+  "api": {
+    "error": {
+      "signup": {
+        "uniqueEmail": "duplicate key value violates unique constraint \"users_email_unique\""
+      }
+    }
+  },
+  "error": {
+    "auth": {
+      "signup": {
+        "emailAlreadyExists": "Adresse déjà utilisée"
+      }
+    }
   }
 }
