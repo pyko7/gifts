@@ -18,6 +18,21 @@ class UserService {
     this.password = user.password
   }
 
+  static async hashPassword(
+    password: string,
+    saltRounds: number
+  ): Promise<string> {
+    return new Promise((resolve, reject) => {
+      bcrypt.hash(password, saltRounds, (err, hash) => {
+        if (err) {
+          console.log(`[hashPassword]: ${err.message}`)
+          return reject(new Error(err.message))
+        }
+        resolve(hash)
+      })
+    })
+  }
+
   static async createUser(email: string, password: string) {
     try {
       // eslint-disable-next-line no-undef
@@ -33,17 +48,17 @@ class UserService {
         parseInt(MAX_SALT_VALUE)
       )
 
-      bcrypt.hash(password, saltRounds, async (err, hash) => {
-        if (err) throw new Error(`[hashPassword]: ${err?.message}`)
-        await db.insert(users).values({ email, password: hash })
-      })
+      const hashedPassword = await this.hashPassword(password, saltRounds)
+      await db.insert(users).values({ email, password: hashedPassword })
     } catch (error) {
       if (error instanceof Error || error instanceof DrizzleError) {
-        throw new Error(`[UserService - createUser]: ${error.message}`)
+        console.log(`[UserService - createUser]: ${error.message}`)
+        throw new Error(error.message)
       }
-      throw new Error(
+      console.log(
         '[UserService - createUser]: An unexpected error has occurred'
       )
+      throw new Error('An unexpected error has occurred')
     }
   }
 

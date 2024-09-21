@@ -1,11 +1,12 @@
 import { serve } from '@hono/node-server'
 import { jwt } from 'hono/jwt'
+import { cors } from 'hono/cors'
 import { Hono } from 'hono'
 import { auth, user, gift, invitation } from './routes/index'
 import 'dotenv/config'
 
 const app = new Hono()
-
+app.use('/*', cors())
 app.route('/auth', auth)
 app.use(
   '/*',
