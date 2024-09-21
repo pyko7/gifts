@@ -9,17 +9,20 @@ export const defaultValues: AuthUseFormProps = {
 };
 
 export const login = async (user: SavableAuthValues) => {
-  const res = await fetch(API_URL, {
+  const res = await fetch(`${API_URL}/auth/login`, {
     headers: {
       "Content-Type": "application/json",
     },
     method: "POST",
     body: JSON.stringify(user),
+    credentials: "include",
   });
   if (!res.ok) {
-    throw new Error(res.statusText);
+    const errorMessage = await res.text();
+    throw new Error(errorMessage);
   }
-  return res;
+  const data = await res.json();
+  return data;
 };
 
 export const signup = async (user: SavableAuthValues) => {

@@ -30,6 +30,9 @@
     "error": {
       "signup": {
         "uniqueEmail": "duplicate key value violates unique constraint \"users_email_unique\""
+      },
+      "login": {
+        "invalidCredentials": "Invalid email or password"
       }
     }
   },
@@ -37,6 +40,9 @@
     "auth": {
       "signup": {
         "emailAlreadyExists": "Adresse déjà utilisée"
+      },
+      "login": {
+        "invalidCredentials": "Email ou mot de passe invalide"
       }
     }
   }

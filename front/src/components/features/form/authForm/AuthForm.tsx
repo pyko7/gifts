@@ -13,6 +13,9 @@ const AuthForm: FC<AuthFormProps> = ({ mode }) => {
   const buttonName = text.auth[mode].button;
   const apiUniqueEmailError = text.api.error.signup.uniqueEmail;
   const uniqueEmailErrorMessage = text.error.auth.signup.emailAlreadyExists;
+  const apiInvalidCredentialsError = text.api.error.login.invalidCredentials;
+  const invalidCredentialsErrorMessage =
+    text.error.auth.login.invalidCredentials;
 
   const form = useForm<AuthUseFormProps>({
     defaultValues,
@@ -21,14 +24,29 @@ const AuthForm: FC<AuthFormProps> = ({ mode }) => {
 
   const mutation = useMutation({
     mutationFn: mode === "login" ? login : signup,
-    onSuccess(data, variables, context) {
-      console.log({ data, variables, context });
+    onSuccess(data) {
+      if (mode === "signup") {
+        return;
+      }
+      localStorage.setItem("token", JSON.stringify(data.token));
     },
     onError(error) {
-      if (error.message === apiUniqueEmailError)
-        form.setError("email", {
-          message: uniqueEmailErrorMessage,
+      if (mode === "signup") {
+        if (error.message === apiUniqueEmailError)
+          form.setError("email", {
+            message: uniqueEmailErrorMessage,
+          });
+        return;
+      }
+      if (error.message === apiInvalidCredentialsError) {
+        form.setError("password", {
+          message: invalidCredentialsErrorMessage,
         });
+        form.setError("email", {
+          message: "",
+        });
+      }
+      return;
     },
   });
 
