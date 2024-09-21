@@ -4,12 +4,12 @@ import { CloseIcon } from "@chakra-ui/icons";
 import ButtonIcon from "@components/common/button/buttonIcon/ButtonIcon";
 import ErrorMessage from "@components/common/errorMessage/ErrorMessage";
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/react";
-import { SignInFormProps } from "../_props";
+import { AuthUseFormProps } from "../authForm/_props";
 import { isEmailValid } from "@utils/validation";
 import sxs from "../_styles";
 
 const Email: FC = () => {
-  const { setValue } = useFormContext<SignInFormProps>();
+  const { setValue } = useFormContext<AuthUseFormProps>();
 
   const handleClick = () => {
     setValue("email", "");
