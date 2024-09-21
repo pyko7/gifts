@@ -33,9 +33,17 @@ class AuthService {
       return user
     } catch (error) {
       if (error instanceof Error || error instanceof DrizzleError) {
-        throw new Error(`[UserService - login]: ${error.message}`)
+        const wrongEmail = 'No user found'
+        const wrongPassword = 'Error when comparing password'
+        console.log(`[AuthService - login]: ${error.message}`)
+
+        if (wrongEmail || wrongPassword) {
+          throw new Error('Invalid email or password')
+        }
+        throw new Error(error.message)
       }
-      throw new Error('[UserService - login]: An unexpected error has occurred')
+      console.log('[AuthService - login]: An unexpected error has occurred')
+      throw new Error('An unexpected error has occurred')
     }
   }
 }

@@ -1,4 +1,4 @@
-import { deleteCookie, setSignedCookie } from 'hono/cookie'
+import { deleteCookie, setCookie } from 'hono/cookie'
 import AuthService from '../services/AuthService'
 import { DrizzleError } from 'drizzle-orm'
 import { sign } from 'hono/jwt'
@@ -10,10 +10,10 @@ class AuthController {
   login = async (c: Context) => {
     try {
       // eslint-disable-next-line no-undef
-      const { JWT_SECRET, COOKIE_SECRET } = process.env
+      const { JWT_SECRET } = process.env
       const expiresAt = Math.floor(Date.now() / 1000) + 60 * 43800 // 1 month expiration
 
-      if (!JWT_SECRET || !COOKIE_SECRET) {
+      if (!JWT_SECRET) {
         throw new Error('No secret provided')
       }
       const { email, password } = await c.req.json()
@@ -27,12 +27,15 @@ class AuthController {
 
       const token = await sign(payload, JWT_SECRET)
 
-      setSignedCookie(c, 'session', token, COOKIE_SECRET, {
+      setCookie(c, 'session', token, {
         httpOnly: true,
-        maxAge: 43800
+        maxAge: 43800,
+        sameSite: 'Lax',
+        secure: false,
+        path: '/'
       })
 
-      return c.json({ userId: user.id })
+      return c.json({ token })
     } catch (error) {
       if (error instanceof Error || error instanceof DrizzleError) {
         return c.text(error.message, 400)

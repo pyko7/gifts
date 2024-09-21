@@ -6,7 +6,13 @@ import { auth, user, gift, invitation } from './routes/index'
 import 'dotenv/config'
 
 const app = new Hono()
-app.use('/*', cors())
+app.use(
+  '*',
+  cors({
+    origin: 'http://localhost:5173',
+    credentials: true
+  })
+)
 app.route('/auth', auth)
 app.use(
   '/*',
