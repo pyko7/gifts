@@ -1,6 +1,5 @@
+import { API_URL } from "@utils/env";
 import { SavableCompleteProfileUseFormValues } from "./_props";
-
-const API_URL = import.meta.env.VITE_API_URL;
 
 export const defaultValues = {
   // profilePicture?:string
