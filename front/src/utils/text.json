@@ -12,8 +12,8 @@
     },
     "forgotPassword": {
       "title": "Réinitialiser le mot de passe",
-      "subtitle": "Entrer votre adresse email afin de réinitialiser le mot de passe",
-      "button": "Réinitialiser"
+      "subtitle": "Entrer votre adresse email. Nous vous enverrons un lien par email afin de réinitialiser votre mot de passe",
+      "button": "Envoyer l'email"
     },
     "resetPassword": {
       "title": "Réinitialiser le mot de passe",
