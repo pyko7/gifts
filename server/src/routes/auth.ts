@@ -1,5 +1,6 @@
 import AuthController from '../controllers/AuthController'
 import UserController from '../controllers/UserController'
+import { isUserExists } from '../middlewares/isUserExists'
 import { jwt } from 'hono/jwt'
 import { Hono } from 'hono'
 import 'dotenv/config'
@@ -10,6 +11,7 @@ const authController = new AuthController()
 
 auth.post('/signup', userController.createUser)
 auth.post('/login', authController.login)
+auth.post('/forgot-password', isUserExists, authController.forgotPassword)
 auth.post(
   '/logout',
   jwt({

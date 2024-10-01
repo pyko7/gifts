@@ -55,6 +55,28 @@ class AuthController {
       return c.text('[AuthController - logout]: Error while logout', 500)
     }
   }
+
+  forgotPassword = async (c: Context) => {
+    try {
+      const { email } = await c.req.json()
+      if (!email) {
+        throw new Error('No email provided')
+      }
+      const emailTest = AuthService.forgotPassword(email)
+
+      console.log({ emailTest })
+
+      return c.text('email sent', 200)
+    } catch (error) {
+      if (error instanceof Error || error instanceof DrizzleError) {
+        return c.text(error.message, 400)
+      }
+      return c.text(
+        '[AuthController - forgotPassword]: Error while reset password',
+        400
+      )
+    }
+  }
 }
 
 export default AuthController
