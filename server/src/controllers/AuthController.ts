@@ -62,9 +62,7 @@ class AuthController {
       if (!email) {
         throw new Error('No email provided')
       }
-      const emailTest = AuthService.forgotPassword(email)
-
-      console.log({ emailTest })
+      await AuthService.forgotPassword(email)
 
       return c.text('email sent', 200)
     } catch (error) {
