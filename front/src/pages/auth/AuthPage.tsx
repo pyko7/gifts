@@ -1,29 +1,33 @@
 import { FC } from "react";
-import { Box, Stack, Text } from "@chakra-ui/react";
 import { AuthPageProps } from "./_props";
 import CompleteProfileForm from "@components/features/form/completeProfileForm/CompleteProfileForm";
 import text from "@utils/text.json";
-import sxs from "./_styles";
 import ForgotPasswordForm from "@components/features/form/forgotPasswordForm/ForgotPasswordForm";
-import ResetPasswordForm from "@components/features/form/resetPasswordForm/ResetPasswordForm";
+import AuthForm from "@components/features/form/authForm/AuthForm";
+import AuthContainer from "./AuthContainer";
 
-const AuthPage: FC<AuthPageProps> = ({ mode, formCompon }) => {
+const AuthPage: FC<AuthPageProps> = ({ mode }) => {
   const title = text.auth[mode].title;
   const subtitle = text.auth[mode].subtitle;
-  return (
-    <Box sx={sxs.container}>
-      <Box sx={sxs.innerContainer}>
-        <Stack spacing={3} sx={sxs.textContainer}>
-          <Text sx={sxs.title}>{title}</Text>
-          <Text sx={sxs.subtitle}>{subtitle}</Text>
-        </Stack>
-        {/* <AuthForm mode={mode} /> */}
-        {/* <ForgotPasswordForm /> */}
-        <ResetPasswordForm />
 
-        {/* <CompleteProfileForm /> */}
-      </Box>
-    </Box>
+  if (mode === "completeProfile") {
+    return (
+      <AuthContainer title={title} subtitle={subtitle}>
+        <CompleteProfileForm />
+      </AuthContainer>
+    );
+  }
+
+  if (mode === "forgotPassword") {
+    <AuthContainer title={title} subtitle={subtitle}>
+      <ForgotPasswordForm />
+    </AuthContainer>;
+  }
+
+  return (
+    <AuthContainer title={title} subtitle={subtitle}>
+      <AuthForm mode={mode} />
+    </AuthContainer>
   );
 };
 

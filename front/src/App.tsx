@@ -1,11 +1,12 @@
 import { FC } from "react";
 import CommonLayout from "./components/common/layout/Layout";
-import AuthPage from "@pages/auth/AuthPage";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./router/router";
 
 const App: FC = () => {
   return (
     <CommonLayout>
-      <AuthPage mode="resetPassword" />
+      <RouterProvider router={router} />
     </CommonLayout>
   );
 };
