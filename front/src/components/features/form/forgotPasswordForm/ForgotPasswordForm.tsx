@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { Box, Button } from "@chakra-ui/react";
+import { Button, Flex } from "@chakra-ui/react";
 import {
   ForgotPasswordUseFormProps,
   SavableForgotPasswordValues,
@@ -9,7 +9,6 @@ import { defaultValues, forgotPassword } from "./_utils";
 import Email from "../fields/Email";
 import text from "../../../../utils/text.json";
 import sxs from "../_styles";
-import formSxs from "../_styles";
 import { useMutation } from "@tanstack/react-query";
 
 const ForgotPasswordForm: FC = () => {
@@ -45,14 +44,14 @@ const ForgotPasswordForm: FC = () => {
 
   return (
     <FormProvider {...form}>
-      <Box as="form" sx={formSxs.formContainer}>
+      <Flex as="form" width="100%" flex={2} flexDirection="column" gap="1.5rem">
         <Email />
-        <Box sx={sxs.buttonContainer}>
+        <Flex flex={1} alignItems="flex-end">
           <Button sx={sxs.button} onClick={form.handleSubmit(onSubmit)}>
             {buttonName}
           </Button>
-        </Box>
-      </Box>
+        </Flex>
+      </Flex>
     </FormProvider>
   );
 };

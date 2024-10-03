@@ -1,11 +1,10 @@
 import { FC } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { Box, Button } from "@chakra-ui/react";
+import { Button, Flex } from "@chakra-ui/react";
 import { ResetPasswordUseFormProps } from "./_props";
 import { defaultValues } from "./_utils";
 import text from "../../../../utils/text.json";
 import sxs from "../_styles";
-import formSxs from "../_styles";
 import Password from "../fields/password/Password";
 
 const ResetPasswordForm: FC = () => {
@@ -25,19 +24,19 @@ const ResetPasswordForm: FC = () => {
 
   return (
     <FormProvider {...form}>
-      <Box as="form" sx={formSxs.formContainer}>
+      <Flex as="form" width="100%" flex={2} flexDirection="column" gap="1.5rem">
         <Password name="password" />
         <Password name="newPassword" placeholder={newPasswordPlaceholder} />
         <Password
           name="confirmNewPassword"
           placeholder={confirmNewPasswordPlaceholder}
         />
-        <Box sx={sxs.buttonContainer}>
+        <Flex flex={1} alignItems="flex-end">
           <Button sx={sxs.button} onClick={form.handleSubmit(onSubmit)}>
             {buttonName}
           </Button>
-        </Box>
-      </Box>
+        </Flex>
+      </Flex>
     </FormProvider>
   );
 };

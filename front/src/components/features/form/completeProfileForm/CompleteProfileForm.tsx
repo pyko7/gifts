@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { Box, Button } from "@chakra-ui/react";
+import { Button, Flex } from "@chakra-ui/react";
 import {
   CompleteProfileUseFormProps,
   SavableCompleteProfileUseFormValues,
@@ -9,7 +9,6 @@ import { completeProfile, defaultValues } from "./_utils";
 import Name from "../fields/Name";
 import text from "../../../../utils/text.json";
 import sxs from "../_styles";
-import formSxs from "../_styles";
 import { useMutation } from "@tanstack/react-query";
 
 const CompleteProfileForm: FC = () => {
@@ -39,14 +38,14 @@ const CompleteProfileForm: FC = () => {
 
   return (
     <FormProvider {...form}>
-      <Box as="form" sx={formSxs.formContainer}>
+      <Flex as="form" width="100%" flex={2} flexDirection="column" gap="1.5rem">
         <Name />
-        <Box sx={sxs.buttonContainer}>
+        <Flex flex={1} alignItems="flex-end">
           <Button sx={sxs.button} onClick={form.handleSubmit(onSubmit)}>
             {buttonName}
           </Button>
-        </Box>
-      </Box>
+        </Flex>
+      </Flex>
     </FormProvider>
   );
 };

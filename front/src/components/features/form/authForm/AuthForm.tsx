@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { Box, Button } from "@chakra-ui/react";
+import { Button, Flex } from "@chakra-ui/react";
 import { useMutation } from "@tanstack/react-query";
 import { SavableAuthValues, AuthFormProps, AuthUseFormProps } from "./_props";
 import { defaultValues, login, signup } from "./_utils";
@@ -61,15 +61,15 @@ const AuthForm: FC<AuthFormProps> = ({ mode }) => {
 
   return (
     <FormProvider {...form}>
-      <Box as="form" sx={sxs.formContainer}>
+      <Flex as="form" width="100%" flex={2} flexDirection="column" gap="1.5rem">
         <Email />
         <Password />
-        <Box sx={sxs.buttonContainer}>
+        <Flex flex={1} alignItems="flex-end">
           <Button sx={sxs.button} onClick={form.handleSubmit(onSubmit)}>
             {buttonName}
           </Button>
-        </Box>
-      </Box>
+        </Flex>
+      </Flex>
     </FormProvider>
   );
 };
