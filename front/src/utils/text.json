@@ -3,27 +3,32 @@
     "login": {
       "title": "Heureux de vous revoir",
       "subtitle": "Entrer vos informations afin de vous connecter",
-      "button": "Se connecter"
+      "button": "Se connecter",
+      "redirectLinkLabel": "Pas de compte ? Inscrivez-vous ici"
     },
     "signup": {
       "title": "Bienvenue",
       "subtitle": "Entrer vos informations afin de vous inscrire",
-      "button": "S'inscrire"
+      "button": "S'inscrire",
+      "redirectLinkLabel": "Déjà un compte ? Connectez-vous ici"
     },
     "forgotPassword": {
       "title": "Réinitialiser le mot de passe",
       "subtitle": "Entrer votre adresse email. Nous vous enverrons un lien par email afin de réinitialiser votre mot de passe",
-      "button": "Envoyer l'email"
+      "button": "Envoyer l'email",
+      "redirectLinkLabel": "Se connecter"
     },
     "resetPassword": {
       "title": "Réinitialiser le mot de passe",
       "subtitle": "Entrer votre mot de passe actuel puis votre nouveau mot de passe",
-      "button": "Confirmer"
+      "button": "Confirmer",
+      "redirectLinkLabel": ""
     },
     "completeProfile": {
       "title": "Compléter votre profil",
       "subtitle": "Entrer vos informations afin de compléter votre profil",
-      "button": "Confirmer"
+      "button": "Confirmer",
+      "redirectLinkLabel": ""
     }
   },
   "api": {

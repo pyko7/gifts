@@ -8,4 +8,6 @@ export type AuthPageProps = {
 export type AuthContainerProps = PropsWithChildren & {
   title: string;
   subtitle: string;
+  redirectLinkLabel?: string;
+  redirectUrl?: AuthPageModeEnum;
 };

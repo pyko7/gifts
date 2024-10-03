@@ -8,9 +8,6 @@ export default makeSx({
       base: "1rem",
       lg: 0,
     },
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
   },
   innerContainer: {
     position: "relative",
@@ -22,9 +19,6 @@ export default makeSx({
       lg: "none",
     },
     padding: "3rem 1rem",
-    display: "flex",
-    alignItems: "center",
-    flexDirection: "column",
     backgroundColor: (theme) => theme.colors.main[900],
     borderRadius: (theme) => theme.radii.xl,
     boxShadow: (theme) =>
@@ -42,18 +36,11 @@ export default makeSx({
         `linear-gradient(200deg,${theme.colors.main[800]} .06%, ${theme.colors.main[900]})`,
     },
   },
-  formContainer: {
-    width: "100%",
-    display: "flex",
-    flexDirection: "column",
-    gap: "1.5rem",
-    flex: 2,
-  },
   textContainer: {
-    width: "100%",
-    textAlign: "center",
-    zIndex: 2,
-    flex: 1,
+    background: "red !important",
+    "& *": {
+      zIndex: 2,
+    },
   },
   title: {
     fontSize: (theme) => theme.fontSizes["2xl"],
