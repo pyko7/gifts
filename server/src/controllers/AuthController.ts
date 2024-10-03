@@ -35,7 +35,7 @@ class AuthController {
         path: '/'
       })
 
-      return c.json({ token })
+      return c.json({ userId: user.id, token })
     } catch (error) {
       if (error instanceof Error || error instanceof DrizzleError) {
         return c.text(error.message, 400)

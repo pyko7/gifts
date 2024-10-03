@@ -9,11 +9,12 @@ export const defaultValues = {
 export const completeProfile = async (
   user: SavableCompleteProfileUseFormValues
 ) => {
-  const res = await fetch(API_URL, {
+  const res = await fetch(`${API_URL}/user/update/${user.userId}`, {
     headers: {
       "Content-Type": "application/json",
     },
-    method: "POST",
+    method: "PUT",
+    credentials: "include",
     body: JSON.stringify(user),
   });
   if (!res.ok) {

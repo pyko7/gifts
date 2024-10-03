@@ -32,6 +32,7 @@ const CompleteProfileForm: FC = () => {
   const onSubmit = async (data: CompleteProfileUseFormProps) => {
     const userData: SavableCompleteProfileUseFormValues = {
       name: data.name,
+      userId: JSON.parse(localStorage.getItem("userId") ?? ""),
     };
     mutation.mutate(userData);
   };

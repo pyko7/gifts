@@ -29,6 +29,7 @@ const AuthForm: FC<AuthFormProps> = ({ mode }) => {
         return;
       }
       localStorage.setItem("token", JSON.stringify(data.token));
+      localStorage.setItem("userId", JSON.stringify(data.userId));
     },
     onError(error) {
       if (mode === "signup") {

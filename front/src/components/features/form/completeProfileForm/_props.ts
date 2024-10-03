@@ -4,4 +4,5 @@ export type CompleteProfileUseFormProps = {
 
 export type SavableCompleteProfileUseFormValues = {
   name: string;
+  userId: string;
 };

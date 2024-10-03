@@ -14,6 +14,7 @@ app.use(
   })
 )
 app.route('/auth', auth)
+
 app.use(
   '/*',
   jwt({
