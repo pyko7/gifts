@@ -4,31 +4,36 @@
       "title": "Heureux de vous revoir",
       "subtitle": "Entrer vos informations afin de vous connecter",
       "button": "Se connecter",
-      "redirectLinkLabel": "Pas de compte ? Inscrivez-vous ici"
+      "redirectLinkLabel": "Pas de compte ? Inscrivez-vous ici",
+      "buttonHelperText": "Mot de passe oublié ?"
     },
     "signup": {
       "title": "Bienvenue",
       "subtitle": "Entrer vos informations afin de vous inscrire",
       "button": "S'inscrire",
-      "redirectLinkLabel": "Déjà un compte ? Connectez-vous ici"
+      "redirectLinkLabel": "Déjà un compte ? Connectez-vous ici",
+      "buttonHelperText": ""
     },
     "forgotPassword": {
       "title": "Réinitialiser le mot de passe",
       "subtitle": "Entrer votre adresse email. Nous vous enverrons un lien par email afin de réinitialiser votre mot de passe",
       "button": "Envoyer l'email",
-      "redirectLinkLabel": "Se connecter"
+      "redirectLinkLabel": "",
+      "buttonHelperText": ""
     },
     "resetPassword": {
       "title": "Réinitialiser le mot de passe",
       "subtitle": "Entrer votre mot de passe actuel puis votre nouveau mot de passe",
       "button": "Confirmer",
-      "redirectLinkLabel": ""
+      "redirectLinkLabel": "",
+      "buttonHelperText": ""
     },
     "completeProfile": {
       "title": "Compléter votre profil",
       "subtitle": "Entrer vos informations afin de compléter votre profil",
       "button": "Confirmer",
-      "redirectLinkLabel": ""
+      "redirectLinkLabel": "",
+      "buttonHelperText": ""
     }
   },
   "api": {

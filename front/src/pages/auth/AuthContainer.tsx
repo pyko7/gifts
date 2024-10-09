@@ -8,8 +8,7 @@ const AuthContainer: FC<AuthContainerProps> = ({
   children,
   title,
   subtitle,
-  redirectLinkLabel = "",
-  redirectUrl = "",
+  redirectLink = [],
 }) => {
   return (
     <Flex alignItems="center" justifyContent="center" sx={sxs.container}>
@@ -31,11 +30,17 @@ const AuthContainer: FC<AuthContainerProps> = ({
         </Flex>
         {children}
         <Flex
+          flexDirection="column"
           justifyContent="center"
           alignItems="center"
+          gap="0.75rem"
           sx={sxs.textContainer}
         >
-          <Link to={`/${redirectUrl}`}>{redirectLinkLabel}</Link>
+          {redirectLink.map((redirect, idx) => (
+            <Link key={idx} to={`/${redirect.url}`}>
+              {redirect.label}
+            </Link>
+          ))}
         </Flex>
       </Flex>
     </Flex>
