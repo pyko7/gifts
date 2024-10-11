@@ -12,13 +12,19 @@ export default makeSx({
   innerContainer: {
     position: "relative",
     width: "100%",
-    maxWidth: "25rem",
+    maxWidth: {
+      base: "25rem",
+      lg: "30rem",
+    },
     height: "75%",
     maxHeight: {
       base: "30rem",
-      lg: "none",
+      lg: "35rem",
     },
-    padding: "3rem 1rem",
+    padding: {
+      base: "3rem 1rem",
+      lg: "3rem",
+    },
     backgroundColor: (theme) => theme.colors.main[900],
     borderRadius: (theme) => theme.radii.xl,
     boxShadow: (theme) =>
