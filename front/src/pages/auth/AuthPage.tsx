@@ -1,12 +1,18 @@
-import { FC } from "react";
-import { AuthPageProps, RedirectLink } from "./_props";
+import { FC, useEffect } from "react";
+import { RedirectLink } from "./_props";
 import CompleteProfileForm from "@components/features/form/completeProfileForm/CompleteProfileForm";
 import text from "@utils/text.json";
 import ForgotPasswordForm from "@components/features/form/forgotPasswordForm/ForgotPasswordForm";
 import AuthForm from "@components/features/form/authForm/AuthForm";
 import AuthContainer from "./AuthContainer";
+import { useAuthFormContext } from "src/context/form/authForm";
+import { useLocation } from "react-router-dom";
+import { AuthPageModeEnum } from "src/types/_props";
 
-const AuthPage: FC<AuthPageProps> = ({ mode }) => {
+const AuthPage: FC = () => {
+  const { mode, setMode } = useAuthFormContext();
+  const { pathname } = useLocation();
+
   const title = text.auth[mode].title;
   const subtitle = text.auth[mode].subtitle;
 
@@ -19,6 +25,14 @@ const AuthPage: FC<AuthPageProps> = ({ mode }) => {
     label: mode === "login" ? text.auth.login.buttonHelperText : "",
     url: "forgot-password",
   };
+
+  useEffect(() => {
+    if (mode !== pathname.slice(1)) {
+      console.log(pathname.slice(1));
+      const formMode = pathname.slice(1) as AuthPageModeEnum;
+      setMode(formMode);
+    }
+  }, [mode, pathname, setMode]);
 
   if (mode === "completeProfile") {
     return (
@@ -50,7 +64,7 @@ const AuthPage: FC<AuthPageProps> = ({ mode }) => {
       subtitle={subtitle}
       redirectLink={[redirectLink, loginRedirectLink]}
     >
-      <AuthForm mode={mode} />
+      <AuthForm />
     </AuthContainer>
   );
 };

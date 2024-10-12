@@ -3,18 +3,18 @@ import AuthPage from "@pages/auth/AuthPage";
 export const authRouter = [
   {
     path: "/login",
-    element: <AuthPage mode="login" />,
+    element: <AuthPage />,
   },
   {
     path: "/signup",
-    element: <AuthPage mode="signup" />,
+    element: <AuthPage />,
   },
   {
     path: "/complete-profile",
-    element: <AuthPage mode="completeProfile" />,
+    element: <AuthPage />,
   },
   {
     path: "/forgot-password",
-    element: <AuthPage mode="forgotPassword" />,
+    element: <AuthPage />,
   },
 ];

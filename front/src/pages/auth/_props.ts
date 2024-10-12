@@ -1,9 +1,4 @@
 import { PropsWithChildren, ReactNode } from "react";
-import { AuthPageModeEnum } from "src/types/_props";
-
-export type AuthPageProps = {
-  mode: AuthPageModeEnum;
-};
 
 export type RedirectLink = {
   label: string;
