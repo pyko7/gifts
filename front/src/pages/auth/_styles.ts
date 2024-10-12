@@ -22,7 +22,7 @@ export default makeSx({
       lg: "35rem",
     },
     padding: {
-      base: "3rem 1rem",
+      base: "3rem 1.5rem",
       lg: "3rem",
     },
     backgroundColor: (theme) => theme.colors.main[900],
@@ -41,10 +41,20 @@ export default makeSx({
       background: (theme) =>
         `linear-gradient(200deg,${theme.colors.main[800]} .06%, ${theme.colors.main[900]})`,
     },
+    "& *": {
+      zIndex: 2,
+    },
   },
   textContainer: {
     "& *": {
       zIndex: 2,
+    },
+  },
+  icon: {
+    marginBottom: "1rem",
+    "& *": {
+      width: "1.5rem",
+      height: "1.5rem",
     },
   },
   title: {

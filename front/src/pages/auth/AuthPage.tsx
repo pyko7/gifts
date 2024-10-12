@@ -33,13 +33,15 @@ const AuthPage: FC<AuthPageProps> = ({ mode }) => {
   }
 
   if (mode === "forgotPassword") {
-    <AuthContainer
-      title={title}
-      subtitle={subtitle}
-      redirectLink={[redirectLink]}
-    >
-      <ForgotPasswordForm />
-    </AuthContainer>;
+    return (
+      <AuthContainer
+        title={title}
+        subtitle={subtitle}
+        redirectLink={[redirectLink]}
+      >
+        <ForgotPasswordForm />
+      </AuthContainer>
+    );
   }
 
   return (
