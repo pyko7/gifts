@@ -5,35 +5,45 @@
       "subtitle": "Entrer vos informations afin de vous connecter",
       "button": "Se connecter",
       "redirectLinkLabel": "Pas de compte ? Inscrivez-vous ici",
-      "buttonHelperText": "Mot de passe oublié ?"
+      "buttonHelperText": "Mot de passe oublié ?",
+      "successTitle": "",
+      "successSubtitle": ""
     },
     "signup": {
       "title": "Bienvenue",
       "subtitle": "Entrer vos informations afin de vous inscrire",
       "button": "S'inscrire",
       "redirectLinkLabel": "Déjà un compte ? Connectez-vous ici",
-      "buttonHelperText": ""
+      "buttonHelperText": "",
+      "successTitle": "Merci pour votre inscription",
+      "successSubtitle": "Vérifier votre boîte mail, vous recevrez un email de confirmation d'inscription"
     },
     "forgotPassword": {
       "title": "Réinitialiser le mot de passe",
       "subtitle": "Entrer votre adresse email. Nous vous enverrons un lien par email afin de réinitialiser votre mot de passe",
       "button": "Envoyer l'email",
       "redirectLinkLabel": "",
-      "buttonHelperText": ""
+      "buttonHelperText": "",
+      "successTitle": "",
+      "successSubtitle": ""
     },
     "resetPassword": {
       "title": "Réinitialiser le mot de passe",
       "subtitle": "Entrer votre mot de passe actuel puis votre nouveau mot de passe",
       "button": "Confirmer",
       "redirectLinkLabel": "",
-      "buttonHelperText": ""
+      "buttonHelperText": "",
+      "successTitle": "",
+      "successSubtitle": ""
     },
     "completeProfile": {
       "title": "Compléter votre profil",
       "subtitle": "Entrer vos informations afin de compléter votre profil",
       "button": "Confirmer",
       "redirectLinkLabel": "",
-      "buttonHelperText": ""
+      "buttonHelperText": "",
+      "successTitle": "",
+      "successSubtitle": ""
     }
   },
   "api": {

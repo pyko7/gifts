@@ -10,9 +10,11 @@ import Name from "../fields/Name";
 import text from "../../../../utils/text.json";
 import sxs from "../_styles";
 import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
 const CompleteProfileForm: FC = () => {
   const buttonName = text.auth.completeProfile.button;
+  const navigate = useNavigate();
   const form = useForm<CompleteProfileUseFormProps>({
     defaultValues,
     mode: "onChange",
@@ -21,7 +23,7 @@ const CompleteProfileForm: FC = () => {
   const mutation = useMutation({
     mutationFn: completeProfile,
     onSuccess(data, variables, context) {
-      console.log({ data, variables, context });
+      navigate("/");
     },
     onError(error, variables, context) {
       console.log({ error, variables, context });

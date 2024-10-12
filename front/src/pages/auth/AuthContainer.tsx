@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import { AuthContainerProps } from "./_props";
 import sxs from "./_styles";
 import { Link } from "react-router-dom";
@@ -8,6 +8,7 @@ const AuthContainer: FC<AuthContainerProps> = ({
   children,
   title,
   subtitle,
+  decorationIcon = undefined,
   redirectLink = [],
 }) => {
   return (
@@ -23,12 +24,16 @@ const AuthContainer: FC<AuthContainerProps> = ({
           flexDirection="column"
           justifyContent="space-between"
           alignItems="center"
+          gap={1}
           sx={sxs.textContainer}
         >
+          <Box sx={sxs.icon}>{decorationIcon}</Box>
           <Text sx={sxs.title}>{title}</Text>
           <Text sx={sxs.subtitle}>{subtitle}</Text>
         </Flex>
+
         {children}
+
         <Flex
           flexDirection="column"
           justifyContent="center"

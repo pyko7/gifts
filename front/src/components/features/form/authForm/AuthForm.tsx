@@ -8,6 +8,7 @@ import Email from "../fields/Email";
 import Password from "../fields/password/Password";
 import text from "../../../../utils/text.json";
 import sxs from "../_styles";
+import { useNavigate } from "react-router-dom";
 
 const AuthForm: FC<AuthFormProps> = ({ mode }) => {
   const buttonName = text.auth[mode].button;
@@ -16,6 +17,8 @@ const AuthForm: FC<AuthFormProps> = ({ mode }) => {
   const apiInvalidCredentialsError = text.api.error.login.invalidCredentials;
   const invalidCredentialsErrorMessage =
     text.error.auth.login.invalidCredentials;
+
+  const navigate = useNavigate();
 
   const form = useForm<AuthUseFormProps>({
     defaultValues,
@@ -26,10 +29,12 @@ const AuthForm: FC<AuthFormProps> = ({ mode }) => {
     mutationFn: mode === "login" ? login : signup,
     onSuccess(data) {
       if (mode === "signup") {
+        //display success message
         return;
       }
       localStorage.setItem("token", JSON.stringify(data.token));
       localStorage.setItem("userId", JSON.stringify(data.userId));
+      navigate("/");
     },
     onError(error) {
       if (mode === "signup") {
