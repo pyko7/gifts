@@ -1,20 +1,37 @@
 import AuthPage from "@pages/auth/AuthPage";
+import { AuthFormProvider } from "../context/form/authForm";
 
 export const authRouter = [
   {
     path: "/login",
-    element: <AuthPage />,
+    element: (
+      <AuthFormProvider>
+        <AuthPage />
+      </AuthFormProvider>
+    ),
   },
   {
     path: "/signup",
-    element: <AuthPage />,
+    element: (
+      <AuthFormProvider>
+        <AuthPage />
+      </AuthFormProvider>
+    ),
   },
   {
     path: "/complete-profile",
-    element: <AuthPage />,
+    element: (
+      <AuthFormProvider>
+        <AuthPage />
+      </AuthFormProvider>
+    ),
   },
   {
     path: "/forgot-password",
-    element: <AuthPage />,
+    element: (
+      <AuthFormProvider>
+        <AuthPage />
+      </AuthFormProvider>
+    ),
   },
 ];
