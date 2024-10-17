@@ -1,34 +1,19 @@
 import { FC, useEffect } from "react";
-import { RedirectLink } from "./_props";
 import CompleteProfileForm from "@components/features/form/completeProfileForm/CompleteProfileForm";
-import text from "@utils/text.json";
 import ForgotPasswordForm from "@components/features/form/forgotPasswordForm/ForgotPasswordForm";
-import AuthForm from "@components/features/form/authForm/AuthForm";
 import AuthContainer from "./AuthContainer";
-import { useAuthFormContext } from "src/context/form/authForm";
+import { useAuthFormContext } from "../../context/form/authForm";
 import { useLocation } from "react-router-dom";
 import { AuthPageModeEnum } from "src/types/_props";
+import SignUpForm from "@components/features/form/authForm/SignUpForm";
+import LoginForm from "@components/features/form/authForm/LoginForm";
 
 const AuthPage: FC = () => {
   const { mode, setMode } = useAuthFormContext();
   const { pathname } = useLocation();
 
-  const title = text.auth[mode].title;
-  const subtitle = text.auth[mode].subtitle;
-
-  const redirectLink: RedirectLink = {
-    label: text.auth[mode].redirectLinkLabel,
-    url: mode === "login" ? "signup" : "login",
-  };
-
-  const loginRedirectLink: RedirectLink = {
-    label: mode === "login" ? text.auth.login.buttonHelperText : "",
-    url: "forgot-password",
-  };
-
   useEffect(() => {
     if (mode !== pathname.slice(1)) {
-      console.log(pathname.slice(1));
       const formMode = pathname.slice(1) as AuthPageModeEnum;
       setMode(formMode);
     }
@@ -36,11 +21,7 @@ const AuthPage: FC = () => {
 
   if (mode === "completeProfile") {
     return (
-      <AuthContainer
-        title={title}
-        subtitle={subtitle}
-        redirectLink={[redirectLink]}
-      >
+      <AuthContainer>
         <CompleteProfileForm />
       </AuthContainer>
     );
@@ -48,23 +29,23 @@ const AuthPage: FC = () => {
 
   if (mode === "forgotPassword") {
     return (
-      <AuthContainer
-        title={title}
-        subtitle={subtitle}
-        redirectLink={[redirectLink]}
-      >
+      <AuthContainer>
         <ForgotPasswordForm />
       </AuthContainer>
     );
   }
 
+  if (mode === "signup") {
+    return (
+      <AuthContainer>
+        <SignUpForm />
+      </AuthContainer>
+    );
+  }
+
   return (
-    <AuthContainer
-      title={title}
-      subtitle={subtitle}
-      redirectLink={[redirectLink, loginRedirectLink]}
-    >
-      <AuthForm />
+    <AuthContainer>
+      <LoginForm />
     </AuthContainer>
   );
 };

@@ -6,8 +6,5 @@ export type RedirectLink = {
 };
 
 export type AuthContainerProps = PropsWithChildren & {
-  title: string;
-  subtitle: string;
-  redirectLink?: RedirectLink[];
   decorationIcon?: ReactNode;
 };

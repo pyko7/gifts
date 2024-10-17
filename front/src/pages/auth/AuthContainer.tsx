@@ -3,14 +3,14 @@ import { Box, Flex, Text } from "@chakra-ui/react";
 import { AuthContainerProps } from "./_props";
 import sxs from "./_styles";
 import { Link } from "react-router-dom";
+import { useAuthFormContext } from "../../context/form/authForm";
 
 const AuthContainer: FC<AuthContainerProps> = ({
   children,
-  title,
-  subtitle,
   decorationIcon = undefined,
-  redirectLink = [],
 }) => {
+  const { title, subtitle, redirectLinks } = useAuthFormContext();
+
   return (
     <Flex alignItems="center" justifyContent="center" sx={sxs.container}>
       <Flex
@@ -41,7 +41,7 @@ const AuthContainer: FC<AuthContainerProps> = ({
           gap="0.75rem"
           sx={sxs.textContainer}
         >
-          {redirectLink.map((redirect, idx) => (
+          {redirectLinks.map((redirect, idx) => (
             <Link key={idx} to={`/${redirect.url}`}>
               {redirect.label}
             </Link>
