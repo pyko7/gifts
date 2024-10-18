@@ -8,7 +8,7 @@ import Email from "../fields/Email";
 import Password from "../fields/password/Password";
 import text from "../../../../utils/text.json";
 import sxs from "../_styles";
-import { useAuthFormContext } from "../../../../context/form/authForm";
+import { useAuthFormContext } from "@context/form/authForm";
 
 const SignUpForm: FC = () => {
   const { isSuccess, setIsSuccess } = useAuthFormContext();

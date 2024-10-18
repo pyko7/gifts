@@ -6,10 +6,13 @@ import path from "path";
 export default defineConfig({
   resolve: {
     alias: {
+      src: path.resolve(__dirname, "./src"),
       "@": path.resolve(__dirname, "."),
       "@components": path.resolve(__dirname, "./src/components"),
       "@pages": path.resolve(__dirname, "./src/pages"),
       "@utils": path.resolve(__dirname, "./src/utils"),
+      "@context": path.resolve(__dirname, "./src/context"),
+      "@store": path.resolve(__dirname, "./src/store"),
     },
   },
   plugins: [react()],

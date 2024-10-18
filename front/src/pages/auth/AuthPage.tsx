@@ -2,7 +2,7 @@ import { FC, useEffect } from "react";
 import CompleteProfileForm from "@components/features/form/completeProfileForm/CompleteProfileForm";
 import ForgotPasswordForm from "@components/features/form/forgotPasswordForm/ForgotPasswordForm";
 import AuthContainer from "./AuthContainer";
-import { useAuthFormContext } from "../../context/form/authForm";
+import { useAuthFormContext } from "@context/form/authForm";
 import { useLocation } from "react-router-dom";
 import { AuthPageModeEnum } from "src/types/_props";
 import SignUpForm from "@components/features/form/authForm/SignUpForm";

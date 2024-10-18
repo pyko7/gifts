@@ -3,7 +3,7 @@ import { Box, Flex, Text } from "@chakra-ui/react";
 import { AuthContainerProps } from "./_props";
 import sxs from "./_styles";
 import { Link } from "react-router-dom";
-import { useAuthFormContext } from "../../context/form/authForm";
+import { useAuthFormContext } from "@context/form/authForm";
 
 const AuthContainer: FC<AuthContainerProps> = ({
   children,

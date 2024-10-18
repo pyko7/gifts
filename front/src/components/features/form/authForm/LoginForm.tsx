@@ -9,10 +9,11 @@ import Password from "../fields/password/Password";
 import text from "../../../../utils/text.json";
 import sxs from "../_styles";
 import { useNavigate } from "react-router-dom";
+import useAuthStore from "@store/auth";
 
 const LoginForm: FC = () => {
   const navigate = useNavigate();
-
+  const { login: loginStore } = useAuthStore();
   const buttonName = text.auth.login.button;
   const apiInvalidCredentialsError = text.api.error.login.invalidCredentials;
   const invalidCredentialsErrorMessage =
@@ -28,6 +29,7 @@ const LoginForm: FC = () => {
     async onSuccess(data) {
       localStorage.setItem("token", JSON.stringify(data.token));
       localStorage.setItem("userId", JSON.stringify(data.userId));
+      loginStore({ username: data.username });
       navigate("/");
     },
     onError(error) {

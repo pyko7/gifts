@@ -1,5 +1,5 @@
+import { AuthFormProvider } from "@context/form/authForm";
 import AuthPage from "@pages/auth/AuthPage";
-import { AuthFormProvider } from "../context/form/authForm";
 
 export const authRouter = [
   {
