@@ -1,4 +1,4 @@
 import { createBrowserRouter } from "react-router-dom";
-import { authRouter } from "./authRouter";
+import { authRouter, mainRouter } from "./index";
 
-export const router = createBrowserRouter([...authRouter]);
+export const router = createBrowserRouter([...authRouter, ...mainRouter]);
