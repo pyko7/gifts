@@ -31,6 +31,18 @@ const colors = {
 export const theme = extendTheme({
   colors,
   components: {
+    Drawer: {
+      baseStyle: {
+        dialog: {
+          bg: "main.900",
+          color: "main.200",
+        },
+        // Customize header styles
+        header: {},
+        // Customize footer styles
+        footer: {},
+      },
+    },
     Input: {
       baseStyle: {
         field: {
