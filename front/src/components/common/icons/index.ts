@@ -7,3 +7,4 @@ export { default as FriendsIcon } from "./FriendsIcon";
 export { default as UserIcon } from "./UserIcon";
 export { default as QRIcon } from "./QRIcon";
 export { default as ArrowRightStartOnRectangleIcon } from "./ArrowRightStartOnRectangleIcon";
+export { default as Bars3Icon } from "./Bars3Icon";

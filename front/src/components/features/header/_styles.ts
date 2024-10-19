@@ -7,6 +7,6 @@ export default makeSx({
       base: "1rem",
       lg: 0,
     },
-    bgColor: "red",
+    borderBottom: (theme) => `1px solid ${theme.colors.main["700"]}`,
   },
 });
