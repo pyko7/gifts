@@ -2,3 +2,8 @@ export { default as EyeIcon } from "./EyeIcon";
 export { default as EyeSlashIcon } from "./EyeSlashIcon";
 export { default as CloseIcon } from "./CloseIcon";
 export { default as BellIcon } from "./BellIcon";
+export { default as HomeIcon } from "./HomeIcon";
+export { default as FriendsIcon } from "./FriendsIcon";
+export { default as UserIcon } from "./UserIcon";
+export { default as QRIcon } from "./QRIcon";
+export { default as ArrowRightStartOnRectangleIcon } from "./ArrowRightStartOnRectangleIcon";

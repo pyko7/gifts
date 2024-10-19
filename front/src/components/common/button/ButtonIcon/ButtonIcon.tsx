@@ -3,9 +3,14 @@ import { FC } from "react";
 import { ButtonIconProps } from "./_types";
 import sxs from "./_styles";
 
-const ButtonIcon: FC<ButtonIconProps> = ({ CustomIcon, ...rest }) => {
+const ButtonIcon: FC<ButtonIconProps> = ({
+  CustomIcon,
+  variant = "ghost",
+  sx,
+  ...rest
+}) => {
   return (
-    <Button variant="ghost" sx={sxs.button} {...rest}>
+    <Button variant={variant} sx={{ ...sxs.button, ...sx }} {...rest}>
       <Icon as={CustomIcon} />
     </Button>
   );
