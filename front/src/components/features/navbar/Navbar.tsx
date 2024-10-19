@@ -1,6 +1,6 @@
-import { BellIcon } from "@chakra-ui/icons";
 import { Button, Flex } from "@chakra-ui/react";
 import ButtonIcon from "@components/common/button/buttonIcon/ButtonIcon";
+import { BellIcon } from "@components/common/icons";
 import { FC } from "react";
 import { Link } from "react-router-dom";
 

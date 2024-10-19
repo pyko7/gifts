@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { CloseIcon } from "@chakra-ui/icons";
+import { CloseIcon } from "@components/common/icons";
 import ButtonIcon from "@components/common/button/buttonIcon/ButtonIcon";
 import ErrorMessage from "@components/common/errorMessage/ErrorMessage";
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/react";

@@ -5,16 +5,17 @@ export default makeSx({
     width: "1rem",
     height: "1rem",
     padding: 0,
+    color: "inherit",
+    "& > svg": {
+      width: "1.25rem",
+      height: "1.25rem",
+      color: (theme) => theme.colors.main[500],
+      "&:hover": {
+        color: (theme) => theme.colors.main[300],
+      },
+    },
     "&:hover": {
       backgroundColor: "transparent ",
-    },
-  },
-  icon: {
-    width: "100%",
-    height: "100%",
-    color: (theme) => theme.colors.main[500],
-    "&:hover": {
-      color: (theme) => theme.colors.main[300],
     },
   },
 });

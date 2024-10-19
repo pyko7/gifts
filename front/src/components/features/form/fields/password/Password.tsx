@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/react";
-import { CloseIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { EyeIcon, EyeSlashIcon, CloseIcon } from "@components/common/icons";
 import ButtonIcon from "@components/common/button/buttonIcon/ButtonIcon";
 import ErrorMessage from "@components/common/errorMessage/ErrorMessage";
 import { isPasswordValid } from "@utils/validation";
@@ -43,12 +43,12 @@ const Password: FC<PasswordProps> = ({
           <InputRightElement mr={field.value ? 8 : 0}>
             {watched[field.name] === "password" ? (
               <ButtonIcon
-                CustomIcon={ViewIcon}
+                CustomIcon={EyeIcon}
                 onClick={() => setValue(`${field.name}InputMode`, "text")}
               />
             ) : (
               <ButtonIcon
-                CustomIcon={ViewOffIcon}
+                CustomIcon={EyeSlashIcon}
                 onClick={() => setValue(`${field.name}InputMode`, "password")}
               />
             )}

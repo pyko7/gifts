@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/react";
-import { CloseIcon } from "@chakra-ui/icons";
+import { CloseIcon } from "@components/common/icons";
 import { isNameValid } from "@utils/validation";
 import { CompleteProfileUseFormProps } from "../completeProfileForm/_props";
 import ButtonIcon from "@components/common/button/buttonIcon/ButtonIcon";
