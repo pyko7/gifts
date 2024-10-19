@@ -10,6 +10,7 @@ import text from "../../../../utils/text.json";
 import sxs from "../_styles";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "@store/auth";
+import { LoginParams } from "@store/_types";
 
 const LoginForm: FC = () => {
   const navigate = useNavigate();
@@ -27,9 +28,15 @@ const LoginForm: FC = () => {
   const mutation = useMutation({
     mutationFn: login,
     async onSuccess(data) {
-      localStorage.setItem("token", JSON.stringify(data.token));
-      localStorage.setItem("userId", JSON.stringify(data.userId));
-      loginStore({ username: data.username });
+      const user = {
+        username: data?.username,
+        userId: data.userId,
+      };
+      const loginData: LoginParams = {
+        token: data.token,
+        user,
+      };
+      loginStore(loginData);
       navigate("/");
     },
     onError(error) {

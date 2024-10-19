@@ -1,29 +1,31 @@
 import { create } from "zustand";
-
-type UserStore = {
-  username: string;
-};
-
-type AuthState = {
-  user: UserStore | null;
-  isAuthenticated: boolean;
-  login: (userData: UserStore) => void;
-  logout: () => void;
-};
+import { AuthState, LoginParams } from "./_types";
 
 const useAuthStore = create<AuthState>((set) => ({
+  token: localStorage.getItem("token"),
   user: null,
-  isAuthenticated: false,
-  login: (userData) =>
-    set({
-      user: userData,
+  isAuthenticated: !!localStorage.getItem("token"),
+
+  login: (data: LoginParams) => {
+    if (!data.token) return;
+    localStorage.setItem("token", JSON.stringify(data.token));
+    localStorage.setItem("userId", JSON.stringify(data.user?.userId));
+    set(() => ({
+      user: data.user,
+      token: data.token,
       isAuthenticated: true,
-    }),
-  logout: () =>
-    set({
+    }));
+  },
+
+  logout: () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    set(() => ({
+      token: null,
       user: null,
       isAuthenticated: false,
-    }),
+    }));
+  },
 }));
 
 export default useAuthStore;
