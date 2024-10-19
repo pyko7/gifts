@@ -10,7 +10,7 @@ import text from "../../../../utils/text.json";
 import sxs from "../_styles";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "@store/auth";
-import { LoginParams } from "@store/_types";
+import { LoginParams } from "@store/_props";
 
 const LoginForm: FC = () => {
   const navigate = useNavigate();

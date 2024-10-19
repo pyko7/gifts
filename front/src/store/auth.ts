@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { AuthState, LoginParams } from "./_types";
+import { AuthState, LoginParams } from "./_props";
 
 const useAuthStore = create<AuthState>((set) => ({
   token: localStorage.getItem("token"),

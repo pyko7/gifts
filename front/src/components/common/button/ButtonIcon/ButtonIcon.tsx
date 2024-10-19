@@ -1,6 +1,6 @@
 import { Button, Icon } from "@chakra-ui/react";
 import { FC, useMemo } from "react";
-import { ButtonIconProps } from "./_types";
+import { ButtonIconProps } from "./_props";
 import sxs from "./_styles";
 
 const ButtonIcon: FC<ButtonIconProps> = ({
