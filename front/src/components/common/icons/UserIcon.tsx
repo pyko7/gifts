@@ -1,7 +1,6 @@
 import { FC } from "react";
 
-const UserIcon: FC = () => {
-  return (
+const UserIcon: FC = () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
@@ -16,6 +15,5 @@ const UserIcon: FC = () => {
       />
     </svg>
   );
-};
 
 export default UserIcon;

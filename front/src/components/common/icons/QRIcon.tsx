@@ -1,7 +1,6 @@
 import { FC } from "react";
 
-const QRIcon: FC = () => {
-  return (
+const QRIcon: FC = () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
@@ -21,6 +20,5 @@ const QRIcon: FC = () => {
       />
     </svg>
   );
-};
 
 export default QRIcon;

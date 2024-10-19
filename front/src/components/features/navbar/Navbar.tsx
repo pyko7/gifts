@@ -4,8 +4,7 @@ import { BellIcon } from "@components/common/icons";
 import { FC } from "react";
 import { Link } from "react-router-dom";
 
-const Navbar: FC = () => {
-  return (
+const Navbar: FC = () => (
     <Flex>
       <Link to="/">Accueil</Link>
       <Link to="/">Amis</Link>
@@ -20,6 +19,5 @@ const Navbar: FC = () => {
       </Flex>
     </Flex>
   );
-};
 
 export default Navbar;

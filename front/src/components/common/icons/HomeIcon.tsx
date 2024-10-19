@@ -1,7 +1,6 @@
 import { FC } from "react";
 
-const HomeIcon: FC = () => {
-  return (
+const HomeIcon: FC = () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
@@ -16,6 +15,5 @@ const HomeIcon: FC = () => {
       />
     </svg>
   );
-};
 
 export default HomeIcon;

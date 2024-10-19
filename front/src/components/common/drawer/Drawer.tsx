@@ -14,17 +14,15 @@ const CommonDrawer: FC<PropsWithChildren<CommonDrawerProps>> = ({
   withCloseButton = true,
   title = undefined,
   children,
-}) => {
-  return (
-    <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
-      <DrawerOverlay />
-      <DrawerContent>
-        <DrawerHeader>{title}</DrawerHeader>
-        {withCloseButton && <DrawerCloseButton />}
-        {children}
-      </DrawerContent>
-    </Drawer>
-  );
-};
+}) => (
+  <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
+    <DrawerOverlay />
+    <DrawerContent>
+      <DrawerHeader>{title}</DrawerHeader>
+      {withCloseButton && <DrawerCloseButton />}
+      {children}
+    </DrawerContent>
+  </Drawer>
+);
 
 export default CommonDrawer;

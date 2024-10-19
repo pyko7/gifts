@@ -1,7 +1,6 @@
 import { FC } from "react";
 
-const FriendsIcon: FC = () => {
-  return (
+const FriendsIcon: FC = () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
@@ -16,6 +15,5 @@ const FriendsIcon: FC = () => {
       />
     </svg>
   );
-};
 
 export default FriendsIcon;

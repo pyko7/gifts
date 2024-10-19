@@ -1,7 +1,6 @@
 import { FC } from "react";
 
-const EyeIcon: FC = () => {
-  return (
+const EyeIcon: FC = () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
@@ -21,6 +20,5 @@ const EyeIcon: FC = () => {
       />
     </svg>
   );
-};
 
 export default EyeIcon;

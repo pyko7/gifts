@@ -3,13 +3,11 @@ import { Box } from "@chakra-ui/react";
 import Header from "@components/features/header/Header";
 import sxs from "./_styles";
 
-const Main: FC<PropsWithChildren> = ({ children }) => {
-  return (
+const Main: FC<PropsWithChildren> = ({ children }) => (
     <Box sx={sxs.container}>
       <Header />
       {children}
     </Box>
   );
-};
 
 export default Main;
