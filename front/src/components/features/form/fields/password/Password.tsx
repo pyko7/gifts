@@ -43,11 +43,15 @@ const Password: FC<PasswordProps> = ({
           <InputRightElement mr={field.value ? 8 : 0}>
             {watched[field.name] === "password" ? (
               <ButtonIcon
+                buttonSize="sm"
+                colorVariant="dark"
                 CustomIcon={EyeIcon}
                 onClick={() => setValue(`${field.name}InputMode`, "text")}
               />
             ) : (
               <ButtonIcon
+                buttonSize="sm"
+                colorVariant="dark"
                 CustomIcon={EyeSlashIcon}
                 onClick={() => setValue(`${field.name}InputMode`, "password")}
               />
@@ -55,7 +59,12 @@ const Password: FC<PasswordProps> = ({
           </InputRightElement>
           {field.value?.length > 0 && (
             <InputRightElement>
-              <ButtonIcon CustomIcon={CloseIcon} onClick={handleClear} />
+              <ButtonIcon
+                buttonSize="sm"
+                colorVariant="dark"
+                CustomIcon={CloseIcon}
+                onClick={handleClear}
+              />
             </InputRightElement>
           )}
           {errors?.[field.name]?.message && (

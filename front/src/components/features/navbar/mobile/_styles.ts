@@ -15,9 +15,4 @@ export default makeSx({
       height: "100%",
     },
   },
-  drawerIconButton: {
-    "& > svg": {
-      color: (theme) => theme.colors.main[200],
-    },
-  },
 });

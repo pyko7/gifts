@@ -1,18 +1,12 @@
 import makeSx from "../../../../utils/makeSx";
 
 export default makeSx({
-  button: {
-    width: "1rem",
-    height: "1rem",
+  buttonBase: {
     padding: 0,
     color: "inherit",
-    "& > svg": {
-      width: "1.25rem",
-      height: "1.25rem",
-      color: (theme) => theme.colors.main[500],
-      "&:hover": {
-        color: (theme) => theme.colors.main[300],
-      },
+    "& > *": {
+      width: "100%",
+      height: "100%",
     },
     "&:hover": {
       backgroundColor: "transparent ",

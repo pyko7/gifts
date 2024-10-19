@@ -4,7 +4,6 @@ import CommonDrawer from "@components/common/drawer/Drawer";
 import MobileNavbarContent from "./MobileNavbarContent";
 import ButtonIcon from "@components/common/button/buttonIcon/ButtonIcon";
 import { QRIcon } from "@components/common/icons";
-import sxs from "./_styles";
 
 const MobileNavbar: FC = () => {
   const [isOpen, setOpen] = useState(true);
@@ -20,7 +19,6 @@ const MobileNavbar: FC = () => {
       <DrawerFooter height="5rem" justifyContent="flex-start">
         <ButtonIcon
           CustomIcon={QRIcon}
-          sx={sxs.drawerIconButton}
           onClick={() => console.log("display share modal")}
         />
       </DrawerFooter>

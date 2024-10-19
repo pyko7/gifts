@@ -33,7 +33,12 @@ const Name: FC = () => {
           />
           {field.value?.length > 0 && (
             <InputRightElement>
-              <ButtonIcon CustomIcon={CloseIcon} onClick={handleClear} />
+              <ButtonIcon
+                buttonSize="sm"
+                colorVariant="dark"
+                CustomIcon={CloseIcon}
+                onClick={handleClear}
+              />
             </InputRightElement>
           )}
           {errors.name?.message && (

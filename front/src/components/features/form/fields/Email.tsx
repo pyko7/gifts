@@ -33,7 +33,12 @@ const Email: FC = () => {
           />
           {field.value?.length > 0 && (
             <InputRightElement>
-              <ButtonIcon CustomIcon={CloseIcon} onClick={handleClick} />
+              <ButtonIcon
+                buttonSize="sm"
+                colorVariant="dark"
+                CustomIcon={CloseIcon}
+                onClick={handleClick}
+              />
             </InputRightElement>
           )}
           {errors.email?.message && (
