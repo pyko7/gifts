@@ -1,23 +1,19 @@
-import { Button, Flex } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import ButtonIcon from "@components/common/button/buttonIcon/ButtonIcon";
-import { BellIcon } from "@components/common/icons";
 import { FC } from "react";
-import { Link } from "react-router-dom";
+import { desktopNavbarItems } from "./_utils";
+import { generateUniqueId } from "@utils/_utils";
 
 const Navbar: FC = () => (
-    <Flex>
-      <Link to="/">Accueil</Link>
-      <Link to="/">Amis</Link>
-      <Button>Ma carte</Button>
-      <Flex>
-        <Flex>
-          <ButtonIcon CustomIcon={BellIcon} />
-        </Flex>
-        <Flex>
-          <ButtonIcon CustomIcon={BellIcon} />
-        </Flex>
-      </Flex>
-    </Flex>
-  );
+  <Flex flex={1} justifyContent="flex-end" gap="1rem">
+    {desktopNavbarItems.map((item) => (
+      <ButtonIcon
+        key={generateUniqueId()}
+        CustomIcon={item.icon}
+        onClick={item.action}
+      />
+    ))}
+  </Flex>
+);
 
 export default Navbar;

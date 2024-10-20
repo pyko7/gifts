@@ -5,7 +5,7 @@ export default makeSx({
     width: "100%",
     padding: {
       base: "1rem",
-      lg: 0,
+      lg: "1rem 3rem",
     },
     borderBottom: (theme) => `1px solid ${theme.colors.main["700"]}`,
   },

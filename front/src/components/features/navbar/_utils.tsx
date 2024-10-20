@@ -1,10 +1,12 @@
 import {
   ArrowRightStartOnRectangleIcon,
+  BellIcon,
   FriendsIcon,
   HomeIcon,
+  QRIcon,
   UserIcon,
 } from "@components/common/icons";
-import { NavbarLink } from "./_props";
+import { NavbarItem, NavbarLink } from "./_props";
 
 const profileLink: NavbarLink = {
   title: "Profil",
@@ -16,6 +18,19 @@ const logOutLink: NavbarLink = {
   title: "Se déconnecter",
   url: "/login",
   icon: <ArrowRightStartOnRectangleIcon />,
+};
+
+const qrItem: NavbarItem = {
+  icon: QRIcon,
+  action: () => console.log("display share profile modal"),
+};
+const bellItem: NavbarItem = {
+  icon: BellIcon,
+  action: () => console.log("display notifications menu"),
+};
+const profileItem: NavbarItem = {
+  icon: UserIcon,
+  action: () => console.log("display profile menu"),
 };
 
 export const navbarLinksBase: NavbarLink[] = [
@@ -36,3 +51,5 @@ export const mobileNavbarLinks: NavbarLink[] = [
   profileLink,
   logOutLink,
 ];
+
+export const desktopNavbarItems: NavbarItem[] = [qrItem, bellItem, profileItem];

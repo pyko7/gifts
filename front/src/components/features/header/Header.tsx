@@ -14,7 +14,9 @@ const Header: FC = () => {
   return (
     <>
       <Flex alignItems="center" justifyContent="space-between" sx={sxs.header}>
-        <Link to="/">Gifts</Link>
+        <Flex flex={1}>
+          <Link to="/">Gifts</Link>
+        </Flex>
         {!isLargerThanTablet ? (
           <ButtonIcon
             CustomIcon={Bars3Icon}
