@@ -11,9 +11,10 @@ import {
 import sxs from "./_styles";
 import { SparklesIcon } from "@components/common/icons";
 import { GiftCardProps } from "./_props";
+import { Link } from "react-router-dom";
 
 const GiftCard: FC<GiftCardProps> = ({ gift }) => (
-  <Card maxW="sm" variant="outline" sx={sxs.card}>
+  <Card as={Link} to="/" variant="outline" sx={sxs.card}>
     <CardBody sx={sxs.cardBody}>
       <Image
         src={gift.imageUrl}

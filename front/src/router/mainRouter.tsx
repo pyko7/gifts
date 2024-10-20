@@ -1,5 +1,6 @@
 import Main from "@components/common/layout/main/Main";
 import ProtectedRoute from "../components/features/protectedRoute/ProtectedRoute";
+import HomePage from "@pages/home/HomePage";
 
 export const mainRouter = [
   {
@@ -7,7 +8,7 @@ export const mainRouter = [
     element: (
       <ProtectedRoute>
         <Main>
-          <span>welcome to /</span>
+          <HomePage />
         </Main>
       </ProtectedRoute>
     ),

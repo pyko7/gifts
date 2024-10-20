@@ -2,10 +2,17 @@ import makeSx from "@utils/makeSx";
 
 export default makeSx({
   card: {
-    margin: "2rem",
+    maxWidth: (theme) => ({
+      base: theme.breakpoints["sm"],
+      lg: "300px",
+    }),
     backgroundColor: "transparent",
     border: (theme) => `1px solid ${theme.colors.main["700"]}`,
     borderRadius: (theme) => theme.radii["xl"],
+    "&:hover": {
+      backdropFilter: "brightness(140%)",
+      borderColor: (theme) => theme.colors.main["600"],
+    },
   },
   cardImage: {
     width: "100%",
