@@ -3,12 +3,10 @@ import CommonLayout from "./components/common/layout/Layout";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./router/router";
 
-const App: FC = () => {
-  return (
-    <CommonLayout>
-      <RouterProvider router={router} />
-    </CommonLayout>
-  );
-};
+const App: FC = () => (
+  <CommonLayout>
+    <RouterProvider router={router} />
+  </CommonLayout>
+);
 
 export default App;
