@@ -20,19 +20,6 @@ const logOutLink: NavbarLink = {
   icon: <ArrowRightStartOnRectangleIcon />,
 };
 
-const qrItem: NavbarItem = {
-  icon: QRIcon,
-  action: () => console.log("display share profile modal"),
-};
-const bellItem: NavbarItem = {
-  icon: BellIcon,
-  action: () => console.log("display notifications menu"),
-};
-const profileItem: NavbarItem = {
-  icon: UserIcon,
-  action: () => console.log("display profile menu"),
-};
-
 export const navbarLinksBase: NavbarLink[] = [
   {
     title: "Accueil",
@@ -45,6 +32,33 @@ export const navbarLinksBase: NavbarLink[] = [
     icon: <FriendsIcon />,
   },
 ];
+
+const profileList: NavbarLink[] = [
+  profileLink,
+  {
+    title: "Amis",
+    url: "/",
+    icon: <FriendsIcon />,
+  },
+  {
+    title: "Se déconnecter",
+    url: "/",
+    icon: <ArrowRightStartOnRectangleIcon />,
+  },
+];
+
+const qrItem: NavbarItem = {
+  icon: QRIcon,
+  action: () => console.log("display qr code"),
+};
+const bellItem: NavbarItem = {
+  icon: BellIcon,
+  list: [],
+};
+const profileItem: NavbarItem = {
+  icon: UserIcon,
+  list: profileList,
+};
 
 export const mobileNavbarLinks: NavbarLink[] = [
   ...navbarLinksBase,

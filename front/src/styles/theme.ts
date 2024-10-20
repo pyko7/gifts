@@ -43,6 +43,27 @@ export const theme = extendTheme({
         footer: {},
       },
     },
+    Menu: {
+      baseStyle: {
+        list: {
+          bg: "main.900",
+          color: "white",
+          border: "none",
+          padding: "0.5rem",
+        },
+        item: {
+          bg: "transparent",
+          color: "main.200",
+          borderRadius: "0.35rem",
+          _hover: {
+            bg: "main.800",
+          },
+          _focus: {
+            bg: "main.800",
+          },
+        },
+      },
+    },
     Input: {
       baseStyle: {
         field: {

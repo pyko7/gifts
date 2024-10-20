@@ -1,13 +1,14 @@
 import { As } from "@chakra-ui/react";
-import { ReactNode } from "react";
+import { ReactElement, ReactNode } from "react";
 
 export type NavbarLink = {
   title: string;
   url: string;
-  icon?: ReactNode;
+  icon?: ReactElement<ReactNode>;
 };
 
 export type NavbarItem = {
   icon: As;
-  action: () => void;
+  list?: NavbarLink[];
+  action?: () => void;
 };

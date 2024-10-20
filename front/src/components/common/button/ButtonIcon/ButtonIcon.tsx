@@ -9,6 +9,7 @@ const ButtonIcon: FC<ButtonIconProps> = ({
   colorVariant = "light",
   buttonSize = "md",
   sx,
+  ref,
   ...rest
 }) => {
   const lightColorVariant = useMemo(
@@ -45,6 +46,7 @@ const ButtonIcon: FC<ButtonIconProps> = ({
         ...sx,
       }}
       {...rest}
+      ref={ref}
     >
       <Icon as={CustomIcon} />
     </Button>

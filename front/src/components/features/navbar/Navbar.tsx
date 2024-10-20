@@ -1,16 +1,17 @@
-import { Flex } from "@chakra-ui/react";
-import ButtonIcon from "@components/common/button/buttonIcon/ButtonIcon";
 import { FC } from "react";
+import { Flex } from "@chakra-ui/react";
+import NavbarItem from "./navbarItems/NavbarItem";
 import { desktopNavbarItems } from "./_utils";
 import { generateUniqueId } from "@utils/_utils";
 
 const Navbar: FC = () => (
   <Flex flex={1} justifyContent="flex-end" gap="1rem">
     {desktopNavbarItems.map((item) => (
-      <ButtonIcon
+      <NavbarItem
         key={generateUniqueId()}
-        CustomIcon={item.icon}
-        onClick={item.action}
+        icon={item.icon}
+        list={item?.list}
+        action={item?.action}
       />
     ))}
   </Flex>
