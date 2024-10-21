@@ -6,7 +6,7 @@ export default makeSx({
     minHeight: "100vh",
     position: {
       base: "absolute",
-      lg: "static",
+      md: "static",
     },
     top: 0,
     left: 0,

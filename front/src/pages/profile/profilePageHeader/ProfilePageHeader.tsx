@@ -1,11 +1,9 @@
-import { Box, Flex, MenuItem } from "@chakra-ui/react";
 import { FC } from "react";
+import { Flex } from "@chakra-ui/react";
 import sxs from "./_styles";
 import ButtonIcon from "@components/common/button/buttonIcon/ButtonIcon";
 import { ArrowLeftIcon } from "@components/common/icons";
-import CommonMenu from "@components/common/menu/Menu";
-import EllipsisVerticalIcon from "@components/common/icons/EllipsisVerticalIcon";
-import LinkSlash from "@components/common/icons/LinkSlash";
+import ProfileMenuButton from "@components/features/profile/profileMenuButton/ProfileMenuButton";
 
 const ProfilePageHeader: FC = () => (
   <Flex flex={1} justifyContent="space-between" sx={sxs.header}>
@@ -14,14 +12,7 @@ const ProfilePageHeader: FC = () => (
       CustomIcon={ArrowLeftIcon}
       onClick={() => console.log("go back")}
     />
-    <CommonMenu menuButtonIcon={EllipsisVerticalIcon}>
-      <MenuItem
-        sx={sxs.menuTextImportant}
-        icon={<Box sx={sxs.menuIconImportant}>{<LinkSlash />}</Box>}
-      >
-        Supprimer la relation
-      </MenuItem>
-    </CommonMenu>
+    <ProfileMenuButton />
   </Flex>
 );
 
