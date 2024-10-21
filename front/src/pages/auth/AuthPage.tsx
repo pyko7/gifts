@@ -7,6 +7,7 @@ import { useLocation } from "react-router-dom";
 import { AuthPageModeEnum } from "src/types/_props";
 import SignUpForm from "@components/features/form/authForm/SignUpForm";
 import LoginForm from "@components/features/form/authForm/LoginForm";
+import { kebabToCamel } from "@utils/_utils";
 
 const AuthPage: FC = () => {
   const { mode, setMode } = useAuthFormContext();
@@ -14,7 +15,8 @@ const AuthPage: FC = () => {
 
   useEffect(() => {
     if (mode !== pathname.slice(1)) {
-      const formMode = pathname.slice(1) as AuthPageModeEnum;
+      const path = pathname.slice(1);
+      const formMode = kebabToCamel(path) as AuthPageModeEnum;
       setMode(formMode);
     }
   }, [mode, pathname, setMode]);
