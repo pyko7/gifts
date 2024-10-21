@@ -1,16 +1,22 @@
-import Main from "@components/common/layout/main/Main";
-import ProtectedRoute from "../components/features/protectedRoute/ProtectedRoute";
 import HomePage from "@pages/home/HomePage";
+import ProfilePage from "@pages/profile/ProfilePage";
+import ProtectedLayout from "@components/common/layout/protectedLayout/ProtectedLayout";
 
 export const mainRouter = [
   {
     path: "/",
     element: (
-      <ProtectedRoute>
-        <Main>
-          <HomePage />
-        </Main>
-      </ProtectedRoute>
+      <ProtectedLayout>
+        <HomePage />
+      </ProtectedLayout>
+    ),
+  },
+  {
+    path: "/profile",
+    element: (
+      <ProtectedLayout>
+        <ProfilePage />
+      </ProtectedLayout>
     ),
   },
 ];

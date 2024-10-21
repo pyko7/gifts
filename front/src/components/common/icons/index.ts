@@ -9,3 +9,4 @@ export { default as QRIcon } from "./QRIcon";
 export { default as ArrowRightStartOnRectangleIcon } from "./ArrowRightStartOnRectangleIcon";
 export { default as Bars3Icon } from "./Bars3Icon";
 export { default as SparklesIcon } from "./SparklesIcon";
+export { default as ArrowLeftIcon } from "./ArrowLeftIcon";
