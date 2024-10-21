@@ -11,9 +11,12 @@ import text from "../../../../utils/text.json";
 import sxs from "../_styles";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import useAuthStore from "@store/auth";
+import { getLocalStorageItem, setLocalStorageItem } from "@utils/localStorage";
 
 const CompleteProfileForm: FC = () => {
   const buttonName = text.auth.completeProfile.button;
+  const { login, user, token } = useAuthStore();
   const navigate = useNavigate();
   const form = useForm<CompleteProfileUseFormProps>({
     defaultValues,
@@ -22,7 +25,21 @@ const CompleteProfileForm: FC = () => {
 
   const mutation = useMutation({
     mutationFn: completeProfile,
-    onSuccess(data, variables, context) {
+    onSuccess(data) {
+      const username: string = data.name;
+      const localStorageUser = getLocalStorageItem("user");
+      setLocalStorageItem("user", { ...localStorageUser, username });
+
+      if (user) {
+        login({
+          user: {
+            ...user,
+            username,
+          },
+          token,
+        });
+      }
+
       navigate("/");
     },
     onError(error, variables, context) {
@@ -31,9 +48,10 @@ const CompleteProfileForm: FC = () => {
   });
 
   const onSubmit = async (data: CompleteProfileUseFormProps) => {
+    const localStorageUser = getLocalStorageItem("user");
     const userData: SavableCompleteProfileUseFormValues = {
       name: data.name,
-      userId: JSON.parse(localStorage.getItem("userId") ?? ""),
+      userId: localStorageUser?.userId,
     };
     mutation.mutate(userData);
   };

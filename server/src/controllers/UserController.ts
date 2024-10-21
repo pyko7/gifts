@@ -63,8 +63,9 @@ class UserController {
         return c.text('[UserController - updateUser]: Invalid userId', 401)
       }
 
-      await UserService.updateUser(user, userId)
-      return c.text('User successfully updated', 200)
+      const updatedUser = await UserService.updateUser(user, userId)
+
+      return c.json(updatedUser)
     } catch (error) {
       if (error instanceof Error || error instanceof DrizzleError) {
         return c.text(error.message, 400)

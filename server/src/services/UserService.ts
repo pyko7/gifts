@@ -69,7 +69,7 @@ class UserService {
       })
 
       if (!res) {
-        throw new Error('Update failed, no user found ')
+        throw new Error('Retrieve failed, no user found ')
       }
 
       const user: Pick<User, 'name' | 'email'> = {
@@ -90,14 +90,21 @@ class UserService {
 
   static async updateUser(user: User, userId: string) {
     try {
-      const result = await db
+      // TODO: Remove any
+      const result: User[] = await db
         .update(users)
         .set({ ...user })
         .where(eq(users.id, userId))
         .returning()
+
       if (result.length === 0) {
-        throw new Error('Update failed, no user found ')
+        throw new Error('Update failed')
       }
+      const updatedUser = {
+        name: result[0].name,
+        email: result[0].email
+      }
+      return updatedUser
     } catch (error) {
       if (error instanceof Error || error instanceof DrizzleError) {
         throw new Error(`[UserService - updateUser]: ${error.message}`)

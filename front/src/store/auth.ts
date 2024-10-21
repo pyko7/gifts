@@ -1,15 +1,16 @@
 import { create } from "zustand";
 import { AuthState, LoginParams } from "./_props";
+import { getLocalStorageItem } from "@utils/localStorage";
 
 const useAuthStore = create<AuthState>((set) => ({
-  token: localStorage.getItem("token"),
-  user: null,
+  token: getLocalStorageItem("token"),
+  user: getLocalStorageItem("user"),
   isAuthenticated: !!localStorage.getItem("token"),
 
   login: (data: LoginParams) => {
     if (!data.token) return;
     localStorage.setItem("token", JSON.stringify(data.token));
-    localStorage.setItem("userId", JSON.stringify(data.user?.userId));
+    localStorage.setItem("user", JSON.stringify(data.user));
     set(() => ({
       user: data.user,
       token: data.token,
@@ -19,7 +20,7 @@ const useAuthStore = create<AuthState>((set) => ({
 
   logout: () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("userId");
+    localStorage.removeItem("user");
     set(() => ({
       token: null,
       user: null,

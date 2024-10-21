@@ -20,5 +20,5 @@ export const completeProfile = async (
   if (!res.ok) {
     throw new Error(res.statusText);
   }
-  return res;
+  return res.json();
 };
