@@ -1,6 +1,4 @@
-import { invitation } from './invitations'
-import { auth } from './auth'
-import { user } from './user'
-import { gift } from './gift'
-
-export { auth, user, gift, invitation }
+export * from './invitations'
+export * from './auth'
+export * from './user'
+export * from './gift'

@@ -62,6 +62,32 @@ class UserService {
     }
   }
 
+  static async getUserById(id: string) {
+    try {
+      const res: User | undefined = await db.query.users.findFirst({
+        where: eq(users.id, id)
+      })
+
+      if (!res) {
+        throw new Error('Update failed, no user found ')
+      }
+
+      const user: Pick<User, 'name' | 'email'> = {
+        name: res.name,
+        email: res.email
+      }
+
+      return user
+    } catch (error) {
+      if (error instanceof Error || error instanceof DrizzleError) {
+        throw new Error(`[UserService - getUserById]: ${error.message}`)
+      }
+      throw new Error(
+        '[UserService - getUserById]: An unexpected error has occurred'
+      )
+    }
+  }
+
   static async updateUser(user: User, userId: string) {
     try {
       const result = await db

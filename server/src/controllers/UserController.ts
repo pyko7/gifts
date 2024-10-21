@@ -20,6 +20,26 @@ class UserController {
       return c.text('Error while creating the user', 400)
     }
   }
+
+  getUserById = async (c: Context) => {
+    try {
+      const userId = getUserId(c)
+
+      if (!userId) {
+        return c.text('[UserController - getUserById]: Invalid userId', 401)
+      }
+
+      const user = await UserService.getUserById(userId)
+      return c.json(user, 200)
+    } catch (error) {
+      console.log(error)
+      if (error instanceof Error || error instanceof DrizzleError) {
+        return c.text(error.message, 400)
+      }
+      return c.text('Error while getting the user', 400)
+    }
+  }
+
   updateUser = async (c: Context) => {
     try {
       // eslint-disable-next-line no-undef
