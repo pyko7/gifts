@@ -32,6 +32,7 @@ const LoginForm: FC = () => {
         username: data?.username,
         userId: data.userId,
       };
+
       const loginData: LoginParams = {
         token: data.token,
         user,
