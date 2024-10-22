@@ -10,7 +10,7 @@ import { NavbarItem, NavbarLink } from "./_props";
 
 const profileLink: NavbarLink = {
   title: "Profil",
-  url: "/",
+  url: "/profile",
   icon: <UserIcon />,
 };
 

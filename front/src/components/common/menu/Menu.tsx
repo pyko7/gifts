@@ -1,11 +1,7 @@
 import { FC, PropsWithChildren } from "react";
-import { As, Menu, MenuButton, MenuList } from "@chakra-ui/react";
+import { Menu, MenuButton, MenuList } from "@chakra-ui/react";
 import { ForwardedButtonIcon } from "./MenuButtonIcon";
-
-type CommonMenuProps = {
-  menuButtonIcon?: As;
-  menuButtonText?: string;
-};
+import { CommonMenuProps } from "./_props";
 
 const CommonMenu: FC<PropsWithChildren<CommonMenuProps>> = ({
   menuButtonIcon = undefined,

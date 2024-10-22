@@ -10,6 +10,10 @@ export default makeSx({
     },
     top: 0,
     left: 0,
+    padding: {
+      base: 0,
+      md: "1rem 5rem",
+    },
     backgroundColor: (theme) => theme.colors.main["950"],
   },
 });
