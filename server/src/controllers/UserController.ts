@@ -23,7 +23,7 @@ class UserController {
 
   getUserById = async (c: Context) => {
     try {
-      const userId = getUserId(c)
+      const { userId } = c.req.param()
 
       if (!userId) {
         return c.text('[UserController - getUserById]: Invalid userId', 401)

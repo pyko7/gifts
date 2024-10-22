@@ -1,6 +1,5 @@
 import {
   createContext,
-  Dispatch,
   FC,
   PropsWithChildren,
   useContext,
@@ -10,16 +9,7 @@ import {
 import { AuthPageModeEnum } from "src/types/_props";
 import text from "@utils/text.json";
 import { RedirectLink } from "@pages/auth/_props";
-
-type AuthFormContextValues = {
-  mode: AuthPageModeEnum;
-  setMode: Dispatch<React.SetStateAction<AuthPageModeEnum>>;
-  isSuccess?: boolean;
-  setIsSuccess: Dispatch<React.SetStateAction<boolean>>;
-  title: string;
-  subtitle: string;
-  redirectLinks: RedirectLink[];
-};
+import { AuthFormContextValues } from "./_props";
 
 const defaultValues: AuthFormContextValues = {
   mode: "login",
