@@ -29,7 +29,7 @@ const LoginForm: FC = () => {
     mutationFn: login,
     async onSuccess(data) {
       const user = {
-        username: data?.username,
+        name: data?.name,
         userId: data.userId,
       };
 

@@ -26,15 +26,15 @@ const CompleteProfileForm: FC = () => {
   const mutation = useMutation({
     mutationFn: completeProfile,
     onSuccess(data) {
-      const username: string = data.name;
+      const name: string = data.name;
       const localStorageUser = getLocalStorageItem("user");
-      setLocalStorageItem("user", { ...localStorageUser, username });
+      setLocalStorageItem("user", { ...localStorageUser, name });
 
       if (user) {
         login({
           user: {
             ...user,
-            username,
+            name,
           },
           token,
         });
