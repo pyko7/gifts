@@ -1,35 +1,33 @@
 import HomePage from "@pages/home/HomePage";
 import ProfilePage from "@pages/profile/ProfilePage";
-import ProtectedLayout from "@components/common/layout/protectedLayout/ProtectedLayout";
+import AuthProvider from "@components/common/layout/authProvider/AuthProvider";
 import { ProfileProvider } from "@context/profile/ProfileContext";
 
 export const mainRouter = [
   {
     path: "/",
-    element: (
-      <ProtectedLayout>
-        <HomePage />
-      </ProtectedLayout>
-    ),
-  },
-  {
-    path: "/profile",
-    element: (
-      <ProtectedLayout>
-        <ProfileProvider>
-          <ProfilePage />
-        </ProfileProvider>
-      </ProtectedLayout>
-    ),
-  },
-  {
-    path: "/profile/:id",
-    element: (
-      <ProtectedLayout>
-        <ProfileProvider>
-          <ProfilePage />
-        </ProfileProvider>
-      </ProtectedLayout>
-    ),
+    element: <AuthProvider />,
+    children: [
+      {
+        path: "/",
+        element: <HomePage />,
+      },
+      {
+        path: "profile",
+        element: (
+          <ProfileProvider>
+            <ProfilePage />
+          </ProfileProvider>
+        ),
+      },
+      {
+        path: "profile/:id",
+        element: (
+          <ProfileProvider>
+            <ProfilePage />
+          </ProfileProvider>
+        ),
+      },
+    ],
   },
 ];
