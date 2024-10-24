@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Flex } from "@chakra-ui/react";
+import { Flex, Skeleton } from "@chakra-ui/react";
 import GiftCard from "@components/features/card/giftCard/GiftCard";
 import { generateUniqueId } from "@utils/_utils";
 import sxs from "./_styles";
@@ -8,7 +8,10 @@ const GiftCardContainer: FC = () => (
   <Flex sx={sxs.container}>
     {randomGifts.map((gift) => (
       <Flex key={generateUniqueId()} sx={sxs.innerContainer}>
-        <GiftCard gift={gift} />
+        {/* TODO UPDATE ISLOADED PROPS */}
+        <Skeleton isLoaded={true} sx={sxs.skeleton}>
+          <GiftCard gift={gift} />
+        </Skeleton>
       </Flex>
     ))}
   </Flex>

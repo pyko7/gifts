@@ -22,4 +22,7 @@ export default makeSx({
     },
     justifyContent: "center",
   },
+  skeleton: {
+    borderRadius: (theme) => theme.radii["xl"],
+  },
 });

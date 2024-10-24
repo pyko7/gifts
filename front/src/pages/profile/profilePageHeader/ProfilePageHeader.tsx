@@ -5,9 +5,12 @@ import ButtonIcon from "@components/common/button/buttonIcon/ButtonIcon";
 import { ArrowLeftIcon } from "@components/common/icons";
 import ProfileMenuButton from "@components/features/profile/profileMenuButton/ProfileMenuButton";
 import { useNavigate } from "react-router-dom";
+import { useProfileContext } from "@context/profile/ProfileContext";
 
 const ProfilePageHeader: FC = () => {
   const navigate = useNavigate();
+  const { isLoading } = useProfileContext();
+
   return (
     <Flex flex={1} justifyContent="space-between" sx={sxs.header}>
       <ButtonIcon
@@ -15,7 +18,7 @@ const ProfilePageHeader: FC = () => {
         CustomIcon={ArrowLeftIcon}
         onClick={() => navigate(-1)}
       />
-      <ProfileMenuButton />
+      {!isLoading && <ProfileMenuButton />}
     </Flex>
   );
 };
