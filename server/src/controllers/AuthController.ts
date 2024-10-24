@@ -34,7 +34,7 @@ class AuthController {
         secure: false,
         path: '/'
       })
-
+      console.log(`user ${user.id} successfully logged in`)
       return c.json({ userId: user.id, name: user.name, token })
     } catch (error) {
       if (error instanceof Error || error instanceof DrizzleError) {
