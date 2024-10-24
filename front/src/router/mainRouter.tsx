@@ -2,11 +2,13 @@ import HomePage from "@pages/home/HomePage";
 import ProfilePage from "@pages/profile/ProfilePage";
 import AuthProvider from "@components/common/layout/authProvider/AuthProvider";
 import { ProfileProvider } from "@context/profile/ProfileContext";
+import ErrorPage from "@pages/error/ErrorPage";
 
 export const mainRouter = [
   {
     path: "/",
     element: <AuthProvider />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
