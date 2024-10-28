@@ -1,4 +1,4 @@
-import { AuthFormProvider } from "@context/form/authForm";
+import { AuthFormProvider } from "@context/authForm/authForm";
 import AuthPage from "@pages/auth/AuthPage";
 import ErrorPage from "@pages/error/ErrorPage";
 

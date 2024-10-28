@@ -2,7 +2,7 @@ import { FC, useEffect } from "react";
 import CompleteProfileForm from "@components/features/form/completeProfileForm/CompleteProfileForm";
 import ForgotPasswordForm from "@components/features/form/forgotPasswordForm/ForgotPasswordForm";
 import AuthContainer from "./AuthContainer";
-import { useAuthFormContext } from "@context/form/authForm";
+import { useAuthFormContext } from "@context/authForm/authForm";
 import { useLocation } from "react-router-dom";
 import { AuthPageModeEnum } from "src/types/_props";
 import SignUpForm from "@components/features/form/authForm/SignUpForm";
@@ -23,6 +23,7 @@ const AuthPage: FC = () => {
 
   if (mode === "completeProfile") {
     return (
+      // TODO REPLACE BY FORMCONTAINER
       <AuthContainer>
         <CompleteProfileForm />
       </AuthContainer>
@@ -31,6 +32,7 @@ const AuthPage: FC = () => {
 
   if (mode === "forgotPassword") {
     return (
+      // TODO REPLACE BY FORMCONTAINER
       <AuthContainer>
         <ForgotPasswordForm />
       </AuthContainer>
@@ -39,6 +41,7 @@ const AuthPage: FC = () => {
 
   if (mode === "signup") {
     return (
+      // TODO REPLACE BY FORMCONTAINER
       <AuthContainer>
         <SignUpForm />
       </AuthContainer>
@@ -46,6 +49,7 @@ const AuthPage: FC = () => {
   }
 
   return (
+    // TODO REPLACE BY FORMCONTAINER
     <AuthContainer>
       <LoginForm />
     </AuthContainer>
