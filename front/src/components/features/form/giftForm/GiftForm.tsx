@@ -1,25 +1,38 @@
 import { FormProvider, useForm } from "react-hook-form";
-import { GiftFormProps } from "./_props";
+import { FormGiftProps, GiftFormProps, SaveFormValuesProps } from "./_props";
 import Description from "./fields/Description";
 import Name from "./fields/Name";
 import Price from "./fields/Price";
 import Url from "./fields/Url";
 import WishRate from "./fields/WishRate";
-import { defaultValues } from "./_utils";
+import { defaultValues, submitForm } from "./_utils";
 import { useMutation } from "@tanstack/react-query";
+import { Button } from "@chakra-ui/react";
+import { useGiftFormContext } from "@context/giftForm/GiftFormContext";
+import { FC } from "react";
 
-const GiftForm = () => {
+const GiftForm: FC<FormGiftProps> = ({ mode = "CREATION" }) => {
+  const fetchedDefaultValues = useGiftFormContext();
   const form = useForm<GiftFormProps>({
-    defaultValues,
+    defaultValues: mode === "EDIT" ? fetchedDefaultValues : defaultValues,
     mode: "onChange",
   });
 
-  // const mutation = useMutation({
-  //   mutationFn: () => console.log("form validated"),
-  // });
+  const mutation = useMutation({
+    mutationFn: submitForm,
+    onSuccess: () => console.log("success"),
+    onError: () => console.log("error"),
+  });
 
-  const handleSubmit = () => {
-    // submit form
+  const onSubmit = async (data: SaveFormValuesProps) => {
+    const userData: SaveFormValuesProps = {
+      name: data.name,
+      description: data.description,
+      price: data.price,
+      url: data.url,
+      wishRate: data.wishRate,
+    };
+    mutation.mutate(userData);
   };
 
   return (
@@ -29,6 +42,7 @@ const GiftForm = () => {
       <Description />
       <Price />
       <WishRate />
+      <Button onClick={() => form.handleSubmit(onSubmit)}>Submit form </Button>
     </FormProvider>
   );
 };
