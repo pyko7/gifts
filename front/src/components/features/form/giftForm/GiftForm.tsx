@@ -5,9 +5,9 @@ import Name from "./fields/Name";
 import Price from "./fields/Price";
 import Url from "./fields/Url";
 import WishRate from "./fields/WishRate";
+import Picture from "./fields/Picture";
 import { defaultValues, submitForm } from "./_utils";
 import { useMutation } from "@tanstack/react-query";
-import { Button } from "@chakra-ui/react";
 import { useGiftFormContext } from "@context/giftForm/GiftFormContext";
 import { FC } from "react";
 
@@ -42,7 +42,7 @@ const GiftForm: FC<FormGiftProps> = ({ mode = "CREATION" }) => {
       <Description />
       <Price />
       <WishRate />
-      <Button onClick={() => form.handleSubmit(onSubmit)}>Submit form </Button>
+      <Picture />
     </FormProvider>
   );
 };

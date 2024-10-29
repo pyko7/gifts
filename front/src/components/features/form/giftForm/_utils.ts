@@ -7,6 +7,7 @@ export const defaultValues: GiftFormProps = {
   description: undefined,
   price: undefined,
   wishRate: undefined,
+  picture: undefined,
 };
 
 export const submitForm = async (gift: SaveFormValuesProps) => {

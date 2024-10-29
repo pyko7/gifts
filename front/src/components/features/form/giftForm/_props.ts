@@ -6,6 +6,7 @@ export type GiftFormProps = {
   description?: string;
   price?: string;
   wishRate?: string;
+  picture?: string;
 };
 
 export type SaveFormValuesProps = GiftFormProps;

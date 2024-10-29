@@ -89,5 +89,28 @@ export const theme = extendTheme({
         variant: null,
       },
     },
+    Textarea: {
+      baseStyle: {
+        borderColor: "main.700",
+        background: "transparent",
+        borderWidth: 1,
+        _placeholder: {
+          color: "main.50",
+        },
+        _invalid: {
+          borderColor: "error.600",
+        },
+        _hover: {
+          borderColor: "main.500",
+        },
+        _focus: {
+          borderColor: "main.500",
+        },
+      },
+      defaultProps: {
+        //used to clear default style
+        variant: null,
+      },
+    },
   },
 });

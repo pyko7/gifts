@@ -13,7 +13,6 @@ const Description: FC = () => (
     }}
     render={({ field, formState: { errors } }) => (
       <InputGroup sx={sxs.inputGroup}>
-        {/* TODO: CHECK IF NEED DEFAULT STYLE */}
         <Textarea
           required
           isInvalid={Boolean(errors.name)}
