@@ -6,6 +6,7 @@ import ButtonIcon from "@components/common/button/buttonIcon/ButtonIcon";
 import ErrorMessage from "@components/common/errorMessage/ErrorMessage";
 import sxs from "../../_styles";
 import { GiftFormProps } from "../_props";
+import { isWishRateValid } from "@utils/validation";
 
 const WishRate: FC = () => {
   const { setValue } = useFormContext<GiftFormProps>();
@@ -18,13 +19,13 @@ const WishRate: FC = () => {
     <Controller
       name="wishRate"
       rules={{
-        validate: (val) => val < 6 && val > 0,
+        validate: isWishRateValid,
       }}
       render={({ field, formState: { errors } }) => (
         <InputGroup sx={sxs.inputGroup}>
           <Input
             required
-            isInvalid={Boolean(errors.name)}
+            isInvalid={Boolean(errors.wishRate)}
             type="number"
             placeholder="wishRate"
             {...field}
@@ -39,8 +40,8 @@ const WishRate: FC = () => {
               />
             </InputRightElement>
           )}
-          {errors.name?.message && (
-            <ErrorMessage message={String(errors.name?.message)} />
+          {errors.wishRate?.message && (
+            <ErrorMessage message={String(errors.wishRate?.message)} />
           )}
         </InputGroup>
       )}

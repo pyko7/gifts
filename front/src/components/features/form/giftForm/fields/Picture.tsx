@@ -9,58 +9,61 @@ import FileUpload from "@components/common/input/fileUpload/FileUpload";
 import FileUploadPreview from "@components/common/input/fieldUploadPreview/FileUploadPreview";
 
 const Picture: FC = () => {
-  const { setValue } = useFormContext<GiftFormProps>();
-  //use context instead
-  const [file, setFile] = useState<File | undefined>(undefined);
+  const { control } = useFormContext<GiftFormProps>();
   const [filePreview, setFilePreview] = useState<string | undefined>(undefined);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>, onChange: any) => {
+    if (e.target.files && e.target.files[0]) {
       const targetFile = e.target.files[0];
+
+      if (filePreview) {
+        URL.revokeObjectURL(filePreview);
+      }
+
       const previewUrl = URL.createObjectURL(targetFile);
-      setFile(targetFile);
       setFilePreview(previewUrl);
+
+      onChange(targetFile);
     }
   };
 
-  const handleClear = () => {
+  const handleClear = (onChange: any) => {
+    if (filePreview) {
+      URL.revokeObjectURL(filePreview);
+    }
     setFilePreview(undefined);
-    setValue("picture", "");
+    onChange(undefined);
   };
 
   return (
-    <>
-      <Controller
-        name="picture"
-        rules={{}}
-        render={({ field, formState: { errors } }) => (
-          <InputGroup sx={{ ...sxs.inputGroup, alignItems: "flex-start" }}>
-            {!filePreview ? (
-              <FileUpload
-                label="Ajouter une image"
-                icon={<CloudArrowUpIcon />}
-              />
-            ) : (
-              <FileUploadPreview
-                filePreview={filePreview}
-                onClear={handleClear}
-              />
-            )}
-            <Input
-              id="picture"
-              type="file"
-              accept=".jpg, .jpeg, .png"
-              {...field}
-              onChange={handleChange}
-              sx={{ display: "none" }}
+    <Controller
+      name="picture"
+      control={control}
+      render={({ field: { onChange, onBlur, ref }, formState: { errors } }) => (
+        <InputGroup sx={{ ...sxs.inputGroup, alignItems: "flex-start" }}>
+          {!filePreview ? (
+            <FileUpload label="Ajouter une image" icon={<CloudArrowUpIcon />} />
+          ) : (
+            <FileUploadPreview
+              filePreview={filePreview}
+              onClear={() => handleClear(onChange)}
             />
-            {errors.name?.message && (
-              <ErrorMessage message={String(errors.name?.message)} />
-            )}
-          </InputGroup>
-        )}
-      />
-    </>
+          )}
+          <Input
+            id="picture"
+            type="file"
+            accept=".jpg, .jpeg, .png"
+            onChange={(e) => handleChange(e, onChange)}
+            onBlur={onBlur}
+            ref={ref}
+            sx={{ display: "none" }}
+          />
+          {errors.picture?.message && (
+            <ErrorMessage message={String(errors.picture?.message)} />
+          )}
+        </InputGroup>
+      )}
+    />
   );
 };
 

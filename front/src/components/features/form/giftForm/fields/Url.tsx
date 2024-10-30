@@ -26,7 +26,7 @@ const Url: FC = () => {
         <InputGroup sx={sxs.inputGroup}>
           <Input
             required
-            isInvalid={Boolean(errors.name)}
+            isInvalid={Boolean(errors.url)}
             type="text"
             placeholder="Lien"
             {...field}
@@ -41,8 +41,8 @@ const Url: FC = () => {
               />
             </InputRightElement>
           )}
-          {errors.name?.message && (
-            <ErrorMessage message={String(errors.name?.message)} />
+          {errors.url?.message && (
+            <ErrorMessage message={String(errors.url?.message)} />
           )}
         </InputGroup>
       )}

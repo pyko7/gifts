@@ -10,9 +10,11 @@ import { defaultValues, submitForm } from "./_utils";
 import { useMutation } from "@tanstack/react-query";
 import { useGiftFormContext } from "@context/giftForm/GiftFormContext";
 import { FC } from "react";
+import { Button } from "@chakra-ui/react";
 
 const GiftForm: FC<FormGiftProps> = ({ mode = "CREATION" }) => {
   const fetchedDefaultValues = useGiftFormContext();
+
   const form = useForm<GiftFormProps>({
     defaultValues: mode === "EDIT" ? fetchedDefaultValues : defaultValues,
     mode: "onChange",
@@ -43,6 +45,7 @@ const GiftForm: FC<FormGiftProps> = ({ mode = "CREATION" }) => {
       <Price />
       <WishRate />
       <Picture />
+      <Button onClick={form.handleSubmit(onSubmit)}>Valider</Button>
     </FormProvider>
   );
 };

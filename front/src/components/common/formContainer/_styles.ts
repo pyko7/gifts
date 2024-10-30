@@ -17,10 +17,6 @@ export default makeSx({
       lg: "30rem",
     },
     height: "75%",
-    maxHeight: {
-      base: "30rem",
-      lg: "35rem",
-    },
     padding: {
       base: "3rem 1.5rem",
       lg: "3rem",

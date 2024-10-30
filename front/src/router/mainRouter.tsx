@@ -3,6 +3,7 @@ import ProfilePage from "@pages/profile/ProfilePage";
 import AuthProvider from "@components/common/layout/authProvider/AuthProvider";
 import { ProfileProvider } from "@context/profile/ProfileContext";
 import ErrorPage from "@pages/error/ErrorPage";
+import NewGiftPage from "@pages/gift/newGift/NewGiftPage";
 
 export const mainRouter = [
   {
@@ -29,6 +30,10 @@ export const mainRouter = [
             <ProfilePage />
           </ProfileProvider>
         ),
+      },
+      {
+        path: "gift/new",
+        element: <NewGiftPage />,
       },
     ],
   },

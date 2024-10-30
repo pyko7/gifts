@@ -21,4 +21,11 @@ export const isNameValid = (name: string) =>
   name && name.trim().length > 0 ? undefined : "Veuillez entrer un nom";
 
 export const isUrlValid = (url: string) =>
-  url.slice(0, 5) === "https" ? undefined : "Veuillez entrer un nom valide";
+  url.slice(0, 5) === "https" ? undefined : "Veuillez entrer un lien valide";
+
+export const isWishRateValid = (rate: string) => {
+  const rateNumber = parseInt(rate);
+  const error = "Veuillez entrer une valeur entre 1 et 5";
+  if (isNaN(rateNumber)) return error;
+  return rateNumber < 6 && rateNumber > 0 ? undefined : error;
+};

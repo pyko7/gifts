@@ -11,8 +11,7 @@ export const defaultValues: GiftFormProps = {
 };
 
 export const submitForm = async (gift: SaveFormValuesProps) => {
-  // TODO REPLACE URL
-  const res = await fetch(`${API_URL}/gift/???`, {
+  const res = await fetch(`${API_URL}/gift/create`, {
     headers: {
       "Content-Type": "application/json",
     },

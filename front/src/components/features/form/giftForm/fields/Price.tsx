@@ -20,13 +20,13 @@ const Price: FC = () => {
       name="price"
       rules={{
         required: "Le prix est manquant",
-        validate: isUrlValid,
+        minLength: 1,
       }}
       render={({ field, formState: { errors } }) => (
         <InputGroup sx={sxs.inputGroup}>
           <Input
             required
-            isInvalid={Boolean(errors.name)}
+            isInvalid={Boolean(errors.price)}
             type="text"
             placeholder="Prix"
             {...field}
@@ -41,8 +41,8 @@ const Price: FC = () => {
               />
             </InputRightElement>
           )}
-          {errors.name?.message && (
-            <ErrorMessage message={String(errors.name?.message)} />
+          {errors.price?.message && (
+            <ErrorMessage message={String(errors.price?.message)} />
           )}
         </InputGroup>
       )}

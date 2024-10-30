@@ -8,7 +8,7 @@ const FormContainer: FC<FormContainerProps> = ({
   children,
   title,
   subtitle = "",
-  buttonName = "Valider",
+  buttonName,
   redirectLinks,
   onCancel,
   onSave,
