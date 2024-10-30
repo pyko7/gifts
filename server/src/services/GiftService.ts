@@ -49,16 +49,15 @@ class GiftService {
 
   async createGift() {
     try {
-      const gift = {
-        userId: this.userId,
-        name: this.name,
-        url: this.url,
-        description: this.description,
-        price: this.price,
+      await db.insert(gifts).values({
+        name: this.name ?? '',
+        userId: this.userId ?? '',
+        url: this.url ?? '',
+        description: this.description ?? '',
+        price: this.price ?? '',
+        state: this.state,
         wishRate: this.wishRate
-      }
-
-      await db.insert(gifts).values({ ...gift })
+      })
     } catch (error) {
       if (error instanceof Error || error instanceof DrizzleError) {
         throw new Error(`[GiftService - createGift]: ${error.message}`)
