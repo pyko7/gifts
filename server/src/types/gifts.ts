@@ -9,3 +9,16 @@ export type ReserveGift = {
   reservedById: string
   state: StateEnum
 }
+export type GiftFormData = {
+  name: string
+  description: string
+  price: string
+  url: string
+  wishRate: string
+  file: File
+}
+
+export type CreateGift = Omit<
+  Gift,
+  'id' | 'state' | 'reservedById' | 'createdAt' | 'updatedAt'
+>
