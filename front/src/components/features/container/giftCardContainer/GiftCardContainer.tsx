@@ -5,14 +5,14 @@ import { generateUniqueId } from "@utils/_utils";
 import sxs from "./_styles";
 import { useQuery } from "@tanstack/react-query";
 import { useProfileContext } from "@context/profile/ProfileContext";
-import { getGiftsById } from "./_utils";
+import { getGiftsByUserId } from "./_utils";
 
 const GiftCardContainer: FC = () => {
   const { user } = useProfileContext();
 
   const { data: gifts, isLoading } = useQuery({
     queryKey: ["profileGifts", user?.id],
-    queryFn: () => getGiftsById(user?.id),
+    queryFn: () => getGiftsByUserId(user?.id),
     retry: 2,
     enabled: Boolean(user?.id),
   });
