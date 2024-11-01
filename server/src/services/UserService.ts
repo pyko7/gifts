@@ -72,7 +72,8 @@ class UserService {
         throw new Error('Retrieve failed, no user found ')
       }
 
-      const user: Pick<User, 'name' | 'email'> = {
+      const user: Pick<User, 'name' | 'email' | 'id'> = {
+        id: res.id,
         name: res.name,
         email: res.email
       }

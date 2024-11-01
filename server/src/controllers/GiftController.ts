@@ -1,8 +1,15 @@
-import { Gift, ReserveGift } from '../types/gifts'
+import {
+  CreateGift,
+  Gift,
+  GiftFormData,
+  ReserveGift,
+  WishRateEnum
+} from '../types'
 import GiftService from '../services/GiftService'
 import { getUserId } from '../utils/user/_utils'
 import { DrizzleError } from 'drizzle-orm'
 import { Context } from 'hono'
+import { uploadAndGetFileUrl } from '../utils/file/_utils'
 
 class GiftController {
   constructor() {}
@@ -11,15 +18,17 @@ class GiftController {
     try {
       const userId = c.req.param('userId')
 
-      if (!userId)
+      if (!userId || userId === 'undefined') {
         return c.text('[GiftController - getUserGifts]: Missing parameter', 400)
+      }
 
       const result = await GiftService.getUserGifts(userId)
+
       if (!result) {
         return c.text('[GiftController - getUserGifts]: No gifts found', 400)
       }
 
-      c.text('Gift successfully got', 200)
+      c.text('Gift successfully retrieved', 200)
       return c.json(result)
     } catch (error) {
       if (error instanceof Error || error instanceof DrizzleError) {
@@ -60,14 +69,23 @@ class GiftController {
   createGift = async (c: Context) => {
     try {
       const userId = getUserId(c)
-      const req = await c.req.json()
+      const body = await c.req.parseBody<GiftFormData>({ dot: true })
 
-      if (!req) throw new Error('No request provided')
+      if (!body) throw new Error('No request provided')
 
-      const computedGift: Gift = { ...req, userId }
-      const giftService = new GiftService(computedGift)
+      const imageUrl = await uploadAndGetFileUrl(body['file'])
 
-      await giftService.createGift()
+      const computedGift: CreateGift = {
+        userId: userId ?? '',
+        name: body['name'],
+        description: body['description'],
+        url: body['url'],
+        price: body['price'],
+        wishRate: body['wishRate'] as WishRateEnum,
+        imageUrl: imageUrl ?? null
+      }
+
+      await GiftService.createGift(computedGift)
 
       return c.text('Gift successfully created', 201)
     } catch (error) {

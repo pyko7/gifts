@@ -1,4 +1,10 @@
-import { Gift, ReserveGift, StateEnum, WishRateEnum } from '../types/gifts'
+import {
+  CreateGift,
+  Gift,
+  ReserveGift,
+  StateEnum,
+  WishRateEnum
+} from '../types/gifts'
 import { and, DrizzleError, eq } from 'drizzle-orm'
 import { gifts } from '../db/schemas/gift'
 import { db } from '../db/drizzle'
@@ -47,16 +53,17 @@ class GiftService {
     }
   }
 
-  async createGift() {
+  // TODO: HANDLE IF ERROR DELETE UPLOADED IMAGE
+  static async createGift(gift: CreateGift) {
     try {
       await db.insert(gifts).values({
-        name: this.name ?? '',
-        userId: this.userId ?? '',
-        url: this.url ?? '',
-        description: this.description ?? '',
-        price: this.price ?? '',
-        state: this.state,
-        wishRate: this.wishRate
+        name: gift.name,
+        userId: gift.userId,
+        url: gift.url,
+        description: gift.description,
+        price: gift.price,
+        wishRate: gift.wishRate,
+        imageUrl: gift.imageUrl
       })
     } catch (error) {
       if (error instanceof Error || error instanceof DrizzleError) {
