@@ -72,8 +72,11 @@ class GiftController {
       const body = await c.req.parseBody<GiftFormData>({ dot: true })
 
       if (!body) throw new Error('No request provided')
+      let image = null
 
-      const image = await uploadAndGetFile(body['file'])
+      if (body['file']) {
+        image = await uploadAndGetFile(body['file'])
+      }
 
       const computedGift: CreateGift = {
         userId: userId ?? '',

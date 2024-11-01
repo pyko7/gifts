@@ -3,8 +3,6 @@
 import { bucket } from '../../db/firebase'
 import { UploadAndGetFile } from './_types'
 
-const { STORAGE_PUBLIC_URL, FIREBASE_STORAGE_BUCKET } = process.env
-
 export const uploadAndGetFile = async (
   file: File
 ): Promise<UploadAndGetFile | undefined> => {
