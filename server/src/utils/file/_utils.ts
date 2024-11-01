@@ -34,11 +34,15 @@ export const uploadAndGetFile = async (
       })
     })
 
-    const publicUrl = `${STORAGE_PUBLIC_URL}/${FIREBASE_STORAGE_BUCKET}/${destination}`
+    const twoYears = new Date().setFullYear(new Date().getFullYear() + 2)
 
+    const [signedUrl] = await firebaseFile.getSignedUrl({
+      action: 'read',
+      expires: twoYears
+    })
     const uploadedFile = {
       name: fileName,
-      url: publicUrl
+      url: signedUrl
     }
     return uploadedFile
   } catch (err) {
