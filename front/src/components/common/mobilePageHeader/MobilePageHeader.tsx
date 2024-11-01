@@ -1,15 +1,12 @@
-import { FC } from "react";
 import { Flex } from "@chakra-ui/react";
-import sxs from "./_styles";
 import ButtonIcon from "@components/common/button/buttonIcon/ButtonIcon";
 import { ArrowLeftIcon } from "@components/common/icons";
-import ProfileMenuButton from "@components/features/profile/profileMenuButton/ProfileMenuButton";
+import { FC, PropsWithChildren } from "react";
 import { useNavigate } from "react-router-dom";
-import { useProfileContext } from "@context/profile/ProfileContext";
+import sxs from "./_styles";
 
-const ProfilePageHeader: FC = () => {
+const MobilePageHeader: FC<PropsWithChildren> = ({ children }) => {
   const navigate = useNavigate();
-  const { isLoading } = useProfileContext();
 
   return (
     <Flex flex={1} justifyContent="space-between" sx={sxs.header}>
@@ -18,9 +15,9 @@ const ProfilePageHeader: FC = () => {
         CustomIcon={ArrowLeftIcon}
         onClick={() => navigate(-1)}
       />
-      {!isLoading && <ProfileMenuButton />}
+      {children}
     </Flex>
   );
 };
 
-export default ProfilePageHeader;
+export default MobilePageHeader;
