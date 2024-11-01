@@ -1,6 +1,14 @@
 import { API_URL } from "./env";
 
-export const getUserById = async (userId: string) => {
+type GetUserById = {
+  email: string;
+  id: string;
+  name: string;
+};
+
+export const getUserById = async (
+  userId: string | null
+): Promise<GetUserById> => {
   const res = await fetch(`${API_URL}/user/${userId}`, {
     credentials: "include",
   });

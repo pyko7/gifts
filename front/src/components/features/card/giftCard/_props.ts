@@ -1,12 +1,4 @@
-type Gift = {
-  userName: string;
-  title: string;
-  wishRate: number;
-  giftUrl: string;
-  websiteName: string;
-  imageUrl: string;
-  price: string;
-};
+import { Gift } from "src/types/gift";
 
 export type GiftCardProps = {
   gift: Gift;

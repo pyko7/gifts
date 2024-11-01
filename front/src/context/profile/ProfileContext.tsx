@@ -20,9 +20,11 @@ export const ProfileProvider: FC<PropsWithChildren> = ({ children }) => {
   const navigate = useNavigate();
   const { logout } = useAuthStore();
 
-  const splitPathname = pathname.split("/");
-  const isSelf = splitPathname[1] === "profile" && splitPathname.length === 2;
-  const userId = isSelf
+  const splitPathname = pathname.split("/").filter((x) => x.length !== 0);
+
+  const isSelf = splitPathname[0] === "profile";
+
+  const userId: string | null = isSelf
     ? getLocalStorageItem("user").userId
     : pathname.split("/")[2];
 
@@ -30,6 +32,7 @@ export const ProfileProvider: FC<PropsWithChildren> = ({ children }) => {
     queryKey: ["user", userId],
     queryFn: () => getUserById(userId),
     retry: 2,
+    enabled: Boolean(userId),
   });
 
   if (isError) {

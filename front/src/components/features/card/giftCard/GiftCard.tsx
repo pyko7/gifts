@@ -13,12 +13,13 @@ import { SparklesIcon } from "@components/common/icons";
 import { GiftCardProps } from "./_props";
 import { Link } from "react-router-dom";
 
+//TODO: handle state and reserverdBy
 const GiftCard: FC<GiftCardProps> = ({ gift }) => (
-  <Card as={Link} to="/" variant="outline" sx={sxs.card}>
+  <Card as={Link} to={`/gift/${gift.id}`} variant="outline" sx={sxs.card}>
     <CardBody sx={sxs.cardBody}>
       <Image
         src={gift.imageUrl}
-        alt={gift.title}
+        alt={gift.name}
         borderRadius="lg"
         sx={sxs.cardImage}
       />
@@ -26,10 +27,10 @@ const GiftCard: FC<GiftCardProps> = ({ gift }) => (
     <CardFooter>
       <Flex flex={1} justifyContent="space-between" sx={sxs.cardFooter}>
         <Flex flexDirection="column">
-          <Text sx={sxs.cardFooterTitle}>{gift.title}</Text>
+          <Text sx={sxs.cardFooterTitle}>{gift.name}</Text>
           <Flex flexDirection="column" marginY="0.25rem" gap={0}>
             <Text sx={sxs.cardFooterSubText}>{gift.userName}</Text>
-            <Text sx={sxs.cardFooterSubText}>{gift.websiteName}</Text>
+            <Text sx={sxs.cardFooterSubText}>{gift.url}</Text>
           </Flex>
           <Text>{gift.price} €</Text>
         </Flex>

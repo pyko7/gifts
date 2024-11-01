@@ -1,5 +1,5 @@
 import { API_URL } from "@utils/env";
-import { GiftFormProps, SaveFormValuesProps } from "./_props";
+import { GiftFormProps } from "./_props";
 
 export const defaultValues: GiftFormProps = {
   name: undefined,
@@ -10,13 +10,10 @@ export const defaultValues: GiftFormProps = {
   picture: undefined,
 };
 
-export const submitForm = async (gift: SaveFormValuesProps) => {
+export const submitForm = async (gift: FormData) => {
   const res = await fetch(`${API_URL}/gift/create`, {
-    headers: {
-      "Content-Type": "application/json",
-    },
     method: "POST",
-    body: JSON.stringify(gift),
+    body: gift,
     credentials: "include",
   });
   if (!res.ok) {

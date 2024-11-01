@@ -27,14 +27,15 @@ const GiftForm: FC<FormGiftProps> = ({ mode = "CREATION" }) => {
   });
 
   const onSubmit = async (data: SaveFormValuesProps) => {
-    const userData: SaveFormValuesProps = {
-      name: data.name,
-      description: data.description,
-      price: data.price,
-      url: data.url,
-      wishRate: data.wishRate,
-    };
-    mutation.mutate(userData);
+    const formData = new FormData();
+    formData.append("file", data.picture ?? "");
+    formData.append("name", data.name ?? "");
+    formData.append("description", data.description ?? "");
+    formData.append("price", data.price ?? "");
+    formData.append("url", data.url ?? "");
+    formData.append("wishRate", data.wishRate ?? "");
+
+    mutation.mutate(formData);
   };
 
   return (
