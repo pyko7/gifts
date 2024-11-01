@@ -45,12 +45,18 @@ class GiftService {
     }
   }
 
-  static async getGiftById(giftId: string) {
+  static async getGiftById(giftId: string): Promise<Gift> {
     try {
       const result = await db.select().from(gifts).where(eq(gifts.id, giftId))
-      return result
+
+      return result[0]
     } catch (error) {
-      return error
+      if (error instanceof Error) {
+        console.error(`[GiftService - getGiftById] - ${error.message}`)
+      } else {
+        console.error('[GiftService - getGiftById] - An unknown error occurred')
+      }
+      throw new Error('[GiftService] - Failed to retrieve user')
     }
   }
 
