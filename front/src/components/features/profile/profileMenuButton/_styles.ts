@@ -1,6 +1,12 @@
 import makeSx from "@utils/makeSx";
 
 export default makeSx({
+  gitfButton: {
+    display: {
+      base: "none",
+      md: "block",
+    },
+  },
   menuTextImportant: {
     color: (theme) => theme.colors.error["600"],
   },

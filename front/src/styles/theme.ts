@@ -50,10 +50,6 @@ export const theme = extendTheme({
           opacity: "0.75 !important",
         },
         dialog: {
-          width: "100%",
-          // keep the two properties
-          maxW: "none !important",
-          maxWidth: "none !important",
           height: "100%",
           bg: "transparent",
           color: "main.200",
@@ -67,8 +63,14 @@ export const theme = extendTheme({
         },
         closeButton: {
           position: "absolute",
-          top: "1rem",
-          right: "1rem",
+          top: {
+            base: "1rem",
+            lg: "2rem",
+          },
+          right: {
+            base: "1rem",
+            lg: "2rem",
+          },
           zIndex: 3,
           "& > svg": {
             width: "1.25rem",
