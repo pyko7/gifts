@@ -20,6 +20,5 @@ export const submitForm = async (gift: FormData) => {
     const errorMessage = await res.text();
     throw new Error(errorMessage);
   }
-  const data = await res.json();
-  return data;
+  return;
 };

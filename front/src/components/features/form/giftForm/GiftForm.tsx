@@ -7,13 +7,14 @@ import Url from "./fields/Url";
 import WishRate from "./fields/WishRate";
 import Picture from "./fields/Picture";
 import { defaultValues, submitForm } from "./_utils";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useGiftFormContext } from "@context/giftForm/GiftFormContext";
 import { FC } from "react";
 import { Button } from "@chakra-ui/react";
 
 const GiftForm: FC<FormGiftProps> = ({ mode = "CREATION" }) => {
   const fetchedDefaultValues = useGiftFormContext();
+  const queryClient = useQueryClient();
 
   const form = useForm<GiftFormProps>({
     defaultValues: mode === "EDIT" ? fetchedDefaultValues : defaultValues,
@@ -22,7 +23,13 @@ const GiftForm: FC<FormGiftProps> = ({ mode = "CREATION" }) => {
 
   const mutation = useMutation({
     mutationFn: submitForm,
-    onSuccess: () => console.log("success"),
+    onSuccess: () => {
+      fetchedDefaultValues.onClose();
+      // maybe should be updated by setQueryData
+      queryClient.invalidateQueries({
+        queryKey: ["profileGifts"],
+      });
+    },
     onError: () => console.log("error"),
   });
 
