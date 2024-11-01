@@ -8,6 +8,7 @@ import {
 import { and, DrizzleError, eq } from 'drizzle-orm'
 import { gifts } from '../db/schemas/gift'
 import { db } from '../db/drizzle'
+import { deleteFile } from '../utils/file/_utils'
 
 class GiftService {
   id: string | null
@@ -53,7 +54,6 @@ class GiftService {
     }
   }
 
-  // TODO: HANDLE IF ERROR DELETE UPLOADED IMAGE
   static async createGift(gift: CreateGift) {
     try {
       await db.insert(gifts).values({
@@ -66,6 +66,9 @@ class GiftService {
         imageUrl: gift.imageUrl
       })
     } catch (error) {
+      if (gift.storedImageName) {
+        deleteFile(gift.storedImageName)
+      }
       if (error instanceof Error || error instanceof DrizzleError) {
         throw new Error(`[GiftService - createGift]: ${error.message}`)
       }

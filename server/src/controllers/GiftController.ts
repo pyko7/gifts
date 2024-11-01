@@ -9,7 +9,7 @@ import GiftService from '../services/GiftService'
 import { getUserId } from '../utils/user/_utils'
 import { DrizzleError } from 'drizzle-orm'
 import { Context } from 'hono'
-import { uploadAndGetFileUrl } from '../utils/file/_utils'
+import { uploadAndGetFile } from '../utils/file/_utils'
 
 class GiftController {
   constructor() {}
@@ -73,7 +73,7 @@ class GiftController {
 
       if (!body) throw new Error('No request provided')
 
-      const imageUrl = await uploadAndGetFileUrl(body['file'])
+      const image = await uploadAndGetFile(body['file'])
 
       const computedGift: CreateGift = {
         userId: userId ?? '',
@@ -82,7 +82,8 @@ class GiftController {
         url: body['url'],
         price: body['price'],
         wishRate: body['wishRate'] as WishRateEnum,
-        imageUrl: imageUrl ?? null
+        imageUrl: image?.url ?? null,
+        storedImageName: image?.name
       }
 
       await GiftService.createGift(computedGift)

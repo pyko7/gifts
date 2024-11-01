@@ -1,15 +1,16 @@
 /* eslint-disable no-undef */
 
 import { bucket } from '../../db/firebase'
+import { UploadAndGetFile } from './_types'
 
 const { STORAGE_PUBLIC_URL, FIREBASE_STORAGE_BUCKET } = process.env
 
-//TODO: FIND A WAY TO PREVENT UPLOAD IF ERROR IN DRIZZLE DB CREATION
-export const uploadAndGetFileUrl = async (
+export const uploadAndGetFile = async (
   file: File
-): Promise<string | undefined> => {
+): Promise<UploadAndGetFile | undefined> => {
   try {
-    const destination = `uploads/${Date.now()}_${file.name}`
+    const fileName = `${Date.now()}_${file.name}`
+    const destination = `uploads/${fileName}`
     const firebaseFile = bucket.file(destination)
 
     const writableStream = firebaseFile.createWriteStream({
@@ -34,8 +35,23 @@ export const uploadAndGetFileUrl = async (
     })
 
     const publicUrl = `${STORAGE_PUBLIC_URL}/${FIREBASE_STORAGE_BUCKET}/${destination}`
-    return publicUrl
+
+    const uploadedFile = {
+      name: fileName,
+      url: publicUrl
+    }
+    return uploadedFile
   } catch (err) {
     console.error('[uploadAndGetFileUrl -  Upload failed:', err)
+  }
+}
+
+export const deleteFile = async (fileUrl: string | null) => {
+  try {
+    await bucket.deleteFiles({
+      prefix: `uploads/${fileUrl}`
+    })
+  } catch (error) {
+    console.error('[deleteFile -  Deletion  failed:', error)
   }
 }

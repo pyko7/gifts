@@ -21,4 +21,6 @@ export type GiftFormData = {
 export type CreateGift = Omit<
   Gift,
   'id' | 'state' | 'reservedById' | 'createdAt' | 'updatedAt'
->
+> & {
+  storedImageName?: string
+}
