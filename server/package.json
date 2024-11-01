@@ -12,6 +12,7 @@
     "bcrypt": "^5.1.1",
     "crypto-js": "^4.2.0",
     "drizzle-orm": "^0.33.0",
+    "firebase-admin": "^12.7.0",
     "hono": "^4.5.8",
     "postgres": "^3.4.4"
   },
