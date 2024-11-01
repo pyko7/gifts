@@ -1,7 +1,14 @@
-import { createContext, FC, PropsWithChildren, useContext } from "react";
+import {
+  createContext,
+  FC,
+  PropsWithChildren,
+  useContext,
+  useState,
+} from "react";
 import { GiftFormContextDefaultValues } from "./_props";
 
 const defaultValues: GiftFormContextDefaultValues = {
+  isModalOpen: false,
   userId: undefined,
   name: undefined,
   url: undefined,
@@ -10,6 +17,8 @@ const defaultValues: GiftFormContextDefaultValues = {
   state: undefined,
   wishRate: undefined,
   reservedById: undefined,
+  openModal: () => undefined,
+  onClose: () => undefined,
 };
 
 type GiftFormProviderProps = {
@@ -23,10 +32,26 @@ export const useGiftFormContext = () => useContext(GiftFormContext);
 
 const GiftFormProvider: FC<PropsWithChildren<GiftFormProviderProps>> = ({
   children,
-}) => (
-  <GiftFormContext.Provider value={{ ...defaultValues }}>
-    {children}
-  </GiftFormContext.Provider>
-);
+}) => {
+  const [isModalOpen, setIsModalOpen] = useState(defaultValues.isModalOpen);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+    return;
+  };
+
+  const onClose = () => {
+    setIsModalOpen(false);
+    return;
+  };
+
+  return (
+    <GiftFormContext.Provider
+      value={{ ...defaultValues, isModalOpen, openModal, onClose }}
+    >
+      {children}
+    </GiftFormContext.Provider>
+  );
+};
 
 export default GiftFormProvider;

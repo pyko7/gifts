@@ -18,10 +18,6 @@ const Url: FC = () => {
   return (
     <Controller
       name="url"
-      rules={{
-        required: "L'url est manquante",
-        validate: isUrlValid,
-      }}
       render={({ field, formState: { errors } }) => (
         <InputGroup sx={sxs.inputGroup}>
           <Input

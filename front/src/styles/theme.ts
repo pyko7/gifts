@@ -43,6 +43,48 @@ export const theme = extendTheme({
         footer: {},
       },
     },
+    Modal: {
+      baseStyle: {
+        overlay: {
+          bg: "main.950",
+          opacity: "0.75 !important",
+        },
+        dialog: {
+          width: "100%",
+          // keep the two properties
+          maxW: "none !important",
+          maxWidth: "none !important",
+          height: "100%",
+          bg: "transparent",
+          color: "main.200",
+          margin: 0,
+        },
+        body: {
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+        },
+        closeButton: {
+          position: "absolute",
+          top: "1rem",
+          right: "1rem",
+          zIndex: 3,
+          "& > svg": {
+            width: "1.25rem",
+            height: "1.25rem",
+          },
+          color: "main.200",
+          _hover: {
+            color: "main.50",
+          },
+        },
+        // Customize header styles
+        header: {},
+        // Customize footer styles
+        footer: {},
+      },
+    },
     Menu: {
       baseStyle: {
         list: {
