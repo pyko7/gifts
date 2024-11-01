@@ -15,6 +15,7 @@ export const gifts = pgTable('gifts', {
   state: stateEnum('state').default('available'),
   wishRate: wishRateEnum('wishRate'),
   reservedById: uuid('reservedById'),
+  imageUrl: text('imageUrl'),
   createdAt: timestamp('created_at', {
     mode: 'date',
     precision: 3,
