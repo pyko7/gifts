@@ -1,15 +1,15 @@
 import {
   CreateGift,
-  Gift,
   GiftFormData,
   ReserveGift,
+  UpdateGift,
   WishRateEnum
 } from '../types'
 import GiftService from '../services/GiftService'
 import { getUserId } from '../utils/user/_utils'
 import { DrizzleError } from 'drizzle-orm'
 import { Context } from 'hono'
-import { uploadAndGetFile } from '../utils/file/_utils'
+import { deleteFile, getFileName, uploadAndGetFile } from '../utils/file/_utils'
 import UserService from '../services/UserService'
 
 class GiftController {
@@ -108,23 +108,54 @@ class GiftController {
 
   updateGift = async (c: Context) => {
     try {
-      const { userId, giftId } = c.req.param()
+      const { giftId } = c.req.param()
 
       if (!giftId) throw new Error('Missing parameter')
 
-      const req = await c.req.json()
+      const body = await c.req.parseBody<GiftFormData>({ dot: true })
 
-      if (!req) throw new Error('No request provided')
+      if (!body) throw new Error('No request provided')
 
-      // eslint-disable-next-line no-undef
-      const secret = process.env.COOKIE_SECRET
+      const currentGift = await GiftService.getGiftById(body['id'] ?? '')
+      let image = undefined
 
-      if (!secret) throw new Error('Missing secret')
+      // if new file
+      if (body['file']) {
+        if (currentGift?.imageUrl) {
+          const fileName = getFileName(currentGift.imageUrl ?? '')
+          if (!fileName) return
+          deleteFile(fileName)
+        }
+        image = await uploadAndGetFile(body['file'])
 
-      const computedGift: Gift = { ...req, id: giftId, userId }
-      const giftService = new GiftService(computedGift)
+        // if file has been deleted
+      } else if (!body['imageUrl']) {
+        const fileName = getFileName(currentGift.imageUrl ?? '')
+        if (!fileName) return
+        deleteFile(fileName)
 
-      await giftService.updateGift()
+        // else file hasn't changed
+      } else {
+        image = {
+          url: currentGift.imageUrl
+        }
+      }
+
+      const computedGift: UpdateGift = {
+        id: currentGift.id ?? '',
+        userId: currentGift.userId ?? '',
+        name: body['name'],
+        description: body['description'],
+        url: body['url'],
+        price: body['price'],
+        wishRate: body['wishRate'] as WishRateEnum,
+        imageUrl: image?.url ?? null,
+        storedImageName: image?.name,
+        state: currentGift.state,
+        reservedById: currentGift.reservedById
+      }
+
+      await GiftService.updateGift(computedGift)
 
       return c.text('Gift successfully updated', 200)
     } catch (error) {

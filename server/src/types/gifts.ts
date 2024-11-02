@@ -10,17 +10,23 @@ export type ReserveGift = {
   state: StateEnum
 }
 export type GiftFormData = {
+  id?: string
   name: string
   description: string
   price: string
   url: string
   wishRate: string
   file: File
+  imageUrl?: string
 }
 
 export type CreateGift = Omit<
   Gift,
   'id' | 'state' | 'reservedById' | 'createdAt' | 'updatedAt'
 > & {
+  storedImageName?: string
+}
+
+export type UpdateGift = Omit<Gift, 'createdAt' | 'updatedAt'> & {
   storedImageName?: string
 }

@@ -3,6 +3,13 @@
 import { bucket } from '../../db/firebase'
 import { UploadAndGetFile } from './_types'
 
+export const getFileName = (file: string) => {
+  const firstSplit = file.split('/')
+  return firstSplit
+    ? firstSplit[firstSplit?.length - 1].split('?')[0]
+    : undefined
+}
+
 export const uploadAndGetFile = async (
   file: File
 ): Promise<UploadAndGetFile | undefined> => {

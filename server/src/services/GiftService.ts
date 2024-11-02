@@ -3,6 +3,7 @@ import {
   Gift,
   ReserveGift,
   StateEnum,
+  UpdateGift,
   WishRateEnum
 } from '../types/gifts'
 import { and, DrizzleError, eq } from 'drizzle-orm'
@@ -82,17 +83,20 @@ class GiftService {
     }
   }
 
-  async updateGift() {
+  static async updateGift(gift: UpdateGift) {
     try {
-      const giftId = this.id ?? ''
-      const userId = this.userId ?? ''
+      const giftId = gift.id ?? ''
+      const userId = gift.userId ?? ''
+
       const updatedGift = {
-        name: this.name,
-        url: this.url,
-        description: this.description,
-        price: this.price,
-        state: this.state,
-        wishRate: this.wishRate
+        name: gift.name,
+        url: gift.url,
+        description: gift.description,
+        price: gift.price,
+        state: gift.state,
+        wishRate: gift.wishRate,
+        imageUrl: gift?.imageUrl,
+        reservedById: gift.reservedById
       }
 
       const result = await db
