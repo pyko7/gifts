@@ -5,7 +5,12 @@ import GiftBody from "./giftBody/GiftBody";
 import sxs from "./_styles";
 
 const Gift: FC<{ gift: GiftGlobalProps }> = ({ gift }) => (
-  <Flex flexDirection="column" gap="1rem" sx={sxs.container}>
+  <Flex
+    flexDirection={{ base: "column", lg: "row" }}
+    alignItems={{ base: "center", lg: "flex-start" }}
+    gap="1rem"
+    sx={sxs.container}
+  >
     <Image src={gift?.imageUrl} alt={gift?.name} sx={sxs.image} />
     <GiftBody gift={gift} />
   </Flex>

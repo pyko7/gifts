@@ -6,6 +6,8 @@ export default makeSx({
     padding: "1rem",
   },
   image: {
+    width: "100%",
+    maxWidth: "22rem",
     aspectRatio: "1 / 1",
     objectFit: "cover",
     borderRadius: (theme) => theme.radii.xl,
