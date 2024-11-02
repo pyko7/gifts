@@ -4,7 +4,7 @@ import { Input, InputGroup } from "@chakra-ui/react";
 import ErrorMessage from "@components/common/errorMessage/ErrorMessage";
 import sxs from "../../_styles";
 import { GiftFormProps } from "../_props";
-import CloudArrowUpIcon from "@components/common/icons/CloudArrowUpIcon";
+import { CloudArrowUpIcon } from "@components/common/icons";
 import FileUpload from "@components/common/input/fileUpload/FileUpload";
 import FileUploadPreview from "@components/common/input/fieldUploadPreview/FileUploadPreview";
 

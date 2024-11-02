@@ -10,3 +10,8 @@ export { default as ArrowRightStartOnRectangleIcon } from "./ArrowRightStartOnRe
 export { default as Bars3Icon } from "./Bars3Icon";
 export { default as SparklesIcon } from "./SparklesIcon";
 export { default as ArrowLeftIcon } from "./ArrowLeftIcon";
+export { default as CloudArrowUpIcon } from "./CloudArrowUpIcon";
+export { default as EllipsisVerticalIcon } from "./EllipsisVerticalIcon";
+export { default as LinkSlash } from "./LinkSlash";
+export { default as PencilSquareIcon } from "./PencilSquareIcon";
+export { default as PlusIcon } from "./PlusIcon";

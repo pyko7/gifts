@@ -6,7 +6,7 @@ import GiftCardContainer from "../container/giftCardContainer/GiftCardContainer"
 import { useGiftFormContext } from "@context/giftForm/GiftFormContext";
 import GiftModal from "../giftModal/GiftModal";
 import FloatingActionButton from "@components/common/floatingActionButton/FloatingActionButton";
-import PlusIcon from "@components/common/icons/PlusIcon";
+import { PlusIcon } from "@components/common/icons";
 
 const Profile: FC = () => {
   const { isModalOpen, openModal } = useGiftFormContext();

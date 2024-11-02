@@ -1,10 +1,10 @@
 import { FC } from "react";
-import EllipsisVerticalIcon from "@components/common/icons/EllipsisVerticalIcon";
+import { EllipsisVerticalIcon } from "@components/common/icons";
 import CommonMenu from "@components/common/menu/Menu";
 import sxs from "./_styles";
 import { Box, MenuItem } from "@chakra-ui/react";
-import LinkSlash from "@components/common/icons/LinkSlash";
-import PencilSquareIcon from "@components/common/icons/PencilSquareIcon";
+import { LinkSlash } from "@components/common/icons";
+import { PencilSquareIcon } from "@components/common/icons";
 
 const GiftMenuButton: FC = () => (
   <CommonMenu menuButtonIcon={EllipsisVerticalIcon}>

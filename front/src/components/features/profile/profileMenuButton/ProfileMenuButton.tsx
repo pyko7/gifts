@@ -1,9 +1,9 @@
 import { FC } from "react";
 import { Box, Button, MenuItem } from "@chakra-ui/react";
-import EllipsisVerticalIcon from "@components/common/icons/EllipsisVerticalIcon";
+import { EllipsisVerticalIcon } from "@components/common/icons";
 import CommonMenu from "@components/common/menu/Menu";
 import sxs from "./_styles";
-import LinkSlash from "@components/common/icons/LinkSlash";
+import { LinkSlash } from "@components/common/icons";
 import { useGiftFormContext } from "@context/giftForm/GiftFormContext";
 
 const ProfileMenuButton: FC = () => {
