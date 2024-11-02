@@ -31,6 +31,22 @@ const colors = {
 export const theme = extendTheme({
   colors,
   components: {
+    Button: {
+      baseStyle: {
+        _disabled: {
+          bg: "main.500",
+          color: "main.200",
+          cursor: "default",
+          opacity: 0.7,
+          _active: {
+            bg: "main.500 !important",
+          },
+          _hover: {
+            bg: "main.500 !important",
+          },
+        },
+      },
+    },
     Drawer: {
       baseStyle: {
         dialog: {

@@ -199,20 +199,23 @@ class GiftController {
   reserveGift = async (c: Context) => {
     try {
       const giftId = c.req.param('giftId')
+
       if (!giftId) throw new Error('Missing parameter')
+      const gift = await GiftService.getGiftById(giftId)
+
+      if (!gift) throw new Error('[ReserveGift] - No gift found ')
 
       const userId = getUserId(c)
 
       if (!userId)
         return c.text('[GiftController - reserveGift]: Wrong userId', 401)
 
-      const req = await c.req.json()
-      if (!req) throw new Error('No request provided')
+      const state = gift.state === 'available' ? 'unavailable' : 'available'
 
       const computedReservation: ReserveGift = {
         giftId,
         reservedById: userId,
-        state: req.state
+        state
       }
 
       GiftService.reserveGift(computedReservation)

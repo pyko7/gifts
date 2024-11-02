@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-type GiftStateEnum = "avaible" | "unavaible";
+type GiftStateEnum = "available" | "unavailable";
 const giftWishRateEnum = ["1", "2", "3", "4", "5"] as const;
 
 type GiftWishRateEnum = typeof giftWishRateEnum;
@@ -15,4 +15,5 @@ export type Gift = {
   imageUrl?: string;
   price: string;
   state: GiftStateEnum;
+  reservedById?: string;
 };

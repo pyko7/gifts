@@ -52,3 +52,15 @@ export const deleteGift = async (data: DeleteGift) => {
   }
   return;
 };
+
+export const reserveGift = async (giftId: string) => {
+  const res = await fetch(`${API_URL}/gift/reservation/${giftId}`, {
+    method: "PUT",
+    credentials: "include",
+  });
+  if (!res.ok) {
+    const errorMessage = await res.text();
+    throw new Error(errorMessage);
+  }
+  return;
+};
