@@ -127,6 +127,8 @@ class GiftService {
       if (result.length === 0) {
         throw new Error('Deletion failed, no user found ')
       }
+
+      return result[0]
     } catch (error) {
       if (error instanceof Error || error instanceof DrizzleError) {
         throw new Error(`[GiftService - deleteGift]: ${error.message}`)

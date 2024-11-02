@@ -11,3 +11,8 @@ export type GiftFormProps = {
 };
 
 export type SaveFormValuesProps = GiftFormProps;
+
+export type DeleteGift = {
+  giftUserId: string;
+  giftId: string;
+};

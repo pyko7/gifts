@@ -1,5 +1,5 @@
 import { API_URL } from "@utils/env";
-import { GiftFormProps } from "./_props";
+import { DeleteGift, GiftFormProps } from "./_props";
 
 export const defaultValues: GiftFormProps = {
   name: undefined,
@@ -31,6 +31,21 @@ export const updateGift = async (gift: FormData) => {
     body: gift,
     credentials: "include",
   });
+  if (!res.ok) {
+    const errorMessage = await res.text();
+    throw new Error(errorMessage);
+  }
+  return;
+};
+
+export const deleteGift = async (data: DeleteGift) => {
+  const res = await fetch(
+    `${API_URL}/gift/delete/${data.giftUserId}/${data.giftId}`,
+    {
+      method: "DELETE",
+      credentials: "include",
+    }
+  );
   if (!res.ok) {
     const errorMessage = await res.text();
     throw new Error(errorMessage);

@@ -175,7 +175,14 @@ class GiftController {
 
       if (!giftId) throw new Error('Missing parameter')
 
-      await GiftService.deleteGift(userId, giftId)
+      const result = await GiftService.deleteGift(userId, giftId)
+
+      if (result && result.imageUrl) {
+        const fileName = getFileName(result.imageUrl)
+        if (fileName) {
+          deleteFile(fileName)
+        }
+      }
 
       return c.text('Gift successfully deleted', 200)
     } catch (error) {
