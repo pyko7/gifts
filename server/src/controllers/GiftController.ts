@@ -10,6 +10,7 @@ import { getUserId } from '../utils/user/_utils'
 import { DrizzleError } from 'drizzle-orm'
 import { Context } from 'hono'
 import { uploadAndGetFile } from '../utils/file/_utils'
+import UserService from '../services/UserService'
 
 class GiftController {
   constructor() {}
@@ -53,8 +54,10 @@ class GiftController {
         return c.text('[GiftController - getGiftById]: No gifts found', 400)
       }
 
+      const user = await UserService.getUserById(result.userId)
+
       c.text('Gift successfully got', 200)
-      return c.json(result)
+      return c.json({ ...result, userName: user.name })
     } catch (error) {
       if (error instanceof Error || error instanceof DrizzleError) {
         return c.text(error.message, 400)

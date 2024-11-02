@@ -17,11 +17,10 @@ const GiftWishRateAndUsername: FC = () => {
           <Text>{gift?.wishRate} / 5</Text>
         </Flex>
       </SkeletonText>
-      {/* ADD USERNAME --> FETCH OR RES ?? */}
       <SkeletonText noOfLines={1} skeletonHeight="8" isLoaded={!isLoading}>
         <Flex gap="0.25rem">
           <Text>demandé par: </Text>
-          <Text sx={sxs.userName}>Jean {gift?.userName}</Text>
+          <Text sx={sxs.userName}>{gift?.userName}</Text>
         </Flex>
       </SkeletonText>
     </Flex>
