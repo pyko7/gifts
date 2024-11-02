@@ -10,7 +10,7 @@ const ProfileMenuButton: FC = () => {
   const { openModal } = useGiftFormContext();
   return (
     <>
-      <Button sx={sxs.gitfButton} onClick={openModal}>
+      <Button sx={sxs.gitfButton} onClick={() => openModal("CREATION")}>
         Ajouter un gift
       </Button>
       <CommonMenu menuButtonIcon={EllipsisVerticalIcon}>

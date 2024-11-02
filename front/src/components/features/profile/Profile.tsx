@@ -21,7 +21,10 @@ const Profile: FC = () => {
         <ProfileHeader />
         <GiftCardContainer />
         {!isModalOpen && (
-          <FloatingActionButton icon={PlusIcon} onClick={openModal} />
+          <FloatingActionButton
+            icon={PlusIcon}
+            onClick={() => openModal("CREATION")}
+          />
         )}
       </Flex>
       <GiftModal />

@@ -1,7 +1,11 @@
 import { User } from "src/types";
 
+export type GiftFormModeEnum = "CREATION" | "EDIT";
+
 export type GiftFormContextDefaultValues = {
+  mode: GiftFormModeEnum;
   isModalOpen: boolean;
+  id?: string;
   userId?: string;
   name?: string;
   url?: string;
@@ -9,7 +13,9 @@ export type GiftFormContextDefaultValues = {
   price?: string;
   state?: string;
   wishRate?: string;
+  imageUrl?: string;
   reservedById?: User;
-  openModal: () => void;
+  openModal: (mode: GiftFormModeEnum) => void;
   onClose: () => void;
+  getFormValues: (value: any) => void;
 };

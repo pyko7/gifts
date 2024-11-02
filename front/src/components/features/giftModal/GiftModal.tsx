@@ -4,10 +4,11 @@ import GiftForm from "../form/giftForm/GiftForm";
 import FormContainer from "@components/common/formContainer/FormContainer";
 
 const GiftModal = () => {
-  const { isModalOpen, onClose } = useGiftFormContext();
+  const { isModalOpen, onClose, mode } = useGiftFormContext();
+  const title = mode === "EDIT" ? "Modifier d'un gift" : "Création d'un gift";
   return (
     <CommonModal isOpen={isModalOpen} onClose={onClose}>
-      <FormContainer title="Création d'un gift" buttonName={undefined}>
+      <FormContainer title={title} buttonName={undefined}>
         <GiftForm />
       </FormContainer>
     </CommonModal>

@@ -5,6 +5,7 @@ import sxs from "./_style";
 import GiftMenuButton from "@components/features/gift/giftMenuButton/GiftMenuButton";
 import Gift from "@components/features/gift/Gift";
 import GiftPageProvider from "@context/gift/GiftContext";
+import GiftModal from "@components/features/giftModal/GiftModal";
 
 const GiftPage: FC = () => (
   <GiftPageProvider>
@@ -14,6 +15,7 @@ const GiftPage: FC = () => (
       </MobilePageHeader>
       <Gift />
     </Box>
+    <GiftModal />
   </GiftPageProvider>
 );
 

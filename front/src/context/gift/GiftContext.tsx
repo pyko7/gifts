@@ -32,7 +32,7 @@ const GiftPageProvider: FC<PropsWithChildren<GiftPageProviderProps>> = ({
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["user", giftId],
+    queryKey: ["giftById", giftId],
     queryFn: () => getGiftById(giftId),
     retry: 2,
     enabled: Boolean(giftId),

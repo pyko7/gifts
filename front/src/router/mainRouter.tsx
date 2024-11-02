@@ -4,6 +4,7 @@ import AuthProvider from "@components/common/layout/authProvider/AuthProvider";
 import { ProfileProvider } from "@context/profile/ProfileContext";
 import ErrorPage from "@pages/error/ErrorPage";
 import GiftPage from "@pages/gift/GiftPage";
+import GiftFormProvider from "@context/giftForm/GiftFormContext";
 
 export const mainRouter = [
   {
@@ -33,7 +34,11 @@ export const mainRouter = [
       },
       {
         path: "gift/:id",
-        element: <GiftPage />,
+        element: (
+          <GiftFormProvider>
+            <GiftPage />
+          </GiftFormProvider>
+        ),
       },
     ],
   },

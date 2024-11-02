@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useState } from "react";
+import { ChangeEvent, FC } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { Input, InputGroup } from "@chakra-ui/react";
 import ErrorMessage from "@components/common/errorMessage/ErrorMessage";
@@ -9,8 +9,8 @@ import FileUpload from "@components/common/input/fileUpload/FileUpload";
 import FileUploadPreview from "@components/common/input/fieldUploadPreview/FileUploadPreview";
 
 const Picture: FC = () => {
-  const { control } = useFormContext<GiftFormProps>();
-  const [filePreview, setFilePreview] = useState<string | undefined>(undefined);
+  const { control, watch, setValue } = useFormContext<GiftFormProps>();
+  const filePreview = watch("imageUrl");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>, onChange: any) => {
     if (e.target.files && e.target.files[0]) {
@@ -21,8 +21,7 @@ const Picture: FC = () => {
       }
 
       const previewUrl = URL.createObjectURL(targetFile);
-      setFilePreview(previewUrl);
-
+      setValue("imageUrl", previewUrl);
       onChange(targetFile);
     }
   };
@@ -31,7 +30,7 @@ const Picture: FC = () => {
     if (filePreview) {
       URL.revokeObjectURL(filePreview);
     }
-    setFilePreview(undefined);
+    setValue("imageUrl", undefined);
     onChange(undefined);
   };
 
