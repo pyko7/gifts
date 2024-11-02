@@ -12,4 +12,10 @@ export default makeSx({
     fontWeight: (theme) => theme.fontWeights.semibold,
     color: (theme) => theme.colors.main[100],
   },
+  hiddenOnMobile: {
+    display: {
+      base: "none",
+      md: "block",
+    },
+  },
 });

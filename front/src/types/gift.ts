@@ -6,6 +6,7 @@ type GiftWishRateEnum = typeof giftWishRateEnum;
 
 export type Gift = {
   id: string;
+  userId: string;
   description?: string;
   userName: string;
   name: string;

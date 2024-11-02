@@ -4,7 +4,7 @@ import sxs from "./_styles";
 import { useGiftPageContext } from "@context/gift/GiftContext";
 
 const GiftPriceAndButton: FC = () => {
-  const { gift, isLoading } = useGiftPageContext();
+  const { gift, isLoading, isSelfGift } = useGiftPageContext();
 
   return (
     <Flex
@@ -18,11 +18,13 @@ const GiftPriceAndButton: FC = () => {
       <SkeletonText noOfLines={1} skeletonHeight={8} isLoaded={!isLoading}>
         <Text sx={sxs.price}>{gift?.price}€</Text>
       </SkeletonText>
-      <Box sx={sxs.button}>
-        <SkeletonText noOfLines={1} skeletonHeight={8} isLoaded={!isLoading}>
-          <Button w="100%">Réserver</Button>
-        </SkeletonText>
-      </Box>
+      {!isSelfGift && (
+        <Box sx={sxs.button}>
+          <SkeletonText noOfLines={1} skeletonHeight={8} isLoaded={!isLoading}>
+            <Button w="100%">Réserver</Button>
+          </SkeletonText>
+        </Box>
+      )}
     </Flex>
   );
 };
