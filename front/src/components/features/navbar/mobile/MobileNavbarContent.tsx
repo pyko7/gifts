@@ -17,7 +17,7 @@ const MobileNavbarContent: FC = () => (
         >
           <Box>{item?.icon}</Box>
         </Flex>
-        <Text as={Link} to={item.url} sx={{ fontSize: "1.25rem" }}>
+        <Text as={Link} to={item.url} sx={sxs.link}>
           {item.title}
         </Text>
       </Flex>

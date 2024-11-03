@@ -15,4 +15,7 @@ export default makeSx({
       height: "100%",
     },
   },
+  link: {
+    fontSize: "1.25rem",
+  },
 });

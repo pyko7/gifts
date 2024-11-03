@@ -66,10 +66,9 @@ export const theme = extendTheme({
           opacity: "0.75 !important",
         },
         dialog: {
-          height: "100%",
           bg: "transparent",
           color: "main.200",
-          margin: 0,
+          margin: "auto",
         },
         body: {
           width: "100%",
