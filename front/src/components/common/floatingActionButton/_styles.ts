@@ -19,5 +19,8 @@ export default makeSx({
     "& > *": {
       color: (theme) => `${theme.colors.main[950]} !important`,
     },
+    "&:hover": {
+      backgroundColor: (theme) => theme.colors.main[300],
+    },
   },
 });

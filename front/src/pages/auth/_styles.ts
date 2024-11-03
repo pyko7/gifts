@@ -3,6 +3,7 @@ import makeSx from "../../utils/makeSx";
 export default makeSx({
   container: {
     width: "100%",
+    minHeight: "100vh",
     height: "100%",
     padding: {
       base: "1rem",
