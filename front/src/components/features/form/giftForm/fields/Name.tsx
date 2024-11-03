@@ -4,7 +4,7 @@ import { Input, InputGroup, InputRightElement } from "@chakra-ui/react";
 import { CloseIcon } from "@components/common/icons";
 import { isNameValid } from "@utils/validation";
 import ButtonIcon from "@components/common/button/buttonIcon/ButtonIcon";
-import ErrorMessage from "@components/common/errorMessage/ErrorMessage";
+import CommonFormControl from "@components/common/formControl/CommonFormControl";
 import sxs from "../../_styles";
 import { GiftFormProps } from "../_props";
 
@@ -23,28 +23,24 @@ const Name: FC = () => {
         validate: isNameValid,
       }}
       render={({ field, formState: { errors } }) => (
-        <InputGroup sx={sxs.inputGroup}>
-          <Input
-            required
-            isInvalid={Boolean(errors.name)}
-            type="text"
-            placeholder="Nom"
-            {...field}
-          />
-          {field.value?.length > 0 && (
-            <InputRightElement>
-              <ButtonIcon
-                buttonSize="sm"
-                colorVariant="dark"
-                CustomIcon={CloseIcon}
-                onClick={handleClear}
-              />
-            </InputRightElement>
-          )}
-          {errors.name?.message && (
-            <ErrorMessage message={String(errors.name?.message)} />
-          )}
-        </InputGroup>
+        <CommonFormControl
+          label="Nom"
+          errorMessage={errors.name?.message?.toString()}
+        >
+          <InputGroup sx={sxs.inputGroup}>
+            <Input required type="text" placeholder="Nom" {...field} />
+            {field.value?.length > 0 && (
+              <InputRightElement>
+                <ButtonIcon
+                  buttonSize="sm"
+                  colorVariant="dark"
+                  CustomIcon={CloseIcon}
+                  onClick={handleClear}
+                />
+              </InputRightElement>
+            )}
+          </InputGroup>
+        </CommonFormControl>
       )}
     />
   );

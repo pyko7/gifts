@@ -3,7 +3,7 @@ import { Controller, useFormContext } from "react-hook-form";
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/react";
 import { EyeIcon, EyeSlashIcon, CloseIcon } from "@components/common/icons";
 import ButtonIcon from "@components/common/button/buttonIcon/ButtonIcon";
-import ErrorMessage from "@components/common/errorMessage/ErrorMessage";
+import CommonFormControl from "@components/common/formControl/CommonFormControl";
 import { isPasswordValid } from "@utils/validation";
 import sxs from "../../_styles";
 import { PasswordProps, UsePasswordFormContext } from "./_props";
@@ -32,45 +32,46 @@ const Password: FC<PasswordProps> = ({
         validate: isPasswordValid,
       }}
       render={({ field, formState: { errors } }) => (
-        <InputGroup sx={sxs.inputGroup}>
-          <Input
-            required
-            isInvalid={Boolean(errors.password)}
-            type={watched[field.name]}
-            placeholder={placeholder}
-            {...field}
-          />
-          <InputRightElement mr={field.value ? 8 : 0}>
-            {watched[field.name] === "password" ? (
-              <ButtonIcon
-                buttonSize="sm"
-                colorVariant="dark"
-                CustomIcon={EyeIcon}
-                onClick={() => setValue(`${field.name}InputMode`, "text")}
-              />
-            ) : (
-              <ButtonIcon
-                buttonSize="sm"
-                colorVariant="dark"
-                CustomIcon={EyeSlashIcon}
-                onClick={() => setValue(`${field.name}InputMode`, "password")}
-              />
-            )}
-          </InputRightElement>
-          {field.value?.length > 0 && (
-            <InputRightElement>
-              <ButtonIcon
-                buttonSize="sm"
-                colorVariant="dark"
-                CustomIcon={CloseIcon}
-                onClick={handleClear}
-              />
+        <CommonFormControl
+          label="Mot de passe"
+          errorMessage={errors.password?.message?.toString()}
+        >
+          <InputGroup sx={sxs.inputGroup}>
+            <Input
+              required
+              type={watched[field.name]}
+              placeholder={placeholder}
+              {...field}
+            />
+            <InputRightElement mr={field.value ? 8 : 0}>
+              {watched[field.name] === "password" ? (
+                <ButtonIcon
+                  buttonSize="sm"
+                  colorVariant="dark"
+                  CustomIcon={EyeIcon}
+                  onClick={() => setValue(`${field.name}InputMode`, "text")}
+                />
+              ) : (
+                <ButtonIcon
+                  buttonSize="sm"
+                  colorVariant="dark"
+                  CustomIcon={EyeSlashIcon}
+                  onClick={() => setValue(`${field.name}InputMode`, "password")}
+                />
+              )}
             </InputRightElement>
-          )}
-          {errors?.[field.name]?.message && (
-            <ErrorMessage message={String(errors?.[field.name]?.message)} />
-          )}
-        </InputGroup>
+            {field.value?.length > 0 && (
+              <InputRightElement>
+                <ButtonIcon
+                  buttonSize="sm"
+                  colorVariant="dark"
+                  CustomIcon={CloseIcon}
+                  onClick={handleClear}
+                />
+              </InputRightElement>
+            )}
+          </InputGroup>
+        </CommonFormControl>
       )}
     />
   );

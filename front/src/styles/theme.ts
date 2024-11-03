@@ -130,7 +130,7 @@ export const theme = extendTheme({
           borderWidth: 1,
           background: "transparent",
           _placeholder: {
-            color: "main.50",
+            color: "main.500",
           },
           _invalid: {
             borderColor: "error.600",
@@ -140,6 +140,9 @@ export const theme = extendTheme({
           },
           _focus: {
             borderColor: "main.500",
+            _invalid: {
+              borderColor: "error.600",
+            },
           },
         },
       },

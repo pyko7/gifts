@@ -29,3 +29,9 @@ export const isWishRateValid = (rate: string) => {
   if (isNaN(rateNumber)) return error;
   return rateNumber < 6 && rateNumber > 0 ? undefined : error;
 };
+
+export const isPriceValid = (val: string) => {
+  const regex = /^-?\d+(,\d+)?$/;
+  const match = regex.test(val);
+  return val.length > 0 && match ? undefined : "Veuillez entrer un prix valide";
+};
