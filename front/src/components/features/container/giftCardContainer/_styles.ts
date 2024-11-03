@@ -18,8 +18,8 @@ export default makeSx({
       base: "100%",
       md: "calc(50% - 2rem)",
       lg: "calc(33% - 2rem)",
-      xl: "fit-content",
     },
+    maxWidth: "19rem",
     justifyContent: "center",
   },
   skeleton: {

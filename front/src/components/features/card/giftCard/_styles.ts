@@ -2,10 +2,7 @@ import makeSx from "@utils/makeSx";
 
 export default makeSx({
   card: {
-    maxWidth: (theme) => ({
-      base: theme.breakpoints["sm"],
-      lg: "300px",
-    }),
+    width: "100%",
     backgroundColor: "transparent",
     border: (theme) => `1px solid ${theme.colors.main["700"]}`,
     borderRadius: (theme) => theme.radii["xl"],
@@ -16,6 +13,9 @@ export default makeSx({
   },
   cardImage: {
     width: "100%",
+    height: "100%",
+    aspectRatio: "1/1",
+    objectFit: "cover",
   },
   cardBody: {
     padding: 0,
