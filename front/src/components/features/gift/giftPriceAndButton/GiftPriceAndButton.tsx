@@ -1,22 +1,45 @@
 import { FC } from "react";
-import { Box, Button, Flex, SkeletonText, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  SkeletonText,
+  Text,
+  useToast,
+} from "@chakra-ui/react";
 import { useGiftPageContext } from "@context/gift/GiftContext";
 import useAuthStore from "@store/auth";
 import { useMutation } from "@tanstack/react-query";
 import { reserveGift } from "@components/features/form/giftForm/_utils";
 import sxs from "./_styles";
+import text from "../../../../utils/text.json";
 
 const GiftPriceAndButton: FC = () => {
   const { gift, isLoading, isSelfGift } = useGiftPageContext();
+  const toast = useToast();
+  const successMessage = text.success.gift.reservation.global;
+  const globalError = text.error.gift.delete.global;
 
   const { user } = useAuthStore();
 
   const mutation = useMutation({
     mutationFn: reserveGift,
     onSuccess: () => {
-      console.log("display toast");
+      toast({
+        title: successMessage,
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
     },
-    onError: () => console.log("error"),
+    onError: () => {
+      toast({
+        title: globalError,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    },
   });
 
   const handleClick = () => {

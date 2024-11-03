@@ -10,7 +10,8 @@ import { defaultValues, createGift, updateGift } from "./_utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useGiftFormContext } from "@context/giftForm/GiftFormContext";
 import { FC, useMemo } from "react";
-import { Button } from "@chakra-ui/react";
+import { Button, useToast } from "@chakra-ui/react";
+import text from "../../../../utils/text.json";
 
 const GiftForm: FC = () => {
   const {
@@ -26,7 +27,9 @@ const GiftForm: FC = () => {
     onClose,
   } = useGiftFormContext();
   const queryClient = useQueryClient();
-
+  const toast = useToast();
+  const globalErrorOnCreation = text.error.gift.creation.global;
+  const globalErrorOnUpdate = text.error.gift.update.global;
   const fetchedDefaultValues: GiftFormProps = useMemo(
     () => ({
       name,
@@ -64,7 +67,15 @@ const GiftForm: FC = () => {
         });
       }
     },
-    onError: () => console.log("error"),
+    onError: () => {
+      toast({
+        title:
+          mode === "CREATION" ? globalErrorOnCreation : globalErrorOnUpdate,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    },
   });
 
   const onSubmit = async (data: SaveFormValuesProps) => {

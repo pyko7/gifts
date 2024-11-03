@@ -9,7 +9,7 @@ const AuthContainer: FC<AuthContainerProps> = ({
   children,
   decorationIcon = undefined,
 }) => {
-  const { title, subtitle, redirectLinks } = useAuthFormContext();
+  const { title, subtitle, redirectLinks, setIsSuccess } = useAuthFormContext();
 
   return (
     <Flex alignItems="center" justifyContent="center" sx={sxs.container}>
@@ -42,7 +42,11 @@ const AuthContainer: FC<AuthContainerProps> = ({
           sx={sxs.textContainer}
         >
           {redirectLinks.map((redirect, idx) => (
-            <Link key={idx} to={`/${redirect.url}`}>
+            <Link
+              key={idx}
+              to={`/${redirect.url}`}
+              onClick={() => setIsSuccess(false)}
+            >
               {redirect.label}
             </Link>
           ))}

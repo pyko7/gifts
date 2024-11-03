@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { Button, Flex } from "@chakra-ui/react";
+import { Button, Flex, useToast } from "@chakra-ui/react";
 import { useMutation } from "@tanstack/react-query";
 import { SavableAuthValues, AuthUseFormProps } from "./_props";
 import { defaultValues, signup } from "./_utils";
@@ -12,7 +12,9 @@ import { useAuthFormContext } from "@context/authForm/authForm";
 
 const SignUpForm: FC = () => {
   const { isSuccess, setIsSuccess } = useAuthFormContext();
+  const toast = useToast();
   const buttonName = text.auth.signup.button;
+  const globalError = text.error.auth.signup.global;
   const apiUniqueEmailError = text.api.error.signup.uniqueEmail;
   const uniqueEmailErrorMessage = text.error.auth.signup.emailAlreadyExists;
 
@@ -27,10 +29,18 @@ const SignUpForm: FC = () => {
       setIsSuccess(true);
     },
     onError(error) {
-      if (error.message === apiUniqueEmailError)
+      if (error.message === apiUniqueEmailError) {
         form.setError("email", {
           message: uniqueEmailErrorMessage,
         });
+      } else {
+        toast({
+          title: globalError,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      }
       return;
     },
   });

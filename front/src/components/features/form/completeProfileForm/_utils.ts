@@ -18,7 +18,8 @@ export const completeProfile = async (
     body: JSON.stringify(user),
   });
   if (!res.ok) {
-    throw new Error(res.statusText);
+    const errorMessage = await res.text();
+    throw new Error(errorMessage);
   }
   return res.json();
 };

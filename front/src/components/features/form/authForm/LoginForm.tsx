@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { Button, Flex } from "@chakra-ui/react";
+import { Button, Flex, useToast } from "@chakra-ui/react";
 import { useMutation } from "@tanstack/react-query";
 import { SavableAuthValues, AuthUseFormProps } from "./_props";
 import { defaultValues, login } from "./_utils";
@@ -15,7 +15,9 @@ import { LoginParams } from "@store/_props";
 const LoginForm: FC = () => {
   const navigate = useNavigate();
   const { login: loginStore } = useAuthStore();
+  const toast = useToast();
   const buttonName = text.auth.login.button;
+  const globalError = text.error.auth.login.global;
   const apiInvalidCredentialsError = text.api.error.login.invalidCredentials;
   const invalidCredentialsErrorMessage =
     text.error.auth.login.invalidCredentials;
@@ -47,6 +49,13 @@ const LoginForm: FC = () => {
         });
         form.setError("email", {
           message: "",
+        });
+      } else {
+        toast({
+          title: globalError,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
         });
       }
       return;

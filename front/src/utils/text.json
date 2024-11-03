@@ -53,16 +53,50 @@
       },
       "login": {
         "invalidCredentials": "Invalid email or password"
+      },
+      "completeProfile": {
+        "uniqueUserName": "duplicate key value violates unique constraint \"users_name_unique\""
+      }
+    }
+  },
+  "success": {
+    "gift": {
+      "reservation": {
+        "global": "Le gift a été réservé"
       }
     }
   },
   "error": {
     "auth": {
       "signup": {
+        "global": "Une erreur est survenue lors de l'inscription",
         "emailAlreadyExists": "Adresse déjà utilisée"
       },
       "login": {
+        "global": "Une erreur est survenue lors de la connexion",
         "invalidCredentials": "Email ou mot de passe invalide"
+      },
+      "completeProfile": {
+        "userNameAlreadyExists": "Ce nom est déjà utilisé"
+      }
+    },
+    "user": {
+      "update": {
+        "global": "Une erreur est survenue lors de la modification du profil"
+      }
+    },
+    "gift": {
+      "creation": {
+        "global": "Une erreur est survenue lors de la création du gift"
+      },
+      "update": {
+        "global": "Une erreur est survenue lors de la modification du gift"
+      },
+      "delete": {
+        "global": "Une erreur est survenue lors de la suppression du gift"
+      },
+      "reservation": {
+        "global": "Une erreur est survenue lors de la réservation du gift"
       }
     }
   }

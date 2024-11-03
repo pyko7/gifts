@@ -2,7 +2,7 @@ import { FC } from "react";
 import { EllipsisVerticalIcon } from "@components/common/icons";
 import CommonMenu from "@components/common/menu/Menu";
 import sxs from "./_styles";
-import { Box, MenuItem } from "@chakra-ui/react";
+import { Box, MenuItem, useToast } from "@chakra-ui/react";
 import { LinkSlash } from "@components/common/icons";
 import { PencilSquareIcon } from "@components/common/icons";
 import { useGiftFormContext } from "@context/giftForm/GiftFormContext";
@@ -11,19 +11,29 @@ import { deleteGift } from "@components/features/form/giftForm/_utils";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuthStore from "@store/auth";
 import { DeleteGift } from "@components/features/form/giftForm/_props";
+import text from "../../../../utils/text.json";
 
 const GiftMenuButton: FC = () => {
   const { openModal } = useGiftFormContext();
   const { pathname } = useLocation();
   const { user } = useAuthStore();
   const navigate = useNavigate();
+  const toast = useToast();
+  const globalError = text.error.gift.delete.global;
 
   const mutation = useMutation({
     mutationFn: deleteGift,
     onSuccess: () => {
       navigate("/profile");
     },
-    onError: () => console.log("error"),
+    onError: () => {
+      toast({
+        title: globalError,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    },
   });
 
   const handleClick = () => {

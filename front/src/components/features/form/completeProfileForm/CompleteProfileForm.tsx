@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { Button, Flex } from "@chakra-ui/react";
+import { Button, Flex, useToast } from "@chakra-ui/react";
 import {
   CompleteProfileUseFormProps,
   SavableCompleteProfileUseFormValues,
@@ -16,8 +16,14 @@ import { getLocalStorageItem, setLocalStorageItem } from "@utils/localStorage";
 
 const CompleteProfileForm: FC = () => {
   const buttonName = text.auth.completeProfile.button;
+  const globalError = text.error.user.update.global;
+  const apiUniqueUserNameError = text.api.error.completeProfile.uniqueUserName;
+  const uniqueUserNameErrorMessage =
+    text.error.auth.completeProfile.userNameAlreadyExists;
+
   const { login, user, token } = useAuthStore();
   const navigate = useNavigate();
+  const toast = useToast();
   const form = useForm<CompleteProfileUseFormProps>({
     defaultValues,
     mode: "onChange",
@@ -42,8 +48,20 @@ const CompleteProfileForm: FC = () => {
 
       navigate("/");
     },
-    onError(error, variables, context) {
-      console.log({ error, variables, context });
+    onError(error) {
+      if (error.message === apiUniqueUserNameError) {
+        form.setError("name", {
+          message: uniqueUserNameErrorMessage,
+        });
+      } else {
+        toast({
+          title: globalError,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+      return;
     },
   });
 
