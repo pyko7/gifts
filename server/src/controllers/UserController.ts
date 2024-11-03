@@ -53,27 +53,22 @@ class UserController {
       const userId = getUserId(c)
 
       if (!userId) {
-        return c.text(
-          '[UserController - updateUser]: Invalid session token',
-          401
-        )
+        return c.text('Invalid session token', 401)
       }
 
       if (param !== userId) {
-        return c.text('[UserController - updateUser]: Invalid userId', 401)
+        return c.text('Invalid userId', 401)
       }
 
       const updatedUser = await UserService.updateUser(user, userId)
 
       return c.json(updatedUser)
     } catch (error) {
+      console.log(`[UserController - updateUser]: ${error}`)
       if (error instanceof Error || error instanceof DrizzleError) {
         return c.text(error.message, 400)
       }
-      return c.text(
-        '[UserController - updateUser]: Error while updating the user',
-        500
-      )
+      return c.text(' Error while updating the user', 500)
     }
   }
   deleteUser = async (c: Context) => {

@@ -91,7 +91,6 @@ class UserService {
 
   static async updateUser(user: User, userId: string) {
     try {
-      // TODO: Remove any
       const result: User[] = await db
         .update(users)
         .set({ ...user })
@@ -108,11 +107,10 @@ class UserService {
       return updatedUser
     } catch (error) {
       if (error instanceof Error || error instanceof DrizzleError) {
-        throw new Error(`[UserService - updateUser]: ${error.message}`)
+        console.log(`[UserService - updateUser]: ${error.message}`)
+        throw new Error(`${error.message}`)
       }
-      throw new Error(
-        '[UserService - updateUser]: An unexpected error has occurred'
-      )
+      throw new Error('An unexpected error has occurred')
     }
   }
 
