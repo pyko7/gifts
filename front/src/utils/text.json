@@ -14,7 +14,7 @@
       "subtitle": "Entrer vos informations afin de vous inscrire",
       "button": "S'inscrire",
       "redirectLinkLabel": "Déjà un compte ? Connectez-vous ici",
-      "buttonHelperText": "",
+      "buttonHelperText": "Se connecter",
       "successTitle": "Merci pour votre inscription",
       "successSubtitle": "Vérifier votre boîte mail, vous recevrez un email de confirmation d'inscription"
     },
@@ -24,8 +24,8 @@
       "button": "Envoyer l'email",
       "redirectLinkLabel": "",
       "buttonHelperText": "",
-      "successTitle": "",
-      "successSubtitle": ""
+      "successTitle": "Demande reçue",
+      "successSubtitle": "Nous venons de vous envoyer un email (pensez à regarder les spams), cliquer sur le lien pour modifier votre mot de passe."
     },
     "resetPassword": {
       "title": "Réinitialiser le mot de passe",

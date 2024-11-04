@@ -61,7 +61,7 @@ export default makeSx({
     color: (theme) => theme.colors.main[300],
   },
   cancelButton: {
-    color: (theme) => theme.colors.main[600],
+    color: (theme) => theme.colors.main[300],
     "&:hover": {
       backgroundColor: "transparent",
       color: (theme) => theme.colors.main[200],

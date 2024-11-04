@@ -42,7 +42,7 @@ const FormContainer: FC<FormContainerProps> = ({
         sx={sxs.textContainer}
       >
         {Boolean(onCancel) && (
-          <Button variant="ghost" sx={sxs.cancelButton}>
+          <Button onClick={onCancel} variant="ghost" sx={sxs.cancelButton}>
             Annuler
           </Button>
         )}

@@ -4,8 +4,9 @@ import { FC } from "react";
 import { Link } from "react-router-dom";
 import { mobileNavbarLinks } from "../_utils";
 import sxs from "./_styles";
+import { MobileNavbarContentProps } from "./_props";
 
-const MobileNavbarContent: FC = () => (
+const MobileNavbarContent: FC<MobileNavbarContentProps> = ({ onClose }) => (
   <Flex flexDirection="column" gap="1rem" paddingY="2rem">
     {mobileNavbarLinks.map((item) => (
       <Flex key={generateUniqueId()} alignItems="center" gap="0.75rem">
@@ -17,7 +18,7 @@ const MobileNavbarContent: FC = () => (
         >
           <Box>{item?.icon}</Box>
         </Flex>
-        <Text as={Link} to={item.url} sx={sxs.link}>
+        <Text as={Link} to={item.url} sx={sxs.link} onClick={onClose}>
           {item.title}
         </Text>
       </Flex>

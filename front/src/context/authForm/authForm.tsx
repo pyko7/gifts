@@ -57,9 +57,16 @@ export const AuthFormProvider: FC<PropsWithChildren> = ({ children }) => {
         url: "forgot-password",
       };
       links.push(loginRedirectLink);
+    } else if (isSuccess && (mode === "signup" || mode === "forgotPassword")) {
+      const loginRedirectLink: RedirectLink = {
+        label: text.auth.signup.buttonHelperText,
+        url: "login",
+      };
+      links.length = 0;
+      links.push(loginRedirectLink);
     }
     return links;
-  }, [mode]);
+  }, [isSuccess, mode]);
 
   return (
     <AuthFormContext.Provider

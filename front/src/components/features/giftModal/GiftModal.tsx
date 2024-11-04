@@ -7,8 +7,8 @@ const GiftModal = () => {
   const { isModalOpen, onClose, mode } = useGiftFormContext();
   const title = mode === "EDIT" ? "Modifier d'un gift" : "Création d'un gift";
   return (
-    <CommonModal isOpen={isModalOpen} onClose={onClose}>
-      <FormContainer title={title} buttonName={undefined}>
+    <CommonModal withCloseButton={false} isOpen={isModalOpen} onClose={onClose}>
+      <FormContainer title={title} buttonName={undefined} onCancel={onClose}>
         <GiftForm />
       </FormContainer>
     </CommonModal>

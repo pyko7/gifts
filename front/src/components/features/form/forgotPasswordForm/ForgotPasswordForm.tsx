@@ -10,8 +10,10 @@ import Email from "../fields/Email";
 import text from "../../../../utils/text.json";
 import sxs from "../_styles";
 import { useMutation } from "@tanstack/react-query";
+import { useAuthFormContext } from "@context/authForm/authForm";
 
 const ForgotPasswordForm: FC = () => {
+  const { isSuccess } = useAuthFormContext();
   const buttonName = text.auth.forgotPassword.button;
   const apiInvalidCredentialsError = text.api.error.login.invalidCredentials;
 
@@ -41,6 +43,10 @@ const ForgotPasswordForm: FC = () => {
     };
     mutation.mutate(userData);
   };
+
+  if (isSuccess) {
+    return null;
+  }
 
   return (
     <FormProvider {...form}>

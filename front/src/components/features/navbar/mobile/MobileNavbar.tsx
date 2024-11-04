@@ -12,7 +12,7 @@ const MobileNavbar: FC<MobileNavbarProps> = ({ open, onClose }) => {
   return (
     <CommonDrawer isOpen={open} onClose={onClose} withCloseButton title="">
       <DrawerBody>
-        <MobileNavbarContent />
+        <MobileNavbarContent onClose={onClose} />
       </DrawerBody>
 
       <DrawerFooter height="5rem" justifyContent="flex-start">
