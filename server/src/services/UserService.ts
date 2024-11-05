@@ -4,6 +4,9 @@ import { users } from '../db/schemas/user'
 import { User } from '../utils/types'
 import { db } from '../db/drizzle'
 import bcrypt from 'bcrypt'
+import EmailService from './EmailService'
+import { EmailServiceType, EmailUser } from './emailService/_types'
+import { generateSignUpEmailTemplate } from '../templates/email/signup'
 
 class UserService {
   id: string | null
@@ -49,7 +52,36 @@ class UserService {
       )
 
       const hashedPassword = await this.hashPassword(password, saltRounds)
-      await db.insert(users).values({ email, password: hashedPassword })
+      const result = await db
+        .insert(users)
+        .values({ email, password: hashedPassword })
+        .returning()
+      if (result.length > 0) {
+        const emailSender: EmailUser = {
+          name: 'Gifts team',
+          // eslint-disable-next-line no-undef
+          email: process.env.CONTACT_EMAIL ?? ''
+        }
+        const emailTo = [
+          {
+            name: result[0].email,
+            email: result[0].email
+          }
+        ]
+        //TODO: ADD REAL LINK
+        const emailTemplate = generateSignUpEmailTemplate(
+          'https://www.google.com'
+        )
+
+        const email: EmailServiceType = {
+          emailSender,
+          emailSubject: "Confirmation d'inscription",
+          emailTo,
+          emailTemplate: emailTemplate
+        }
+        const emailService = new EmailService(email)
+        await emailService.sendMail()
+      }
     } catch (error) {
       if (error instanceof Error || error instanceof DrizzleError) {
         console.log(`[UserService - createUser]: ${error.message}`)

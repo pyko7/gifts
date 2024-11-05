@@ -5,6 +5,7 @@ import { db } from '../db/drizzle'
 import bcrypt from 'bcrypt'
 import EmailService from './EmailService'
 import { EmailServiceType, EmailUser } from './emailService/_types'
+import { generateResetPasswordEmailTemplate } from '../templates/email/resetPassword'
 
 class AuthService {
   email: string
@@ -60,11 +61,16 @@ class AuthService {
         email: userEmail
       }
     ]
+
+    //TODO: ADD REAL LINK
+    const emailTemplate =
+      generateResetPasswordEmailTemplate('https://google.com')
+
     const email: EmailServiceType = {
       emailSender,
       emailSubject: 'Mot de passe oublié',
       emailTo,
-      emailTemplate: '<p>Oubli de mdp</p>'
+      emailTemplate
     }
     const emailService = new EmailService(email)
     await emailService.sendMail()
