@@ -9,7 +9,7 @@ import {
 import { and, DrizzleError, eq } from 'drizzle-orm'
 import { gifts } from '../db/schemas/gift'
 import { db } from '../db/drizzle'
-import { deleteFile } from '../utils/file/_utils'
+import MediaService from './mediaService/MediaService'
 
 class GiftService {
   id: string | null
@@ -74,7 +74,8 @@ class GiftService {
       })
     } catch (error) {
       if (gift.storedImageName) {
-        deleteFile(gift.storedImageName)
+        const mediaService = new MediaService(gift.storedImageName)
+        mediaService.deleteFile()
       }
       if (error instanceof Error || error instanceof DrizzleError) {
         throw new Error(`[GiftService - createGift]: ${error.message}`)

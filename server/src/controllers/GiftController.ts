@@ -9,8 +9,8 @@ import GiftService from '../services/GiftService'
 import { getUserId } from '../utils/user/_utils'
 import { DrizzleError } from 'drizzle-orm'
 import { Context } from 'hono'
-import { deleteFile, getFileName, uploadAndGetFile } from '../utils/file/_utils'
 import UserService from '../services/UserService'
+import MediaService from '../services/mediaService/MediaService'
 
 class GiftController {
   constructor() {}
@@ -78,7 +78,7 @@ class GiftController {
       let image = null
 
       if (body['file']) {
-        image = await uploadAndGetFile(body['file'])
+        image = await MediaService.uploadAndGetFile(body['file'], '/gifts')
       }
 
       const computedGift: CreateGift = {
@@ -122,17 +122,19 @@ class GiftController {
       // if new file
       if (body['file']) {
         if (currentGift?.imageUrl) {
-          const fileName = getFileName(currentGift.imageUrl ?? '')
+          const mediaService = new MediaService(currentGift.imageUrl)
+          const fileName = mediaService.getFileName()
           if (!fileName) return
-          deleteFile(fileName)
+          mediaService.deleteFile()
         }
-        image = await uploadAndGetFile(body['file'])
+        image = await MediaService.uploadAndGetFile(body['file'], '/gifts')
 
         // if file has been deleted
       } else if (!body['imageUrl']) {
-        const fileName = getFileName(currentGift.imageUrl ?? '')
+        const mediaService = new MediaService(currentGift.imageUrl ?? '')
+        const fileName = mediaService.getFileName()
         if (!fileName) return
-        deleteFile(fileName)
+        mediaService.deleteFile()
 
         // else file hasn't changed
       } else {
@@ -178,9 +180,10 @@ class GiftController {
       const result = await GiftService.deleteGift(userId, giftId)
 
       if (result && result.imageUrl) {
-        const fileName = getFileName(result.imageUrl)
+        const mediaService = new MediaService(result.imageUrl)
+        const fileName = mediaService.getFileName()
         if (fileName) {
-          deleteFile(fileName)
+          mediaService.deleteFile()
         }
       }
 
