@@ -1,10 +1,7 @@
 import { FC } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { Button, Flex, useToast } from "@chakra-ui/react";
-import {
-  CompleteProfileUseFormProps,
-  SavableCompleteProfileUseFormValues,
-} from "./_props";
+import { CompleteProfileUseFormProps } from "./_props";
 import { completeProfile, defaultValues } from "./_utils";
 import Name from "../fields/Name";
 import text from "../../../../utils/text.json";
@@ -13,6 +10,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "@store/auth";
 import { getLocalStorageItem, setLocalStorageItem } from "@utils/localStorage";
+import Picture from "../fields/profilePicture/ProfilePicture";
 
 const CompleteProfileForm: FC = () => {
   const buttonName = text.auth.completeProfile.button;
@@ -67,17 +65,19 @@ const CompleteProfileForm: FC = () => {
 
   const onSubmit = async (data: CompleteProfileUseFormProps) => {
     const localStorageUser = getLocalStorageItem("user");
-    const userData: SavableCompleteProfileUseFormValues = {
-      name: data.name,
-      userId: localStorageUser?.userId,
-    };
-    mutation.mutate(userData);
+    const formData = new FormData();
+    formData.append("userId", localStorageUser?.userId ?? "");
+    formData.append("file", data.picture ?? "");
+    formData.append("name", data.name ?? "");
+    formData.append("imageUrl", data.imageUrl ?? "");
+    mutation.mutate(formData);
   };
 
   return (
     <FormProvider {...form}>
       <Flex as="form" width="100%" flex={2} flexDirection="column" gap="1.5rem">
         <Name />
+        <Picture />
         <Flex flex={1} alignItems="flex-end">
           <Button sx={sxs.button} onClick={form.handleSubmit(onSubmit)}>
             {buttonName}

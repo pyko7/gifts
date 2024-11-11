@@ -20,6 +20,5 @@ export default makeSx({
     width: "100%",
     objectFit: "cover",
     objectPosition: "center",
-    borderRadius: (theme) => theme.radii.xl,
   },
 });

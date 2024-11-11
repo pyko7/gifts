@@ -8,6 +8,7 @@ import { CloseIcon } from "@components/common/icons";
 const FileUploadPreview: FC<FileUploadPreviewProps> = ({
   filePreview,
   onClear,
+  mode = "IMAGE",
 }) => (
   <Box sx={sxs.container}>
     <ButtonIcon
@@ -17,7 +18,15 @@ const FileUploadPreview: FC<FileUploadPreviewProps> = ({
       onClick={onClear}
     />
     <AspectRatio ratio={1} sx={sxs.innerContainer}>
-      <Image src={filePreview} alt="preview" sx={sxs.image} />
+      <Image
+        src={filePreview}
+        alt="preview"
+        sx={{
+          ...sxs.image,
+          borderRadius: (theme) =>
+            mode === "IMAGE" ? theme.radii.xl : theme.radii.full,
+        }}
+      />
     </AspectRatio>
   </Box>
 );

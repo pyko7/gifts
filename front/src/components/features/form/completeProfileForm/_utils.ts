@@ -1,15 +1,14 @@
 import { API_URL } from "@utils/env";
-import { SavableCompleteProfileUseFormValues } from "./_props";
 
+//TODO UNCOMMENT
 export const defaultValues = {
   // profilePicture?:string
   name: "",
 };
 
-export const completeProfile = async (
-  user: SavableCompleteProfileUseFormValues
-) => {
-  const res = await fetch(`${API_URL}/user/update/${user.userId}`, {
+export const completeProfile = async (user: FormData) => {
+  const userId = user.get("userId");
+  const res = await fetch(`${API_URL}/user/update/${userId}`, {
     headers: {
       "Content-Type": "application/json",
     },
