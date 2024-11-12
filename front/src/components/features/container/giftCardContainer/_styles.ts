@@ -23,6 +23,7 @@ export default makeSx({
     justifyContent: "center",
   },
   skeleton: {
+    width: "100%",
     borderRadius: (theme) => theme.radii["xl"],
   },
 });

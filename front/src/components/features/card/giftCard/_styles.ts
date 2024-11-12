@@ -37,4 +37,9 @@ export default makeSx({
     width: "fit-content",
     height: "fit-content",
   },
+  iconPlaceholder: {
+    "& > svg": {
+      color: (theme) => theme.colors.main[400],
+    },
+  },
 });

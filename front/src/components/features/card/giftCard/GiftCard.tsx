@@ -9,20 +9,34 @@ import {
   Text,
 } from "@chakra-ui/react";
 import sxs from "./_styles";
-import { SparklesIcon } from "@components/common/icons";
+import { GiftIcon, SparklesIcon } from "@components/common/icons";
 import { GiftCardProps } from "./_props";
 import { Link } from "react-router-dom";
+import ImagePlaceholder from "@components/common/imagePlaceholder/ImagePlaceholder";
 
 //TODO: handle state and reserverdBy
 const GiftCard: FC<GiftCardProps> = ({ gift }) => (
   <Card as={Link} to={`/gift/${gift.id}`} variant="outline" sx={sxs.card}>
     <CardBody sx={sxs.cardBody}>
-      <Image
-        src={gift.imageUrl}
-        alt={gift.name}
-        borderRadius="lg"
-        sx={sxs.cardImage}
-      />
+      {gift.imageUrl ? (
+        <Image
+          src={gift.imageUrl}
+          alt={gift.name}
+          borderRadius="lg"
+          sx={sxs.cardImage}
+        />
+      ) : (
+        <ImagePlaceholder
+          sx={{
+            borderBottomStartRadius: "none",
+            borderBottomEndRadius: "none",
+          }}
+        >
+          <Flex aria-hidden="true" p="5rem" sx={sxs.iconPlaceholder}>
+            <GiftIcon />
+          </Flex>
+        </ImagePlaceholder>
+      )}
     </CardBody>
     <CardFooter>
       <Flex flex={1} justifyContent="space-between" sx={sxs.cardFooter}>
