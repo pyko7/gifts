@@ -8,7 +8,7 @@ import text from "../../../../utils/text.json";
 import sxs from "../_styles";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import useAuthStore from "@store/auth";
+import useAuthStore from "@store/auth/auth";
 import { getLocalStorageItem, setLocalStorageItem } from "@utils/localStorage";
 import Picture from "../fields/profilePicture/ProfilePicture";
 

@@ -6,13 +6,18 @@ import sxs from "./_styles";
 import { useQuery } from "@tanstack/react-query";
 import { useProfileContext } from "@context/profile/ProfileContext";
 import { getGiftsByUserId } from "./_utils";
+import useGiftsStore from "@store/auth/gifts/gifts";
 
 const GiftCardContainer: FC = () => {
   const { user } = useProfileContext();
-
+  const { setGiftsNumber } = useGiftsStore();
   const { data: gifts, isLoading } = useQuery({
     queryKey: ["profileGifts", user?.id],
-    queryFn: () => getGiftsByUserId(user?.id),
+    queryFn: async () => {
+      const fetchedGifts = await getGiftsByUserId(user?.id);
+      setGiftsNumber(fetchedGifts.length);
+      return fetchedGifts;
+    },
     retry: 2,
     enabled: Boolean(user?.id),
   });

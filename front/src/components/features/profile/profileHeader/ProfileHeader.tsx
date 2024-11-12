@@ -4,9 +4,11 @@ import sxs from "./_styles";
 import ProfileMenuButton from "../profileMenuButton/ProfileMenuButton";
 import { useProfileContext } from "@context/profile/ProfileContext";
 import ProfileHeaderSkeleton from "./ProfileHeaderSkeleton";
+import useGiftsStore from "@store/auth/gifts/gifts";
 
 const ProfileHeader: FC = () => {
   const { user, isLoading } = useProfileContext();
+  const { giftsNumber } = useGiftsStore();
 
   return (
     <Flex sx={sxs.profileHeader}>
@@ -21,7 +23,9 @@ const ProfileHeader: FC = () => {
         ) : (
           <Flex sx={sxs.profileHeaderTextContainer}>
             <Text sx={sxs.profileHeaderText}>{user?.name}</Text>
-            <Text sx={sxs.profileHeaderTextLight}>3 gifts</Text>
+            {giftsNumber && (
+              <Text sx={sxs.profileHeaderTextLight}>{giftsNumber} gifts</Text>
+            )}
           </Flex>
         )}
       </Flex>

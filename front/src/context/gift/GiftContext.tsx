@@ -3,7 +3,7 @@ import { GiftPageContextDefaultValues } from "./_props";
 import { useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getGiftById } from "@components/features/container/giftCardContainer/_utils";
-import useAuthStore from "@store/auth";
+import useAuthStore from "@store/auth/auth";
 import { getUserById } from "@utils/user";
 
 const defaultValues: GiftPageContextDefaultValues = {

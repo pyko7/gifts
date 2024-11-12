@@ -9,7 +9,7 @@ import { useGiftFormContext } from "@context/giftForm/GiftFormContext";
 import { useMutation } from "@tanstack/react-query";
 import { deleteGift } from "@components/features/form/giftForm/_utils";
 import { useLocation, useNavigate } from "react-router-dom";
-import useAuthStore from "@store/auth";
+import useAuthStore from "@store/auth/auth";
 import { DeleteGift } from "@components/features/form/giftForm/_props";
 import text from "../../../../utils/text.json";
 

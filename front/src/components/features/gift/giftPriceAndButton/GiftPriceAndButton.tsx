@@ -8,7 +8,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useGiftPageContext } from "@context/gift/GiftContext";
-import useAuthStore from "@store/auth";
+import useAuthStore from "@store/auth/auth";
 import { useMutation } from "@tanstack/react-query";
 import { reserveGift } from "@components/features/form/giftForm/_utils";
 import sxs from "./_styles";

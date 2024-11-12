@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getLocalStorageItem } from "@utils/localStorage";
 import { ProfileContextValues } from "./_props";
-import useAuthStore from "@store/auth";
+import useAuthStore from "@store/auth/auth";
 
 const defaultValues: ProfileContextValues = {
   user: undefined,
