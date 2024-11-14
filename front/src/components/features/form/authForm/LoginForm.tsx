@@ -4,13 +4,13 @@ import { Button, Flex, useToast } from "@chakra-ui/react";
 import { useMutation } from "@tanstack/react-query";
 import { SavableAuthValues, AuthUseFormProps } from "./_props";
 import { defaultValues, login } from "./_utils";
-import Email from "../fields/Email";
+import Email from "../fields/email/Email";
 import Password from "../fields/password/Password";
 import text from "../../../../utils/text.json";
 import sxs from "../_styles";
 import { useNavigate } from "react-router-dom";
-import useAuthStore from "@store/auth";
-import { LoginParams } from "@store/_props";
+import useAuthStore from "@store/auth/auth";
+import { LoginParams } from "@store/auth/_props";
 
 const LoginForm: FC = () => {
   const navigate = useNavigate();

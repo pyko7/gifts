@@ -7,6 +7,7 @@ export type PasswordProps = {
   name?: PasswordFieldName;
   placeholder?: string;
   inputMode?: string;
+  label?: string;
 };
 
 export type UsePasswordFormContext =

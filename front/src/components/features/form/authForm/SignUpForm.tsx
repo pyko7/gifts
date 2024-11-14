@@ -4,7 +4,7 @@ import { Button, Flex, useToast } from "@chakra-ui/react";
 import { useMutation } from "@tanstack/react-query";
 import { SavableAuthValues, AuthUseFormProps } from "./_props";
 import { defaultValues, signup } from "./_utils";
-import Email from "../fields/Email";
+import Email from "../fields/email/Email";
 import Password from "../fields/password/Password";
 import text from "../../../../utils/text.json";
 import sxs from "../_styles";

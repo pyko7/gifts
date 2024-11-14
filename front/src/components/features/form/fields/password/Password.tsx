@@ -11,6 +11,7 @@ import { PasswordProps, UsePasswordFormContext } from "./_props";
 const Password: FC<PasswordProps> = ({
   name = "password",
   placeholder = "Mot de passe",
+  label = " Mot de passe",
 }) => {
   const { watch, setValue } = useFormContext<UsePasswordFormContext>();
 
@@ -33,8 +34,8 @@ const Password: FC<PasswordProps> = ({
       }}
       render={({ field, formState: { errors } }) => (
         <CommonFormControl
-          label="Mot de passe"
-          errorMessage={errors.password?.message?.toString()}
+          label={label}
+          errorMessage={errors[field.name]?.message?.toString()}
         >
           <InputGroup sx={sxs.inputGroup}>
             <Input
