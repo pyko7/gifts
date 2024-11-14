@@ -8,6 +8,12 @@ import EmailService from './EmailService'
 import { EmailServiceType, EmailUser } from './emailService/_types'
 import { generateSignUpEmailTemplate } from '../templates/email/signup'
 
+type HandleEmailUpdate = {
+  currentEmail: string
+  email: string
+  newEmail: string
+}
+
 class UserService {
   id: string | null
   name: string | null
@@ -163,6 +169,17 @@ class UserService {
         '[UserService - deleteUser]: An unexpected error has occurred'
       )
     }
+  }
+  static handleEmailUpdate(emails: HandleEmailUpdate) {
+    const { currentEmail, email, newEmail } = emails
+
+    if (currentEmail !== email) {
+      throw new Error('Wrong current email')
+    }
+    if (currentEmail === newEmail) {
+      throw new Error('Emails have to be different')
+    }
+    return newEmail
   }
 }
 

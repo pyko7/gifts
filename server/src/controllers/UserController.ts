@@ -49,8 +49,21 @@ class UserController {
       if (!secret) {
         throw new Error('Missing secret')
       }
-      const user = await c.req.json()
+      let user = await c.req.json()
       const userId = getUserId(c)
+
+      if (user.newEmail) {
+        const currentUser = await UserService.getUserById(userId ?? '')
+        const currentEmail = currentUser.email
+        const emails = {
+          currentEmail,
+          email: user.email,
+          newEmail: user.newEmail
+        }
+        const validNewEmail = UserService.handleEmailUpdate(emails)
+
+        user = { ...user, email: validNewEmail }
+      }
 
       if (!userId) {
         return c.text('Invalid session token', 401)
@@ -71,6 +84,7 @@ class UserController {
       return c.text(' Error while updating the user', 500)
     }
   }
+
   deleteUser = async (c: Context) => {
     try {
       const userId = getUserId(c)
