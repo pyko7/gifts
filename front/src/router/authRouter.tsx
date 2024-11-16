@@ -1,6 +1,7 @@
 import { AuthFormProvider } from "@context/authForm/authForm";
 import AuthPage from "@pages/auth/AuthPage";
 import ErrorPage from "@pages/error/ErrorPage";
+import NotFoundPage from "@pages/notFound/NotFoundPage";
 
 export const authRouter = [
   {
@@ -38,6 +39,6 @@ export const authRouter = [
   },
   {
     path: "*",
-    element: <ErrorPage />,
+    element: <NotFoundPage />,
   },
 ];

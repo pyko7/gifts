@@ -2,7 +2,7 @@ import { Button, Flex, Text } from "@chakra-ui/react";
 import { FC } from "react";
 import { Link } from "react-router-dom";
 
-const ErrorPage: FC = () => (
+const NotFoundPage: FC = () => (
   <Flex
     w="100%"
     h="100%"
@@ -11,11 +11,11 @@ const ErrorPage: FC = () => (
     gap="2rem"
     alignItems="center"
   >
-    <Text fontSize="2rem">Une erreur s'est produite</Text>
+    <Text fontSize="2rem">Oups, cette page n'existe pas</Text>
     <Button as={Link} to="/" maxW="20rem">
       Retourner à la page d'accueil
     </Button>
   </Flex>
 );
 
-export default ErrorPage;
+export default NotFoundPage;
