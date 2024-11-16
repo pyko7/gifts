@@ -117,6 +117,7 @@ class GiftController {
       if (!body) throw new Error('No request provided')
 
       const currentGift = await GiftService.getGiftById(body['id'] ?? '')
+
       let image = undefined
 
       // if new file
@@ -133,9 +134,9 @@ class GiftController {
       } else if (!body['imageUrl']) {
         const mediaService = new MediaService(currentGift.imageUrl ?? '')
         const hasToDelete = mediaService.checkHasToDelete()
-        if (!hasToDelete) return
-        mediaService.deleteFile('gifts')
-
+        if (hasToDelete) {
+          mediaService.deleteFile('gifts')
+        }
         // else file hasn't changed
       } else {
         image = {

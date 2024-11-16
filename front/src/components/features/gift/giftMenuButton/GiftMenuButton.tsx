@@ -12,8 +12,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import useAuthStore from "@store/auth/auth";
 import { DeleteGift } from "@components/features/form/giftForm/_props";
 import text from "../../../../utils/text.json";
+import { useGiftPageContext } from "@context/gift/GiftContext";
 
 const GiftMenuButton: FC = () => {
+  const { isSelfGift } = useGiftPageContext();
   const { openModal } = useGiftFormContext();
   const { pathname } = useLocation();
   const { user } = useAuthStore();
@@ -46,6 +48,10 @@ const GiftMenuButton: FC = () => {
       mutation.mutate(data);
     }
   };
+
+  if (!isSelfGift) {
+    return null;
+  }
 
   return (
     <CommonMenu menuButtonIcon={EllipsisVerticalIcon}>
