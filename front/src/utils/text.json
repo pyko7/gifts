@@ -67,13 +67,6 @@
       }
     }
   },
-  "success": {
-    "gift": {
-      "reservation": {
-        "global": "Le gift a été réservé"
-      }
-    }
-  },
   "error": {
     "auth": {
       "signup": {

@@ -11,10 +11,15 @@ export default makeSx({
       borderColor: (theme) => theme.colors.main["600"],
     },
   },
-  cardImage: {
+  cardImageContainer: {
+    position: "relative",
     width: "100%",
     height: "100%",
     aspectRatio: "1/1",
+  },
+  cardImage: {
+    width: "100%",
+    height: "100%",
     objectFit: "cover",
   },
   cardBody: {

@@ -5,9 +5,10 @@ import sxs from "./_styles";
 import { useGiftPageContext } from "@context/gift/GiftContext";
 import { useGiftFormContext } from "@context/giftForm/GiftFormContext";
 import ImagePlaceholder from "@components/common/imagePlaceholder/ImagePlaceholder";
+import GiftCardLayer from "../card/giftCardLayer/GiftCardLayer";
 
 const Gift: FC = () => {
-  const { gift, isLoading } = useGiftPageContext();
+  const { gift, isLoading, isSelfGift } = useGiftPageContext();
   const { getFormValues } = useGiftFormContext();
 
   useEffect(() => {
@@ -24,6 +25,9 @@ const Gift: FC = () => {
       sx={sxs.container}
     >
       <Skeleton isLoaded={!isLoading} sx={sxs.image}>
+        {gift?.state === "unavailable" && !isSelfGift && (
+          <GiftCardLayer label="Déjà réservé" />
+        )}
         {gift?.imageUrl ? (
           <Image src={gift.imageUrl} alt={gift?.name} sx={sxs.image} />
         ) : (

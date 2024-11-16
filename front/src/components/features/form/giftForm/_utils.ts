@@ -1,5 +1,6 @@
 import { API_URL } from "@utils/env";
 import { DeleteGift, GiftFormProps } from "./_props";
+import { GiftStateEnum } from "src/types/gift";
 
 export const defaultValues: GiftFormProps = {
   name: undefined,
@@ -53,7 +54,9 @@ export const deleteGift = async (data: DeleteGift) => {
   return;
 };
 
-export const reserveGift = async (giftId: string) => {
+export const handleGiftReservation = async (
+  giftId: string
+): Promise<GiftStateEnum> => {
   const res = await fetch(`${API_URL}/gift/reservation/${giftId}`, {
     method: "PUT",
     credentials: "include",
@@ -62,5 +65,6 @@ export const reserveGift = async (giftId: string) => {
     const errorMessage = await res.text();
     throw new Error(errorMessage);
   }
-  return;
+  const data = await res.json();
+  return data;
 };

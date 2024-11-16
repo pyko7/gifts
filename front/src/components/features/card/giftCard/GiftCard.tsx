@@ -13,18 +13,23 @@ import { GiftIcon, SparklesIcon } from "@components/common/icons";
 import { GiftCardProps } from "./_props";
 import { Link } from "react-router-dom";
 import ImagePlaceholder from "@components/common/imagePlaceholder/ImagePlaceholder";
+import GiftCardLayer from "../giftCardLayer/GiftCardLayer";
 
-//TODO: handle state and reserverdBy
-const GiftCard: FC<GiftCardProps> = ({ gift }) => (
+const GiftCard: FC<GiftCardProps> = ({ gift, isSelf }) => (
   <Card as={Link} to={`/gift/${gift.id}`} variant="outline" sx={sxs.card}>
     <CardBody sx={sxs.cardBody}>
       {gift.imageUrl ? (
-        <Image
-          src={gift.imageUrl}
-          alt={gift.name}
-          borderRadius="lg"
-          sx={sxs.cardImage}
-        />
+        <Box sx={sxs.cardImageContainer}>
+          <Image
+            src={gift.imageUrl}
+            alt={gift.name}
+            borderRadius="lg"
+            sx={sxs.cardImage}
+          />
+          {gift.state === "unavailable" && !isSelf && (
+            <GiftCardLayer label="Déjà réservé" />
+          )}
+        </Box>
       ) : (
         <ImagePlaceholder
           sx={{
@@ -35,6 +40,9 @@ const GiftCard: FC<GiftCardProps> = ({ gift }) => (
           <Flex aria-hidden="true" p="5rem" sx={sxs.iconPlaceholder}>
             <GiftIcon />
           </Flex>
+          {gift.state === "unavailable" && !isSelf && (
+            <GiftCardLayer label="Déjà réservé" />
+          )}
         </ImagePlaceholder>
       )}
     </CardBody>

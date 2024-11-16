@@ -9,7 +9,7 @@ import { getGiftsByUserId } from "./_utils";
 import useGiftsStore from "@store/auth/gifts/gifts";
 
 const GiftCardContainer: FC = () => {
-  const { user } = useProfileContext();
+  const { user, isSelf } = useProfileContext();
   const { setGiftsNumber } = useGiftsStore();
   const { data: gifts, isLoading } = useQuery({
     queryKey: ["profileGifts", user?.id],
@@ -27,7 +27,7 @@ const GiftCardContainer: FC = () => {
       {gifts?.map((gift) => (
         <Flex key={generateUniqueId()} sx={sxs.innerContainer}>
           <Skeleton isLoaded={!isLoading} sx={sxs.skeleton}>
-            <GiftCard gift={gift} />
+            <GiftCard gift={gift} isSelf={isSelf} />
           </Skeleton>
         </Flex>
       ))}

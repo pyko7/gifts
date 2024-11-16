@@ -10,27 +10,41 @@ import {
 import { useGiftPageContext } from "@context/gift/GiftContext";
 import useAuthStore from "@store/auth/auth";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { reserveGift } from "@components/features/form/giftForm/_utils";
+import { handleGiftReservation } from "@components/features/form/giftForm/_utils";
 import sxs from "./_styles";
 import text from "../../../../utils/text.json";
 
 const GiftPriceAndButton: FC = () => {
   const { gift, isLoading, isSelfGift } = useGiftPageContext();
   const toast = useToast();
-  const successMessage = text.success.gift.reservation.global;
+  const successfulReservation = "Le gift a été réservé";
+  const successfulCancelation = "Réservation annulée";
   const globalError = text.error.gift.delete.global;
   const queryClient = useQueryClient();
 
   const { user } = useAuthStore();
 
+  const isGiftUnavailable = gift?.state === "unavailable";
+  const isGiftAvailable = gift?.state === "available";
+  const isGiftReservedByUser = gift?.reservedById === user?.userId;
+
+  const canCancelReservation = isGiftUnavailable && isGiftReservedByUser;
+
+  const buttonName =
+    isGiftAvailable || (isGiftUnavailable && !isGiftReservedByUser)
+      ? "Réserver"
+      : "Annuler";
+
   const mutation = useMutation({
-    mutationFn: reserveGift,
-    onSuccess: () => {
+    mutationFn: handleGiftReservation,
+    onSuccess: (data) => {
+      console.log({ data });
       queryClient.invalidateQueries({
         queryKey: ["giftById"],
       });
       toast({
-        title: successMessage,
+        title:
+          data === "available" ? successfulCancelation : successfulReservation,
         status: "success",
         duration: 9000,
         isClosable: true,
@@ -70,11 +84,11 @@ const GiftPriceAndButton: FC = () => {
         <Box sx={sxs.button}>
           <SkeletonText noOfLines={1} skeletonHeight={8} isLoaded={!isLoading}>
             <Button
-              isDisabled={gift?.state === "unavailable"}
+              isDisabled={isGiftUnavailable && !canCancelReservation}
               w="100%"
               onClick={handleClick}
             >
-              Réserver
+              {buttonName}
             </Button>
           </SkeletonText>
         </Box>

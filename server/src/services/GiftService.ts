@@ -151,6 +151,7 @@ class GiftService {
       if (result.length === 0) {
         throw new Error('No gift found')
       }
+      return result[0].state
     } catch (error) {
       if (error instanceof Error || error instanceof DrizzleError) {
         throw new Error(`[GiftService - reserveGift]: ${error.message}`)

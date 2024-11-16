@@ -6,6 +6,7 @@ export default makeSx({
     padding: "1rem",
   },
   image: {
+    position: "relative",
     width: "100%",
     maxWidth: "22rem",
     aspectRatio: "1 / 1",

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-type GiftStateEnum = "available" | "unavailable";
+export type GiftStateEnum = "available" | "unavailable";
 const giftWishRateEnum = ["1", "2", "3", "4", "5"] as const;
 
 type GiftWishRateEnum = typeof giftWishRateEnum;

@@ -210,19 +210,20 @@ class GiftController {
 
       const userId = getUserId(c)
 
-      if (!userId)
+      if (!userId || (gift.reservedById && gift.reservedById !== userId))
         return c.text('[GiftController - reserveGift]: Wrong userId', 401)
 
       const state = gift.state === 'available' ? 'unavailable' : 'available'
 
       const computedReservation: ReserveGift = {
         giftId,
-        reservedById: userId,
+        reservedById: state === 'available' ? null : userId,
         state
       }
 
-      GiftService.reserveGift(computedReservation)
-      return c.text('Reservation successfully made', 200)
+      const result = await GiftService.reserveGift(computedReservation)
+
+      return c.json(result, 200)
     } catch (error) {
       if (error instanceof Error || error instanceof DrizzleError) {
         return c.text(error.message, 400)
