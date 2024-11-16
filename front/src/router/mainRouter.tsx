@@ -5,6 +5,8 @@ import { ProfileProvider } from "@context/profile/ProfileContext";
 import ErrorPage from "@pages/error/ErrorPage";
 import GiftPage from "@pages/gift/GiftPage";
 import GiftFormProvider from "@context/giftForm/GiftFormContext";
+import UpdateProfilePage from "@pages/updateProfile/UpdateProfilePage";
+import UpdateProfileFormProvider from "@context/updateProfile/UpdateProfileContext";
 
 export const mainRouter = [
   {
@@ -21,6 +23,16 @@ export const mainRouter = [
         element: (
           <ProfileProvider>
             <ProfilePage />
+          </ProfileProvider>
+        ),
+      },
+      {
+        path: "profile/update",
+        element: (
+          <ProfileProvider>
+            <UpdateProfileFormProvider>
+              <UpdateProfilePage />
+            </UpdateProfileFormProvider>
           </ProfileProvider>
         ),
       },

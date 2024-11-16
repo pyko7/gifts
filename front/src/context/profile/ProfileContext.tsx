@@ -22,7 +22,9 @@ export const ProfileProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const splitPathname = pathname.split("/").filter((x) => x.length !== 0);
 
-  const isSelf = splitPathname[0] === "profile" && splitPathname.length === 1;
+  const isSelf =
+    (splitPathname[0] === "profile" && splitPathname.length === 1) ||
+    (splitPathname.includes("profile") && splitPathname.includes("update"));
 
   const userId: string | null = isSelf
     ? getLocalStorageItem("user").userId
