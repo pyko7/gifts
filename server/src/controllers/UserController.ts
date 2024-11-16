@@ -5,6 +5,7 @@ import { deleteCookie } from 'hono/cookie'
 import { Context } from 'hono'
 import MediaService from '../services/mediaService/MediaService'
 import { UserFormData } from '../types/user'
+import { getContentType } from '../utils/api/getContentType'
 
 class UserController {
   constructor() {}
@@ -51,23 +52,28 @@ class UserController {
       if (!secret) {
         throw new Error('Missing secret')
       }
-      //REFACTO ****
-      let user
-      const headers = await c.req.header()
-      const contentType = headers['content-type']
 
-      if (contentType.includes('application/json')) {
+      let user
+      const contentType = getContentType(c)
+      const userId = getUserId(c)
+
+      if (contentType === 'JSON') {
         user = await c.req.json()
-      } else if (
-        contentType.includes('application/x-www-form-urlencoded') ||
-        contentType.includes('multipart/form-data')
-      ) {
+      } else if (contentType === 'FORMDATA') {
         const body = await c.req.parseBody<UserFormData>({ dot: true })
         let image = undefined
         if (body['file']) {
+          const currentUser = await UserService.getUserById(userId ?? '')
+          if (currentUser?.imageUrl) {
+            const mediaService = new MediaService(currentUser.imageUrl)
+            const hasToDelete = mediaService.checkHasToDelete()
+            if (!hasToDelete) return
+            mediaService.deleteFile('profilePictures')
+          }
+
           image = await MediaService.uploadAndGetFile(
             body['file'],
-            '/profilePictures'
+            'profilePictures'
           )
         }
         user = {
@@ -77,15 +83,11 @@ class UserController {
           storedImageName: image?.name
         }
       }
-      //REFACTO ****
-
-      const userId = getUserId(c)
 
       if (param !== userId) {
         return c.text('Invalid userId', 401)
       }
 
-      //REFACTO ****
       if (user.newEmail) {
         const currentUser = await UserService.getUserById(userId ?? '')
         const currentEmail = currentUser.email
@@ -99,7 +101,6 @@ class UserController {
         user = { ...user, email: validNewEmail }
       }
 
-      //REFACTO ****
       if (user.password && user.newPassword) {
         const currentUser = await UserService.getUserSensitiveData(userId ?? '')
         const currentPassword = currentUser.password

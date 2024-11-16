@@ -19,7 +19,7 @@ class MediaService {
   ): Promise<UploadAndGetFile | undefined> {
     try {
       const fileName = `${Date.now()}_${file.name}`
-      const destination = `${basePath}/${fileName}`
+      const destination = `uploads/${basePath}/${fileName}`
       const firebaseFile = bucket.file(destination)
 
       const writableStream = firebaseFile.createWriteStream({
@@ -60,14 +60,20 @@ class MediaService {
     }
   }
 
-  async deleteFile() {
+  async deleteFile(folderName: string) {
     try {
+      const fileName = this.getFileName()
+
       await bucket.deleteFiles({
-        prefix: `gifts/${this.url}`
+        prefix: `uploads/${folderName}/${fileName}`
       })
     } catch (error) {
       console.error('[deleteFile -  Deletion  failed:', error)
     }
+  }
+
+  checkHasToDelete() {
+    return this.getFileName()
   }
 }
 

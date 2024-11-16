@@ -78,7 +78,7 @@ class GiftController {
       let image = null
 
       if (body['file']) {
-        image = await MediaService.uploadAndGetFile(body['file'], '/gifts')
+        image = await MediaService.uploadAndGetFile(body['file'], 'gifts')
       }
 
       const computedGift: CreateGift = {
@@ -123,18 +123,18 @@ class GiftController {
       if (body['file']) {
         if (currentGift?.imageUrl) {
           const mediaService = new MediaService(currentGift.imageUrl)
-          const fileName = mediaService.getFileName()
-          if (!fileName) return
-          mediaService.deleteFile()
+          const hasToDelete = mediaService.checkHasToDelete()
+          if (!hasToDelete) return
+          mediaService.deleteFile('gifts')
         }
-        image = await MediaService.uploadAndGetFile(body['file'], '/gifts')
+        image = await MediaService.uploadAndGetFile(body['file'], 'gifts')
 
         // if file has been deleted
       } else if (!body['imageUrl']) {
         const mediaService = new MediaService(currentGift.imageUrl ?? '')
-        const fileName = mediaService.getFileName()
-        if (!fileName) return
-        mediaService.deleteFile()
+        const hasToDelete = mediaService.checkHasToDelete()
+        if (!hasToDelete) return
+        mediaService.deleteFile('gifts')
 
         // else file hasn't changed
       } else {
@@ -181,9 +181,9 @@ class GiftController {
 
       if (result && result.imageUrl) {
         const mediaService = new MediaService(result.imageUrl)
-        const fileName = mediaService.getFileName()
-        if (fileName) {
-          mediaService.deleteFile()
+        const hasToDelete = mediaService.checkHasToDelete()
+        if (hasToDelete) {
+          mediaService.deleteFile('gifts')
         }
       }
 

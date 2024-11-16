@@ -75,7 +75,7 @@ class GiftService {
     } catch (error) {
       if (gift.storedImageName) {
         const mediaService = new MediaService(gift.storedImageName)
-        mediaService.deleteFile()
+        mediaService.deleteFile('gifts')
       }
       if (error instanceof Error || error instanceof DrizzleError) {
         throw new Error(`[GiftService - createGift]: ${error.message}`)
