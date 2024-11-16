@@ -1,4 +1,10 @@
-import { createContext, FC, PropsWithChildren, useContext } from "react";
+import {
+  createContext,
+  FC,
+  PropsWithChildren,
+  useContext,
+  useMemo,
+} from "react";
 import { GiftPageContextDefaultValues } from "./_props";
 import { useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -41,7 +47,10 @@ const GiftPageProvider: FC<PropsWithChildren<GiftPageProviderProps>> = ({
     enabled: Boolean(giftId),
   });
 
-  const isSelfGift = user?.userId === gift?.userId;
+  const isSelfGift = useMemo(
+    () => user?.userId === gift?.userId,
+    [gift?.userId, user?.userId]
+  );
 
   const { data: reservedBy } = useQuery({
     queryKey: ["giftReservedById", gift?.reservedById],

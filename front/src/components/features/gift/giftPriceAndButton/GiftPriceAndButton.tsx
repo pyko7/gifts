@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { useGiftPageContext } from "@context/gift/GiftContext";
 import useAuthStore from "@store/auth/auth";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { reserveGift } from "@components/features/form/giftForm/_utils";
 import sxs from "./_styles";
 import text from "../../../../utils/text.json";
@@ -19,12 +19,16 @@ const GiftPriceAndButton: FC = () => {
   const toast = useToast();
   const successMessage = text.success.gift.reservation.global;
   const globalError = text.error.gift.delete.global;
+  const queryClient = useQueryClient();
 
   const { user } = useAuthStore();
 
   const mutation = useMutation({
     mutationFn: reserveGift,
     onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["giftById"],
+      });
       toast({
         title: successMessage,
         status: "success",

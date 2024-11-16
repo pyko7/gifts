@@ -9,6 +9,7 @@ import useAuthStore from "@store/auth/auth";
 const defaultValues: ProfileContextValues = {
   user: undefined,
   isLoading: false,
+  isSelf: false,
 };
 
 const ProfileContext = createContext<ProfileContextValues>(defaultValues);
@@ -49,6 +50,7 @@ export const ProfileProvider: FC<PropsWithChildren> = ({ children }) => {
       value={{
         user: data,
         isLoading,
+        isSelf,
       }}
     >
       {children}

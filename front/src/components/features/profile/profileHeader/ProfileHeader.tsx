@@ -13,19 +13,13 @@ const ProfileHeader: FC = () => {
   return (
     <Flex sx={sxs.profileHeader}>
       <Flex sx={sxs.profileHeaderInnerContainer}>
-        <Avatar
-          size="xl"
-          name={user?.name}
-          src="https://cdn.pixabay.com/photo/2019/06/22/19/01/golden-retriever-4292254_1280.jpg"
-        />
+        <Avatar size="xl" name={user?.name} src={user?.imageUrl} />
         {isLoading ? (
           <ProfileHeaderSkeleton />
         ) : (
           <Flex sx={sxs.profileHeaderTextContainer}>
             <Text sx={sxs.profileHeaderText}>{user?.name}</Text>
-            {giftsNumber && (
-              <Text sx={sxs.profileHeaderTextLight}>{giftsNumber} gifts</Text>
-            )}
+            <Text sx={sxs.profileHeaderTextLight}>{giftsNumber} gifts</Text>
           </Flex>
         )}
       </Flex>

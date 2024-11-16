@@ -2,6 +2,7 @@ import makeSx from "@utils/makeSx";
 
 export default makeSx({
   container: {
+    width: "100%",
     flex: 1,
     flexDirection: {
       base: "column",

@@ -7,20 +7,32 @@ import {
 } from "@components/common/icons";
 import CommonMenu from "@components/common/menu/Menu";
 import sxs from "./_styles";
-import { LinkSlash } from "@components/common/icons";
 import { useGiftFormContext } from "@context/giftForm/GiftFormContext";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useProfileContext } from "@context/profile/ProfileContext";
 
 const ProfileMenuButton: FC = () => {
+  const { isSelf } = useProfileContext();
   const { openModal } = useGiftFormContext();
-  const { pathname } = useLocation();
   const navigate = useNavigate();
-  const splitPathname = pathname.split("/").filter((x) => x.length !== 0);
-  const isSelf = splitPathname[0] === "profile" && splitPathname.length === 1;
 
   const handleNavigation = () => {
     navigate("/profile/update");
   };
+
+  if (!isSelf) {
+    return (
+      <CommonMenu menuButtonIcon={EllipsisVerticalIcon}>
+        <MenuItem
+          sx={sxs.menuTextImportant}
+          icon={<Box sx={sxs.menuIconImportant}>{<TrashIcon />}</Box>}
+        >
+          Supprimer la relation
+        </MenuItem>
+      </CommonMenu>
+    );
+  }
+
   return (
     <>
       <Button sx={sxs.gitfButton} onClick={() => openModal("CREATION")}>
@@ -33,21 +45,12 @@ const ProfileMenuButton: FC = () => {
         >
           Modifier le profil
         </MenuItem>
-        {!isSelf ? (
-          <MenuItem
-            sx={sxs.menuTextImportant}
-            icon={<Box sx={sxs.menuIconImportant}>{<LinkSlash />}</Box>}
-          >
-            Supprimer la relation
-          </MenuItem>
-        ) : (
-          <MenuItem
-            sx={sxs.menuTextImportant}
-            icon={<Box sx={sxs.menuIconImportant}>{<TrashIcon />}</Box>}
-          >
-            Supprimer le compte
-          </MenuItem>
-        )}
+        <MenuItem
+          sx={sxs.menuTextImportant}
+          icon={<Box sx={sxs.menuIconImportant}>{<TrashIcon />}</Box>}
+        >
+          Supprimer le compte
+        </MenuItem>
       </CommonMenu>
     </>
   );
