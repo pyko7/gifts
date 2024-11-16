@@ -17,3 +17,4 @@ export { default as PencilSquareIcon } from "./PencilSquareIcon";
 export { default as PlusIcon } from "./PlusIcon";
 export { default as TrashIcon } from "./TrashIcon";
 export { default as GiftIcon } from "./GiftIcon";
+export { default as ArrowUpRight } from "./ArrowUpRight";
