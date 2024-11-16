@@ -13,4 +13,9 @@ export default makeSx({
     objectFit: "cover",
     borderRadius: (theme) => theme.radii.xl,
   },
+  iconPlaceholder: {
+    "& > svg": {
+      color: (theme) => theme.colors.main[400],
+    },
+  },
 });
