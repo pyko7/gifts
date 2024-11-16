@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { Box, Button, MenuItem } from "@chakra-ui/react";
+import { FC, useState } from "react";
+import { Box, Button, MenuItem, useToast } from "@chakra-ui/react";
 import {
   EllipsisVerticalIcon,
   PencilSquareIcon,
@@ -10,14 +10,45 @@ import sxs from "./_styles";
 import { useGiftFormContext } from "@context/giftForm/GiftFormContext";
 import { useNavigate } from "react-router-dom";
 import { useProfileContext } from "@context/profile/ProfileContext";
+import ConfirmModal from "@components/common/confirmModal/ConfirmModal";
+import { useMutation } from "@tanstack/react-query";
+import { deleteUser } from "./_utils";
+import text from "../../../../utils/text.json";
 
 const ProfileMenuButton: FC = () => {
   const { isSelf } = useProfileContext();
   const { openModal } = useGiftFormContext();
   const navigate = useNavigate();
+  const toast = useToast();
+  const [deleteModal, setDeleteModal] = useState(false);
+  const globalError = (text.error.user as any).delete.global;
 
   const handleNavigation = () => {
     navigate("/profile/update");
+  };
+
+  const handleClick = () => {
+    setDeleteModal(!deleteModal);
+  };
+
+  const mutation = useMutation({
+    mutationFn: deleteUser,
+    onSuccess: () => {
+      localStorage.clear();
+      navigate("/login");
+    },
+    onError: () => {
+      toast({
+        title: globalError,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    },
+  });
+
+  const handleDeletion = () => {
+    mutation.mutate();
   };
 
   if (!isSelf) {
@@ -48,10 +79,18 @@ const ProfileMenuButton: FC = () => {
         <MenuItem
           sx={sxs.menuTextImportant}
           icon={<Box sx={sxs.menuIconImportant}>{<TrashIcon />}</Box>}
+          onClick={handleClick}
         >
           Supprimer le compte
         </MenuItem>
       </CommonMenu>
+      <ConfirmModal
+        title="Confirmer la suppression"
+        confirmText="Voulez-vous vraiment supprimer votre compte ?"
+        isOpen={deleteModal}
+        onClick={handleDeletion}
+        onClose={handleClick}
+      />
     </>
   );
 };

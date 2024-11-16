@@ -7,7 +7,9 @@ export const wishRateEnum = pgEnum('wishRate', ['1', '2', '3', '4', '5'])
 
 export const gifts = pgTable('gifts', {
   id: uuid('id').defaultRandom().primaryKey().notNull(),
-  userId: uuid('userId').notNull(),
+  userId: uuid('userId')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
   name: text('name').notNull(),
   url: text('url'),
   description: text('description').notNull(),

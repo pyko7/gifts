@@ -143,24 +143,23 @@ class UserController {
   deleteUser = async (c: Context) => {
     try {
       const userId = getUserId(c)
+
       if (!userId) {
         return c.text(
-          '[UserController - updateUser]: Invalid session token',
+          '[UserController - deleteUser]: Invalid session token',
           401
         )
       }
+
       await UserService.deleteUser(userId)
       deleteCookie(c, 'session')
-      c.text('User successfully deleted', 200)
-      return c.redirect('/')
+      return c.text('User successfully deleted', 200)
     } catch (error) {
+      console.log(`[UserController - deleteUser]: ${error}`)
       if (error instanceof Error || error instanceof DrizzleError) {
         return c.text(error.message, 400)
       }
-      return c.text(
-        '[UserController - updateUser]: Error while deleting the user',
-        500
-      )
+      return c.text('Error while deleting the user', 500)
     }
   }
 }

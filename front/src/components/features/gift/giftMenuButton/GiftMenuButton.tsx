@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { EllipsisVerticalIcon } from "@components/common/icons";
 import CommonMenu from "@components/common/menu/Menu";
 import sxs from "./_styles";
@@ -13,6 +13,7 @@ import useAuthStore from "@store/auth/auth";
 import { DeleteGift } from "@components/features/form/giftForm/_props";
 import text from "../../../../utils/text.json";
 import { useGiftPageContext } from "@context/gift/GiftContext";
+import ConfirmModal from "@components/common/confirmModal/ConfirmModal";
 
 const GiftMenuButton: FC = () => {
   const { isSelfGift } = useGiftPageContext();
@@ -22,6 +23,8 @@ const GiftMenuButton: FC = () => {
   const navigate = useNavigate();
   const toast = useToast();
   const globalError = text.error.gift.delete.global;
+
+  const [deleteModal, setDeleteModal] = useState(false);
 
   const mutation = useMutation({
     mutationFn: deleteGift,
@@ -39,6 +42,10 @@ const GiftMenuButton: FC = () => {
   });
 
   const handleClick = () => {
+    setDeleteModal(!deleteModal);
+  };
+
+  const handleDeletion = () => {
     const giftId = pathname.split("/").filter((x) => x)[1];
     const data: DeleteGift = {
       giftUserId: user?.userId ?? "",
@@ -54,25 +61,34 @@ const GiftMenuButton: FC = () => {
   }
 
   return (
-    <CommonMenu menuButtonIcon={EllipsisVerticalIcon}>
-      <MenuItem
-        onClick={() => openModal("EDIT")}
-        icon={<Box sx={sxs.menuIconBase}>{<PencilSquareIcon />}</Box>}
-      >
-        Modifier le gift
-      </MenuItem>
-      <MenuItem
-        sx={sxs.menuTextImportant}
-        icon={
-          <Box sx={{ ...sxs.menuIconBase, ...sxs.menuIconImportant }}>
-            {<LinkSlash />}
-          </Box>
-        }
-        onClick={handleClick}
-      >
-        Supprimer le gift
-      </MenuItem>
-    </CommonMenu>
+    <>
+      <CommonMenu menuButtonIcon={EllipsisVerticalIcon}>
+        <MenuItem
+          onClick={() => openModal("EDIT")}
+          icon={<Box sx={sxs.menuIconBase}>{<PencilSquareIcon />}</Box>}
+        >
+          Modifier le gift
+        </MenuItem>
+        <MenuItem
+          sx={sxs.menuTextImportant}
+          icon={
+            <Box sx={{ ...sxs.menuIconBase, ...sxs.menuIconImportant }}>
+              {<LinkSlash />}
+            </Box>
+          }
+          onClick={handleClick}
+        >
+          Supprimer le gift
+        </MenuItem>
+      </CommonMenu>
+      <ConfirmModal
+        title="Confirmer la suppression"
+        confirmText="Voulez-vous vraiment supprimer ce gift ?"
+        isOpen={deleteModal}
+        onClick={handleDeletion}
+        onClose={handleClick}
+      />
+    </>
   );
 };
 
