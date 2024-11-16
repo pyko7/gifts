@@ -4,7 +4,7 @@ import { Input, InputGroup, InputRightElement } from "@chakra-ui/react";
 import { EyeIcon, EyeSlashIcon, CloseIcon } from "@components/common/icons";
 import ButtonIcon from "@components/common/button/buttonIcon/ButtonIcon";
 import CommonFormControl from "@components/common/formControl/CommonFormControl";
-import { isPasswordValid } from "@utils/validation";
+import { isConfirmPasswordValid, isPasswordValid } from "@utils/validation";
 import sxs from "../../_styles";
 import { PasswordProps, UsePasswordFormContext } from "./_props";
 
@@ -19,6 +19,7 @@ const Password: FC<PasswordProps> = ({
     password: watch("passwordInputMode"),
     newPassword: watch("newPasswordInputMode"),
     confirmNewPassword: watch("confirmNewPasswordInputMode"),
+    newPasswordValue: watch("newPassword"),
   };
 
   const handleClear = () => {
@@ -30,7 +31,10 @@ const Password: FC<PasswordProps> = ({
       name={name}
       rules={{
         required: "Le mot de passe est manquant",
-        validate: isPasswordValid,
+        validate: (val) =>
+          name === "confirmNewPassword"
+            ? isConfirmPasswordValid(watched.newPasswordValue, val)
+            : isPasswordValid(val),
       }}
       render={({ field, formState: { errors } }) => (
         <CommonFormControl

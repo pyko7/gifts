@@ -14,6 +14,12 @@ type HandleEmailUpdate = {
   newEmail: string
 }
 
+type HandlePasswordReset = {
+  currentPassword: string
+  password: string
+  newPassword: string
+}
+
 class UserService {
   id: string | null
   name: string | null
@@ -27,10 +33,18 @@ class UserService {
     this.password = user.password
   }
 
-  static async hashPassword(
-    password: string,
-    saltRounds: number
-  ): Promise<string> {
+  static async hashPassword(password: string): Promise<string> {
+    // eslint-disable-next-line no-undef
+    const { MIN_SALT_VALUE, MAX_SALT_VALUE } = process.env
+
+    if (!MIN_SALT_VALUE || !MAX_SALT_VALUE)
+      throw new Error('No salt value provided')
+
+    const saltRounds = generateRandomNumber(
+      parseInt(MIN_SALT_VALUE),
+      parseInt(MAX_SALT_VALUE)
+    )
+
     return new Promise((resolve, reject) => {
       bcrypt.hash(password, saltRounds, (err, hash) => {
         if (err) {
@@ -44,20 +58,10 @@ class UserService {
 
   static async createUser(email: string, password: string) {
     try {
-      // eslint-disable-next-line no-undef
-      const { MIN_SALT_VALUE, MAX_SALT_VALUE } = process.env
-
       if (!email || !password)
         throw new Error('Missing email or password parameter')
-      else if (!MIN_SALT_VALUE || !MAX_SALT_VALUE)
-        throw new Error('No salt value provided')
 
-      const saltRounds = generateRandomNumber(
-        parseInt(MIN_SALT_VALUE),
-        parseInt(MAX_SALT_VALUE)
-      )
-
-      const hashedPassword = await this.hashPassword(password, saltRounds)
+      const hashedPassword = await this.hashPassword(password)
       const result = await db
         .insert(users)
         .values({ email, password: hashedPassword })
@@ -127,6 +131,31 @@ class UserService {
     }
   }
 
+  static async getUserSensitiveData(id: string) {
+    try {
+      const res: User | undefined = await db.query.users.findFirst({
+        where: eq(users.id, id)
+      })
+
+      if (!res) {
+        throw new Error('Retrieve failed, no user found ')
+      }
+
+      const user: Pick<User, 'password'> = {
+        password: res.password
+      }
+
+      return user
+    } catch (error) {
+      if (error instanceof Error || error instanceof DrizzleError) {
+        throw new Error(`[UserService - getUserById]: ${error.message}`)
+      }
+      throw new Error(
+        '[UserService - getUserById]: An unexpected error has occurred'
+      )
+    }
+  }
+
   static async updateUser(user: User, userId: string) {
     try {
       const result: User[] = await db
@@ -180,6 +209,27 @@ class UserService {
       throw new Error('Emails have to be different')
     }
     return newEmail
+  }
+  static async handlePasswordReset(passwords: HandlePasswordReset) {
+    const { currentPassword, password, newPassword } = passwords
+
+    const isCurrentPasswordMatch = await bcrypt.compare(
+      password,
+      currentPassword
+    )
+    if (!isCurrentPasswordMatch) {
+      throw new Error('Wrong current password')
+    }
+
+    const isNewPasswordSameAsCurrent = await bcrypt.compare(
+      newPassword,
+      currentPassword
+    )
+    if (isNewPasswordSameAsCurrent) {
+      throw new Error('Passwords have to be different')
+    }
+
+    return newPassword
   }
 }
 

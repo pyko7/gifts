@@ -17,6 +17,23 @@ export const isPasswordValid = (password: string) => {
     : "Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre ainsi qu'un caractère spécial";
 };
 
+/**
+ *
+ * @param {string} password value in password input
+ * @param {string} confirmPassword value in confirmPassword input
+ */
+export const isConfirmPasswordValid = (
+  password: string,
+  confirmPassword: string
+): string | undefined => {
+  const invalidConfirmPassword = isPasswordValid(confirmPassword);
+  if (invalidConfirmPassword) return invalidConfirmPassword;
+  if (password !== confirmPassword) {
+    return "Les mots de passe doivent être similaire";
+  }
+  return undefined;
+};
+
 export const isNameValid = (name: string) =>
   name && name.trim().length > 0 ? undefined : "Veuillez entrer un nom";
 

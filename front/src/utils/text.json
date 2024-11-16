@@ -56,6 +56,14 @@
       },
       "completeProfile": {
         "uniqueUserName": "duplicate key value violates unique constraint \"users_name_unique\""
+      },
+      "user": {
+        "update": {
+          "wrong_email": "Wrong current email",
+          "wrong_password": "Wrong current password",
+          "same_email": "Emails have to be different",
+          "same_password": "Passwords have to be different"
+        }
       }
     }
   },
@@ -82,7 +90,11 @@
     },
     "user": {
       "update": {
-        "global": "Une erreur est survenue lors de la modification du profil"
+        "global": "Une erreur est survenue lors de la modification du profil",
+        "verify_email": "Veuillez vérifier l'adresse email",
+        "verify_password": "Mot de passe invalide",
+        "same_email": "La nouvelle adresse email doit être différente de l'actuelle",
+        "same_password": "Le nouveau mot de passe doit être différent de l'actuel"
       }
     },
     "gift": {

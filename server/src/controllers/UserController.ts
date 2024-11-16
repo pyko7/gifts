@@ -50,7 +50,12 @@ class UserController {
         throw new Error('Missing secret')
       }
       let user = await c.req.json()
+
       const userId = getUserId(c)
+
+      if (param !== userId) {
+        return c.text('Invalid userId', 401)
+      }
 
       if (user.newEmail) {
         const currentUser = await UserService.getUserById(userId ?? '')
@@ -65,12 +70,20 @@ class UserController {
         user = { ...user, email: validNewEmail }
       }
 
-      if (!userId) {
-        return c.text('Invalid session token', 401)
-      }
+      if (user.password && user.newPassword) {
+        const currentUser = await UserService.getUserSensitiveData(userId ?? '')
+        const currentPassword = currentUser.password
+        const passwords = {
+          currentPassword,
+          password: user.password,
+          newPassword: user.newPassword
+        }
 
-      if (param !== userId) {
-        return c.text('Invalid userId', 401)
+        const validNewPassword =
+          await UserService.handlePasswordReset(passwords)
+        const hashedNewPassword =
+          await UserService.hashPassword(validNewPassword)
+        user = { ...user, password: hashedNewPassword }
       }
 
       const updatedUser = await UserService.updateUser(user, userId)
