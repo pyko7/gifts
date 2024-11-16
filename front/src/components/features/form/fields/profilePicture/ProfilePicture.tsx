@@ -31,7 +31,7 @@ const Picture: FC = () => {
     if (filePreview) {
       URL.revokeObjectURL(filePreview);
     }
-    setValue("imageUrl", undefined);
+    setValue("imageUrl", null);
     onChange(undefined);
   };
 

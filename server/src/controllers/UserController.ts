@@ -58,10 +58,20 @@ class UserController {
       const userId = getUserId(c)
 
       if (contentType === 'JSON') {
+        const currentUser = await UserService.getUserById(userId ?? '')
+
         user = await c.req.json()
+
+        if (user.imageUrl === null && currentUser?.imageUrl) {
+          const mediaService = new MediaService(currentUser.imageUrl)
+          const hasToDelete = mediaService.checkHasToDelete()
+          if (!hasToDelete) return
+          mediaService.deleteFile('profilePictures')
+        }
       } else if (contentType === 'FORMDATA') {
         const body = await c.req.parseBody<UserFormData>({ dot: true })
         let image = undefined
+
         if (body['file']) {
           const currentUser = await UserService.getUserById(userId ?? '')
           if (currentUser?.imageUrl) {
@@ -76,6 +86,7 @@ class UserController {
             'profilePictures'
           )
         }
+
         user = {
           userId: body['userId'],
           name: body['name'],

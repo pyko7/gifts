@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { Button, Flex, useToast } from "@chakra-ui/react";
 import {
@@ -10,7 +10,7 @@ import { completeProfile, defaultValues } from "./_utils";
 import Name from "../fields/Name";
 import text from "../../../../utils/text.json";
 import sxs from "../_styles";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "@store/auth/auth";
 import { getLocalStorageItem, setLocalStorageItem } from "@utils/localStorage";
@@ -29,8 +29,9 @@ const CompleteProfileForm: FC<CompleteProfileFormProps> = ({ mode }) => {
   const { onClose } = useUpdateProfileFormContext();
   const navigate = useNavigate();
   const toast = useToast();
+  const queryClient = useQueryClient();
 
-  //REFACTO
+  //TODO: HANDLE STATES
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["user", user?.userId],
     queryFn: () => getUserById(user?.userId ?? ""),
@@ -38,15 +39,16 @@ const CompleteProfileForm: FC<CompleteProfileFormProps> = ({ mode }) => {
     enabled: Boolean(user?.userId) && mode === "EDIT",
   });
 
+  const fetchedDefaultValues = useMemo(
+    () => ({
+      name: data?.name,
+      imageUrl: data?.imageUrl,
+    }),
+    [data?.imageUrl, data?.name]
+  );
+
   const form = useForm<CompleteProfileUseFormProps>({
-    defaultValues:
-      mode === "CREATION"
-        ? defaultValues
-        : //REFACTO
-          {
-            name: data?.name,
-            imageUrl: data?.imageUrl,
-          },
+    defaultValues: mode === "CREATION" ? defaultValues : fetchedDefaultValues,
     mode: "onChange",
   });
 
@@ -69,6 +71,10 @@ const CompleteProfileForm: FC<CompleteProfileFormProps> = ({ mode }) => {
       if (mode === "CREATION") {
         navigate("/");
       } else {
+        // maybe should be updated by setQueryData
+        queryClient.invalidateQueries({
+          queryKey: ["user"],
+        });
         onClose();
       }
     },
@@ -103,6 +109,7 @@ const CompleteProfileForm: FC<CompleteProfileFormProps> = ({ mode }) => {
       formData.append("userId", localStorageUser?.userId ?? "");
       formData.append("file", data.picture ?? "");
       formData.append("name", data.name ?? "");
+      formData.append("imageUrl", data.imageUrl ?? "");
       const formDataOptions = {
         ...optionsBase,
         body: formData,

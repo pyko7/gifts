@@ -1,7 +1,7 @@
 export type CompleteProfileUseFormProps = {
   name: string;
   picture?: Blob;
-  imageUrl?: string;
+  imageUrl?: string | null;
 };
 
 export type CompleteProfileFormProps = {
