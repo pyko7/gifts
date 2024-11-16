@@ -3,6 +3,8 @@ import { getUserId } from '../utils/user/_utils'
 import { DrizzleError } from 'drizzle-orm'
 import { deleteCookie } from 'hono/cookie'
 import { Context } from 'hono'
+import MediaService from '../services/mediaService/MediaService'
+import { UserFormData } from '../types/user'
 
 class UserController {
   constructor() {}
@@ -49,7 +51,33 @@ class UserController {
       if (!secret) {
         throw new Error('Missing secret')
       }
-      let user = await c.req.json()
+      //REFACTO ****
+      let user
+      const headers = await c.req.header()
+      const contentType = headers['content-type']
+
+      if (contentType.includes('application/json')) {
+        user = await c.req.json()
+      } else if (
+        contentType.includes('application/x-www-form-urlencoded') ||
+        contentType.includes('multipart/form-data')
+      ) {
+        const body = await c.req.parseBody<UserFormData>({ dot: true })
+        let image = undefined
+        if (body['file']) {
+          image = await MediaService.uploadAndGetFile(
+            body['file'],
+            '/profilePictures'
+          )
+        }
+        user = {
+          userId: body['userId'],
+          name: body['name'],
+          imageUrl: image?.url ?? null,
+          storedImageName: image?.name
+        }
+      }
+      //REFACTO ****
 
       const userId = getUserId(c)
 
@@ -57,6 +85,7 @@ class UserController {
         return c.text('Invalid userId', 401)
       }
 
+      //REFACTO ****
       if (user.newEmail) {
         const currentUser = await UserService.getUserById(userId ?? '')
         const currentEmail = currentUser.email
@@ -70,6 +99,7 @@ class UserController {
         user = { ...user, email: validNewEmail }
       }
 
+      //REFACTO ****
       if (user.password && user.newPassword) {
         const currentUser = await UserService.getUserSensitiveData(userId ?? '')
         const currentPassword = currentUser.password

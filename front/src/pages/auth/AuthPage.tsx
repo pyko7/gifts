@@ -25,7 +25,7 @@ const AuthPage: FC = () => {
     return (
       // TODO REPLACE BY FORMCONTAINER
       <AuthContainer>
-        <CompleteProfileForm />
+        <CompleteProfileForm mode="CREATION" />
       </AuthContainer>
     );
   }

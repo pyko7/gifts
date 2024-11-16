@@ -4,6 +4,7 @@ type GetUserById = {
   email: string;
   id: string;
   name: string;
+  imageUrl?: string;
 };
 
 export const getUserById = async (

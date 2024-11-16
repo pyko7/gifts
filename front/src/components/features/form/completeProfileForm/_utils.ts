@@ -1,21 +1,14 @@
 import { API_URL } from "@utils/env";
+import { CompleteProfile } from "./_props";
 
-//TODO UNCOMMENT
 export const defaultValues = {
-  // profilePicture?:string
   name: "",
+  imageUrl: "",
 };
 
-export const completeProfile = async (user: FormData) => {
-  const userId = user.get("userId");
-  const res = await fetch(`${API_URL}/user/update/${userId}`, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-    method: "PUT",
-    credentials: "include",
-    body: JSON.stringify(user),
-  });
+export const completeProfile = async (data: CompleteProfile) => {
+  const { userId, options } = data;
+  const res = await fetch(`${API_URL}/user/update/${userId}`, options);
   if (!res.ok) {
     const errorMessage = await res.text();
     throw new Error(errorMessage);

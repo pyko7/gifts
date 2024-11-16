@@ -114,10 +114,11 @@ class UserService {
         throw new Error('Retrieve failed, no user found ')
       }
 
-      const user: Pick<User, 'name' | 'email' | 'id'> = {
+      const user: Pick<User, 'name' | 'email' | 'id' | 'imageUrl'> = {
         id: res.id,
         name: res.name,
-        email: res.email
+        email: res.email,
+        imageUrl: res.imageUrl
       }
 
       return user

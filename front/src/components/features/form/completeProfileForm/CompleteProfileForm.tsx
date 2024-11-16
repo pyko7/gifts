@@ -1,18 +1,24 @@
 import { FC } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { Button, Flex, useToast } from "@chakra-ui/react";
-import { CompleteProfileUseFormProps } from "./_props";
+import {
+  CompleteProfile,
+  CompleteProfileFormProps,
+  CompleteProfileUseFormProps,
+} from "./_props";
 import { completeProfile, defaultValues } from "./_utils";
 import Name from "../fields/Name";
 import text from "../../../../utils/text.json";
 import sxs from "../_styles";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "@store/auth/auth";
 import { getLocalStorageItem, setLocalStorageItem } from "@utils/localStorage";
 import Picture from "../fields/profilePicture/ProfilePicture";
+import { getUserById } from "@utils/user";
+import { useUpdateProfileFormContext } from "@context/updateProfile/UpdateProfileContext";
 
-const CompleteProfileForm: FC = () => {
+const CompleteProfileForm: FC<CompleteProfileFormProps> = ({ mode }) => {
   const buttonName = text.auth.completeProfile.button;
   const globalError = text.error.user.update.global;
   const apiUniqueUserNameError = text.api.error.completeProfile.uniqueUserName;
@@ -20,10 +26,27 @@ const CompleteProfileForm: FC = () => {
     text.error.auth.completeProfile.userNameAlreadyExists;
 
   const { login, user, token } = useAuthStore();
+  const { onClose } = useUpdateProfileFormContext();
   const navigate = useNavigate();
   const toast = useToast();
+
+  //REFACTO
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["user", user?.userId],
+    queryFn: () => getUserById(user?.userId ?? ""),
+    retry: 2,
+    enabled: Boolean(user?.userId) && mode === "EDIT",
+  });
+
   const form = useForm<CompleteProfileUseFormProps>({
-    defaultValues,
+    defaultValues:
+      mode === "CREATION"
+        ? defaultValues
+        : //REFACTO
+          {
+            name: data?.name,
+            imageUrl: data?.imageUrl,
+          },
     mode: "onChange",
   });
 
@@ -43,8 +66,11 @@ const CompleteProfileForm: FC = () => {
           token,
         });
       }
-
-      navigate("/");
+      if (mode === "CREATION") {
+        navigate("/");
+      } else {
+        onClose();
+      }
     },
     onError(error) {
       if (error.message === apiUniqueUserNameError) {
@@ -65,12 +91,35 @@ const CompleteProfileForm: FC = () => {
 
   const onSubmit = async (data: CompleteProfileUseFormProps) => {
     const localStorageUser = getLocalStorageItem("user");
-    const formData = new FormData();
-    formData.append("userId", localStorageUser?.userId ?? "");
-    formData.append("file", data.picture ?? "");
-    formData.append("name", data.name ?? "");
-    formData.append("imageUrl", data.imageUrl ?? "");
-    mutation.mutate(formData);
+    const optionsBase: RequestInit = {
+      method: "PUT",
+      credentials: "include",
+    };
+
+    let mutationData: CompleteProfile;
+
+    if (data.picture) {
+      const formData = new FormData();
+      formData.append("userId", localStorageUser?.userId ?? "");
+      formData.append("file", data.picture ?? "");
+      formData.append("name", data.name ?? "");
+      const formDataOptions = {
+        ...optionsBase,
+        body: formData,
+      };
+      mutationData = { userId: user?.userId ?? "", options: formDataOptions };
+    } else {
+      const jsonTypeOptions = {
+        ...optionsBase,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      };
+      mutationData = { userId: user?.userId ?? "", options: jsonTypeOptions };
+    }
+
+    mutation.mutate(mutationData);
   };
 
   return (
