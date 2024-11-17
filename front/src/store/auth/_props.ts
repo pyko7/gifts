@@ -2,13 +2,16 @@ export type UserStore = {
   name: string;
   userId: string;
 };
-
-export type AuthState = {
-  token: string | null;
-  user: UserStore | null;
-  isAuthenticated: boolean;
-  login: (data: LoginParams) => void;
-  logout: () => void;
+export type UserRes = {
+  name: string;
+  id: string;
 };
 
-export type LoginParams = Pick<AuthState, "user" | "token">;
+export type AuthState = {
+  user: UserStore | undefined;
+  isAuthenticated: boolean;
+  loading: boolean;
+  setUser: (user: UserStore | undefined) => void;
+  validateSession: () => Promise<void>;
+  logout: () => void;
+};

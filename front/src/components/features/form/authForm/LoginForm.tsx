@@ -10,11 +10,10 @@ import text from "../../../../utils/text.json";
 import sxs from "../_styles";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "@store/auth/auth";
-import { LoginParams } from "@store/auth/_props";
 
 const LoginForm: FC = () => {
   const navigate = useNavigate();
-  const { login: loginStore } = useAuthStore();
+  const { setUser } = useAuthStore();
   const toast = useToast();
   const buttonName = text.auth.login.button;
   const globalError = text.error.auth.login.global;
@@ -35,11 +34,7 @@ const LoginForm: FC = () => {
         userId: data.userId,
       };
 
-      const loginData: LoginParams = {
-        token: data.token,
-        user,
-      };
-      loginStore(loginData);
+      setUser(user);
       navigate("/");
     },
     onError(error) {

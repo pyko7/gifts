@@ -2,7 +2,6 @@ import { createContext, FC, PropsWithChildren, useContext } from "react";
 import { getUserById } from "@utils/user";
 import { useQuery } from "@tanstack/react-query";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getLocalStorageItem } from "@utils/localStorage";
 import { ProfileContextValues } from "./_props";
 import useAuthStore from "@store/auth/auth";
 
@@ -19,7 +18,7 @@ export const useProfileContext = () => useContext(ProfileContext);
 export const ProfileProvider: FC<PropsWithChildren> = ({ children }) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const { logout } = useAuthStore();
+  const { user, logout } = useAuthStore();
 
   const splitPathname = pathname.split("/").filter((x) => x.length !== 0);
 
@@ -28,7 +27,7 @@ export const ProfileProvider: FC<PropsWithChildren> = ({ children }) => {
     (splitPathname.includes("profile") && splitPathname.includes("update"));
 
   const userId: string | null = isSelf
-    ? getLocalStorageItem("user").userId
+    ? user?.userId ?? ""
     : pathname.split("/")[2];
 
   const { data, isLoading, isError, error } = useQuery({

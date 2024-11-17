@@ -13,7 +13,6 @@ import sxs from "../_styles";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "@store/auth/auth";
-import { getLocalStorageItem, setLocalStorageItem } from "@utils/localStorage";
 import Picture from "../fields/profilePicture/ProfilePicture";
 import { getUserById } from "@utils/user";
 import { useUpdateProfileFormContext } from "@context/updateProfile/UpdateProfileContext";
@@ -25,7 +24,7 @@ const CompleteProfileForm: FC<CompleteProfileFormProps> = ({ mode }) => {
   const uniqueUserNameErrorMessage =
     text.error.auth.completeProfile.userNameAlreadyExists;
 
-  const { login, user, token } = useAuthStore();
+  const { user, setUser } = useAuthStore();
   const { onClose } = useUpdateProfileFormContext();
   const navigate = useNavigate();
   const toast = useToast();
@@ -56,17 +55,9 @@ const CompleteProfileForm: FC<CompleteProfileFormProps> = ({ mode }) => {
     mutationFn: completeProfile,
     onSuccess(data) {
       const name: string = data.name;
-      const localStorageUser = getLocalStorageItem("user");
-      setLocalStorageItem("user", { ...localStorageUser, name });
 
       if (user) {
-        login({
-          user: {
-            ...user,
-            name,
-          },
-          token,
-        });
+        setUser({ ...user, name });
       }
       if (mode === "CREATION") {
         navigate("/");
@@ -96,7 +87,6 @@ const CompleteProfileForm: FC<CompleteProfileFormProps> = ({ mode }) => {
   });
 
   const onSubmit = async (data: CompleteProfileUseFormProps) => {
-    const localStorageUser = getLocalStorageItem("user");
     const optionsBase: RequestInit = {
       method: "PUT",
       credentials: "include",
@@ -106,7 +96,7 @@ const CompleteProfileForm: FC<CompleteProfileFormProps> = ({ mode }) => {
 
     if (data.picture) {
       const formData = new FormData();
-      formData.append("userId", localStorageUser?.userId ?? "");
+      formData.append("userId", user?.userId ?? "");
       formData.append("file", data.picture ?? "");
       formData.append("name", data.name ?? "");
       formData.append("imageUrl", data.imageUrl ?? "");

@@ -3,6 +3,8 @@ import AuthService from '../services/AuthService'
 import { DrizzleError } from 'drizzle-orm'
 import { sign } from 'hono/jwt'
 import { Context } from 'hono'
+import UserService from '../services/UserService'
+import { getUserId } from '../utils/user/_utils'
 
 class AuthController {
   constructor() {}
@@ -41,6 +43,22 @@ class AuthController {
         return c.text(error.message, 400)
       }
       return c.text('[AuthController - login]: Error while login', 400)
+    }
+  }
+
+  async validateSession(c: Context) {
+    try {
+      const userId = getUserId(c)
+      if (!userId) {
+        return c.text('Invalid userId', 401)
+      }
+      const user = await UserService.getUserById(userId)
+      return c.json({ id: user.id, name: user.name })
+    } catch (error) {
+      if (error instanceof Error || error instanceof DrizzleError) {
+        return c.text(error.message, 400)
+      }
+      return c.text('Error while getting the user', 400)
     }
   }
 

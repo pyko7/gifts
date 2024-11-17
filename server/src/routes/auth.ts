@@ -9,7 +9,7 @@ export const auth = new Hono()
 const userController = new UserController()
 const authController = new AuthController()
 
-auth.get('/token', jwtMiddleware, (c) => c.text('Token is valid'))
+auth.get('/validate', jwtMiddleware, authController.validateSession)
 auth.post('/signup', userController.createUser)
 auth.post('/login', authController.login)
 auth.post('/forgot-password', isUserExists, authController.forgotPassword)
