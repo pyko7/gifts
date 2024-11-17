@@ -6,7 +6,7 @@ import sxs from "./_styles";
 import { useQuery } from "@tanstack/react-query";
 import { useProfileContext } from "@context/profile/ProfileContext";
 import { getGiftsByUserId } from "./_utils";
-import useGiftsStore from "@store/auth/gifts/gifts";
+import useGiftsStore from "@store/gifts/gifts";
 
 const GiftCardContainer: FC = () => {
   const { user, isSelf } = useProfileContext();

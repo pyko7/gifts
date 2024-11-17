@@ -4,7 +4,7 @@ import sxs from "./_styles";
 import ProfileMenuButton from "../profileMenuButton/ProfileMenuButton";
 import { useProfileContext } from "@context/profile/ProfileContext";
 import ProfileHeaderSkeleton from "./ProfileHeaderSkeleton";
-import useGiftsStore from "@store/auth/gifts/gifts";
+import useGiftsStore from "@store/gifts/gifts";
 
 const ProfileHeader: FC = () => {
   const { user, isLoading } = useProfileContext();

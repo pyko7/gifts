@@ -52,6 +52,7 @@ export const theme = extendTheme({
         dialog: {
           bg: "main.900",
           color: "main.200",
+          borderStartRadius: "1rem",
         },
         // Customize header styles
         header: {},

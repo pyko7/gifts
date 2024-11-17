@@ -6,7 +6,7 @@ import {
   SavableForgotPasswordValues,
 } from "./_props";
 import { defaultValues, forgotPassword } from "./_utils";
-import Email from "../fields/Email";
+import Email from "../fields/email/Email";
 import text from "../../../../utils/text.json";
 import sxs from "../_styles";
 import { useMutation } from "@tanstack/react-query";
@@ -45,6 +45,7 @@ const ForgotPasswordForm: FC = () => {
   };
 
   if (isSuccess) {
+    //TODO DISPLAY SUCCESS MESSAGE
     return null;
   }
 

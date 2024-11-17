@@ -38,7 +38,6 @@ const GiftPriceAndButton: FC = () => {
   const mutation = useMutation({
     mutationFn: handleGiftReservation,
     onSuccess: (data) => {
-      console.log({ data });
       queryClient.invalidateQueries({
         queryKey: ["giftById"],
       });
