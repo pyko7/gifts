@@ -16,6 +16,7 @@ import useAuthStore from "@store/auth/auth";
 import Picture from "../fields/profilePicture/ProfilePicture";
 import { getUserById } from "@utils/user";
 import { useUpdateProfileFormContext } from "@context/updateProfile/UpdateProfileContext";
+import ErrorPage from "@pages/error/ErrorPage";
 
 const CompleteProfileForm: FC<CompleteProfileFormProps> = ({ mode }) => {
   const buttonName = text.auth.completeProfile.button;
@@ -30,8 +31,7 @@ const CompleteProfileForm: FC<CompleteProfileFormProps> = ({ mode }) => {
   const toast = useToast();
   const queryClient = useQueryClient();
 
-  //TODO: HANDLE STATES
-  const { data, isLoading, isError, error } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["user", user?.userId],
     queryFn: () => getUserById(user?.userId ?? ""),
     retry: 2,
@@ -119,13 +119,22 @@ const CompleteProfileForm: FC<CompleteProfileFormProps> = ({ mode }) => {
     mutation.mutate(mutationData);
   };
 
+  if (isError)
+    return (
+      <ErrorPage message="Une erreur est survenue lors de la récupération du gift" />
+    );
+
   return (
     <FormProvider {...form}>
       <Flex as="form" width="100%" flex={2} flexDirection="column" gap="1.5rem">
         <Name />
         <Picture />
         <Flex flex={1} alignItems="flex-end">
-          <Button sx={sxs.button} onClick={form.handleSubmit(onSubmit)}>
+          <Button
+            isLoading={isLoading}
+            sx={sxs.button}
+            onClick={form.handleSubmit(onSubmit)}
+          >
             {buttonName}
           </Button>
         </Flex>

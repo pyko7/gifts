@@ -17,6 +17,7 @@ const defaultValues: GiftPageContextDefaultValues = {
   isLoading: false,
   isSelfGift: undefined,
   reservedByUserName: undefined,
+  isError: false,
 };
 
 type GiftPageProviderProps = {
@@ -66,6 +67,7 @@ const GiftPageProvider: FC<PropsWithChildren<GiftPageProviderProps>> = ({
         isLoading,
         isSelfGift,
         reservedByUserName: reservedBy?.name,
+        isError,
       }}
     >
       {children}

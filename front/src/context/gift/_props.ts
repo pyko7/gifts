@@ -5,4 +5,5 @@ export type GiftPageContextDefaultValues = {
   isLoading: boolean;
   isSelfGift?: boolean;
   reservedByUserName?: string;
+  isError?: boolean;
 };

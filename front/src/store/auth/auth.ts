@@ -22,7 +22,11 @@ const useAuthStore = create<AuthState>()(
             loading: false,
           });
         } catch (error) {
-          set({ user: undefined, isAuthenticated: false, loading: false });
+          if (error instanceof Error) {
+            if (error.message.includes("Invalid session")) {
+              set({ user: undefined, isAuthenticated: false, loading: false });
+            }
+          }
           throw error;
         }
       },

@@ -7,9 +7,10 @@ import { useGiftFormContext } from "@context/giftForm/GiftFormContext";
 import ImagePlaceholder from "@components/common/imagePlaceholder/ImagePlaceholder";
 import GiftCardLayer from "../card/giftCardLayer/GiftCardLayer";
 import { GiftIcon } from "@components/common/icons";
+import ErrorPage from "@pages/error/ErrorPage";
 
 const Gift: FC = () => {
-  const { gift, isLoading, isSelfGift } = useGiftPageContext();
+  const { gift, isLoading, isSelfGift, isError } = useGiftPageContext();
   const { getFormValues } = useGiftFormContext();
 
   useEffect(() => {
@@ -17,6 +18,11 @@ const Gift: FC = () => {
       getFormValues(gift);
     }
   }, [getFormValues, gift]);
+
+  if (isError)
+    return (
+      <ErrorPage message="Une erreur est survenue lors de la récupération du gift" />
+    );
 
   return (
     <Flex

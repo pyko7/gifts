@@ -123,12 +123,11 @@ class UserService {
 
       return user
     } catch (error) {
+      console.log(`[UserService - getUserById]: ${error}`)
       if (error instanceof Error || error instanceof DrizzleError) {
         throw new Error(`[UserService - getUserById]: ${error.message}`)
       }
-      throw new Error(
-        '[UserService - getUserById]: An unexpected error has occurred'
-      )
+      throw new Error('An unexpected error has occurred')
     }
   }
 
@@ -148,12 +147,13 @@ class UserService {
 
       return user
     } catch (error) {
+      console.log(`[UserService - getUserSensitiveData]: ${error}`)
       if (error instanceof Error || error instanceof DrizzleError) {
-        throw new Error(`[UserService - getUserById]: ${error.message}`)
+        throw new Error(
+          `[UserService - getUserSensitiveData]: ${error.message}`
+        )
       }
-      throw new Error(
-        '[UserService - getUserById]: An unexpected error has occurred'
-      )
+      throw new Error('An unexpected error has occurred')
     }
   }
 
