@@ -7,11 +7,16 @@ import GiftPage from "@pages/gift/GiftPage";
 import GiftFormProvider from "@context/giftForm/GiftFormContext";
 import UpdateProfilePage from "@pages/updateProfile/UpdateProfilePage";
 import UpdateProfileFormProvider from "@context/updateProfile/UpdateProfileContext";
+import ProtectedRoute from "@components/features/protectedRoute/ProtectedRoute";
 
 export const mainRouter = [
   {
     path: "/",
-    element: <AuthProvider />,
+    element: (
+      <ProtectedRoute>
+        <AuthProvider />
+      </ProtectedRoute>
+    ),
     errorElement: <ErrorPage />,
     children: [
       {
