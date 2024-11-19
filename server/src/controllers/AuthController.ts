@@ -39,10 +39,11 @@ class AuthController {
       console.log(`user ${user.id} successfully logged in`)
       return c.json({ userId: user.id, name: user.name, token })
     } catch (error) {
+      console.log(`[AuthController - login]: ${error}`)
       if (error instanceof Error || error instanceof DrizzleError) {
         return c.text(error.message, 400)
       }
-      return c.text('[AuthController - login]: Error while login', 400)
+      return c.text('Error while login', 400)
     }
   }
 
@@ -55,10 +56,11 @@ class AuthController {
       const user = await UserService.getUserById(userId)
       return c.json({ id: user.id, name: user.name })
     } catch (error) {
+      console.log(`[AuthController - validateSession]: ${error}`)
       if (error instanceof Error || error instanceof DrizzleError) {
         return c.text(error.message, 400)
       }
-      return c.text('Error while getting the user', 400)
+      return c.text('Error while validating the session', 400)
     }
   }
 
@@ -67,10 +69,11 @@ class AuthController {
       deleteCookie(c, 'session')
       return c.text('User successfully logged out')
     } catch (error) {
+      console.log(`[AuthController - logout]: ${error}`)
       if (error instanceof Error || error instanceof DrizzleError) {
         return c.text(error.message, 400)
       }
-      return c.text('[AuthController - logout]: Error while logout', 500)
+      return c.text('Error while logout', 500)
     }
   }
 
@@ -84,13 +87,11 @@ class AuthController {
 
       return c.text('email sent', 200)
     } catch (error) {
+      console.log(`[AuthController - forgotPassword]: ${error}`)
       if (error instanceof Error || error instanceof DrizzleError) {
         return c.text(error.message, 400)
       }
-      return c.text(
-        '[AuthController - forgotPassword]: Error while reset password',
-        400
-      )
+      return c.text('Error while reset password', 400)
     }
   }
 }

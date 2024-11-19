@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { AuthState } from "./_props";
-import { validateSession } from "./_utils";
+import { logout, validateSession } from "./_utils";
 import { persist } from "zustand/middleware";
 
 const useAuthStore = create<AuthState>()(
@@ -27,9 +27,10 @@ const useAuthStore = create<AuthState>()(
         }
       },
 
-      logout: () => {
+      logout: async () => {
         try {
           set({ user: undefined, isAuthenticated: false });
+          await logout();
         } catch (error) {
           console.error("Logout failed", error);
         }
