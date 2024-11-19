@@ -3,12 +3,10 @@ import { Box, Flex, SkeletonText, Text } from "@chakra-ui/react";
 import { SparklesIcon } from "@components/common/icons";
 import { useGiftPageContext } from "@context/gift/GiftContext";
 import sxs from "./_styles";
-import GiftMenuButton from "../giftMenuButton/GiftMenuButton";
 import { Link } from "react-router-dom";
 
 const GiftWishRateAndUsername: FC = () => {
-  const { gift, isLoading, isSelfGift, reservedByUserName } =
-    useGiftPageContext();
+  const { gift, isLoading, reservedByUserName } = useGiftPageContext();
 
   return (
     <Flex justifyContent="space-between">
@@ -21,26 +19,20 @@ const GiftWishRateAndUsername: FC = () => {
         </Flex>
       </SkeletonText>
       <SkeletonText noOfLines={1} skeletonHeight="8" isLoaded={!isLoading}>
-        {isSelfGift ? (
-          <Box sx={sxs.hiddenOnMobile}>
-            <GiftMenuButton />
-          </Box>
-        ) : (
-          <Flex flexDirection="column">
-            <Flex gap="0.25rem">
-              <Text>demandé par: </Text>
-              <Text as={Link} to={`/profile/${gift?.userId}`} sx={sxs.userName}>
-                {gift?.userName}
-              </Text>
-            </Flex>
-            {gift?.state === "unavailable" && (
-              <Flex gap="0.25rem">
-                <Text>réserver par: </Text>
-                <Text sx={sxs.userName}>{reservedByUserName}</Text>
-              </Flex>
-            )}
+        <Flex flexDirection="column">
+          <Flex gap="0.25rem">
+            <Text>demandé par: </Text>
+            <Text as={Link} to={`/profile/${gift?.userId}`} sx={sxs.userName}>
+              {gift?.userName}
+            </Text>
           </Flex>
-        )}
+          {gift?.state === "unavailable" && (
+            <Flex gap="0.25rem">
+              <Text>réserver par: </Text>
+              <Text sx={sxs.userName}>{reservedByUserName}</Text>
+            </Flex>
+          )}
+        </Flex>
       </SkeletonText>
     </Flex>
   );

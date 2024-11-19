@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Box } from "@chakra-ui/react";
-import MobilePageHeader from "@components/common/mobilePageHeader/MobilePageHeader";
+import MobilePageHeader from "@components/common/pageInnerHeader/PageInnerHeader";
 import sxs from "./_style";
 import GiftMenuButton from "@components/features/gift/giftMenuButton/GiftMenuButton";
 import Gift from "@components/features/gift/Gift";

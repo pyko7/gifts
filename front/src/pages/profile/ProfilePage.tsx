@@ -3,7 +3,7 @@ import { FC } from "react";
 import sxs from "./_styles";
 import Profile from "@components/features/profile/Profile";
 import GiftFormProvider from "@context/giftForm/GiftFormContext";
-import MobilePageHeader from "@components/common/mobilePageHeader/MobilePageHeader";
+import MobilePageHeader from "@components/common/pageInnerHeader/PageInnerHeader";
 import ProfileMenuButton from "@components/features/profile/profileMenuButton/ProfileMenuButton";
 import { useProfileContext } from "@context/profile/ProfileContext";
 import ErrorPage from "@pages/error/ErrorPage";
