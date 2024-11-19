@@ -9,6 +9,10 @@ export type NavbarLink = {
 
 export type NavbarItem = {
   icon: As;
-  list?: NavbarLink[];
+  list?: NavbarItemMenuItem[];
   action?: () => void;
+};
+
+export type NavbarItemMenuItem = Omit<NavbarItem, "list"> & {
+  title?: string;
 };

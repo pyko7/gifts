@@ -20,7 +20,7 @@ export const profileList: NavbarLink[] = [
   },
   {
     title: "Se déconnecter",
-    url: "/",
+    url: "/login",
     icon: <ArrowRightStartOnRectangleIcon />,
   },
 ];

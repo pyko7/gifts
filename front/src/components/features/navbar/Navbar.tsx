@@ -5,7 +5,7 @@ import { generateUniqueId } from "@utils/_utils";
 import { useNavbarItems } from "src/hooks/useNavbarItems";
 
 const Navbar: FC = () => {
-  const navbarItems = useNavbarItems();
+  const { navbarItems } = useNavbarItems();
   return (
     <Flex flex={1} justifyContent="flex-end" gap="1rem">
       {navbarItems.map((item) => (

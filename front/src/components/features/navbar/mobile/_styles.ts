@@ -16,6 +16,8 @@ export default makeSx({
     },
   },
   link: {
+    color: (theme) => theme.colors.main[300],
+    fontWeight: (theme) => theme.fontWeights.normal,
     fontSize: "1.25rem",
   },
 });
