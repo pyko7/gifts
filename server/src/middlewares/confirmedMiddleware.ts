@@ -22,7 +22,6 @@ export const confirmedMiddleware = createMiddleware(async (c, next) => {
     }
   } else {
     const { session } = getCookie(c)
-    console.log('wesh')
     if (!session) {
       console.log('[confirmedMiddleware] - Invalid session')
       return c.text('Invalid userId', 400)
