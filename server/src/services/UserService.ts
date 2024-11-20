@@ -1,4 +1,4 @@
-import { generateRandomNumber } from '../utils/_utils'
+import { generateRandomNumber, generateToken } from '../utils/_utils'
 import { DrizzleError, eq } from 'drizzle-orm'
 import { users } from '../db/schemas/user'
 import { User } from '../utils/types'
@@ -61,11 +61,13 @@ class UserService {
       if (!email || !password)
         throw new Error('Missing email or password parameter')
 
+      const confirmToken = generateToken()
       const hashedPassword = await this.hashPassword(password)
       const result = await db
         .insert(users)
-        .values({ email, password: hashedPassword })
+        .values({ email, password: hashedPassword, confirmToken })
         .returning()
+
       if (result.length > 0) {
         const emailSender: EmailUser = {
           name: 'Gifts team',
@@ -78,10 +80,11 @@ class UserService {
             email: result[0].email
           }
         ]
-        //TODO: ADD REAL LINK
-        const emailTemplate = generateSignUpEmailTemplate(
-          'https://www.google.com'
-        )
+
+        // eslint-disable-next-line no-undef
+        const API_URL = process.env.API_URL ?? ''
+        const confirmationUrl = `${API_URL}/auth/confirm-signup?token=${confirmToken}`
+        const emailTemplate = generateSignUpEmailTemplate(confirmationUrl)
 
         const email: EmailServiceType = {
           emailSender,

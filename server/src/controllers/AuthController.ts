@@ -94,6 +94,24 @@ class AuthController {
       return c.text('Error while reset password', 400)
     }
   }
+
+  async confirmSignup(c: Context) {
+    try {
+      const { token } = c.req.query()
+
+      if (!token) {
+        return c.json({ error: 'Invalid or missing token' }, 400)
+      }
+      await AuthService.confirmSignup(token)
+      return c.redirect('http://localhost:5173/login')
+    } catch (error) {
+      console.log(`[AuthController - confirmSignup]: ${error}`)
+      if (error instanceof Error || error instanceof DrizzleError) {
+        return c.text(error.message, 400)
+      }
+      return c.text('Error while signup confirmation', 400)
+    }
+  }
 }
 
 export default AuthController

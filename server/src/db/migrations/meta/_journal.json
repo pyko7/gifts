@@ -50,6 +50,20 @@
       "when": 1731781580196,
       "tag": "0006_lucky_squirrel_girl",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1732134319421,
+      "tag": "0007_sudden_mad_thinker",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1732135778971,
+      "tag": "0008_lovely_manta",
+      "breakpoints": true
     }
   ]
 }

@@ -6,6 +6,7 @@ import bcrypt from 'bcrypt'
 import EmailService from './EmailService'
 import { EmailServiceType, EmailUser } from './emailService/_types'
 import { generateResetPasswordEmailTemplate } from '../templates/email/resetPassword'
+import UserService from './UserService'
 
 class AuthService {
   email: string
@@ -74,6 +75,38 @@ class AuthService {
     }
     const emailService = new EmailService(email)
     await emailService.sendMail()
+  }
+
+  static async confirmSignup(token: string) {
+    try {
+      console.log({ token })
+      const res: User | undefined = await db.query.users.findFirst({
+        where: eq(users.confirmToken, token)
+      })
+      console.log({ res })
+
+      if (!res) {
+        throw new Error('Token is invalid or has expired')
+      }
+
+      const userRes = await UserService.updateUser(
+        { ...res, isConfirmed: true, confirmToken: null },
+        res.id
+      )
+
+      if (!userRes) {
+        throw new Error('Error while confirming signup')
+      }
+    } catch (error) {
+      if (error instanceof Error || error instanceof DrizzleError) {
+        console.log(`[AuthService - confirmSignup]: ${error.message}`)
+        throw new Error(error.message)
+      }
+      console.log(
+        '[AuthService - confirmSignup]: An unexpected error has occurred'
+      )
+      throw new Error('An unexpected error has occurred')
+    }
   }
 }
 export default AuthService

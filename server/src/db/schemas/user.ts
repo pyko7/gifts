@@ -1,4 +1,4 @@
-import { text, pgTable, timestamp, uuid } from 'drizzle-orm/pg-core'
+import { text, pgTable, timestamp, uuid, boolean } from 'drizzle-orm/pg-core'
 import { relations } from 'drizzle-orm'
 import { gifts } from './gift'
 
@@ -8,6 +8,8 @@ export const users = pgTable('users', {
   email: text('email').unique().notNull(),
   password: text('password').notNull(),
   imageUrl: text('imageUrl'),
+  isConfirmed: boolean('isConfirmed'),
+  confirmToken: text('confirmToken'),
   createdAt: timestamp('created_at', {
     mode: 'date',
     precision: 3,
