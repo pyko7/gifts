@@ -32,6 +32,7 @@ const LoginForm: FC = () => {
       const user = {
         name: data?.name,
         userId: data.userId,
+        isConfirmed: data?.isConfirmed,
       };
 
       setUser(user);

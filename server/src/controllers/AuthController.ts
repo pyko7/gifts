@@ -54,7 +54,11 @@ class AuthController {
         return c.text('Invalid userId', 401)
       }
       const user = await UserService.getUserById(userId)
-      return c.json({ id: user.id, name: user.name })
+      return c.json({
+        id: user.id,
+        name: user.name,
+        isConfirmed: user.isConfirmed
+      })
     } catch (error) {
       console.log(`[AuthController - validateSession]: ${error}`)
       if (error instanceof Error || error instanceof DrizzleError) {

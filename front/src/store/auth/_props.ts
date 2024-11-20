@@ -1,6 +1,7 @@
 export type UserStore = {
   name: string;
   userId: string;
+  isConfirmed?: boolean;
 };
 export type UserRes = {
   name: string;

@@ -3,8 +3,12 @@ import { Navigate } from "react-router-dom";
 import useAuthStore from "@store/auth/auth";
 
 const ProtectedRoute: FC<PropsWithChildren> = ({ children }) => {
-  const { isAuthenticated } = useAuthStore();
-  return isAuthenticated ? children : <Navigate to="/login" replace />;
+  const { isAuthenticated, user } = useAuthStore();
+  return isAuthenticated && user?.isConfirmed ? (
+    children
+  ) : (
+    <Navigate to="/login" replace />
+  );
 };
 
 export default ProtectedRoute;
