@@ -5,6 +5,7 @@ import { sign } from 'hono/jwt'
 import { Context } from 'hono'
 import UserService from '../services/UserService'
 import { getUserId } from '../utils/user/_utils'
+import { decode } from 'hono/jwt'
 
 class AuthController {
   constructor() {}
@@ -37,7 +38,12 @@ class AuthController {
         path: '/'
       })
       console.log(`user ${user.id} successfully logged in`)
-      return c.json({ userId: user.id, name: user.name, token })
+      return c.json({
+        userId: user.id,
+        name: user.name,
+        token,
+        verified: user.verified
+      })
     } catch (error) {
       console.log(`[AuthController - login]: ${error}`)
       if (error instanceof Error || error instanceof DrizzleError) {
@@ -54,10 +60,11 @@ class AuthController {
         return c.text('Invalid userId', 401)
       }
       const user = await UserService.getUserById(userId)
+
       return c.json({
         id: user.id,
         name: user.name,
-        isConfirmed: user.isConfirmed
+        verified: user.verified
       })
     } catch (error) {
       console.log(`[AuthController - validateSession]: ${error}`)
@@ -106,7 +113,9 @@ class AuthController {
       if (!token) {
         return c.json({ error: 'Invalid or missing token' }, 400)
       }
-      await AuthService.confirmSignup(token)
+      const { payload } = decode(token)
+      const userId = payload.userId as string
+      await AuthService.confirmSignup(userId)
       return c.redirect('http://localhost:5173/login')
     } catch (error) {
       console.log(`[AuthController - confirmSignup]: ${error}`)

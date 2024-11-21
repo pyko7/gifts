@@ -8,8 +8,7 @@ export const users = pgTable('users', {
   email: text('email').unique().notNull(),
   password: text('password').notNull(),
   imageUrl: text('imageUrl'),
-  isConfirmed: boolean('isConfirmed'),
-  confirmToken: text('confirmToken'),
+  verified: boolean('verified'),
   createdAt: timestamp('created_at', {
     mode: 'date',
     precision: 3,

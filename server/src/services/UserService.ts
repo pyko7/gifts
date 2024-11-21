@@ -1,4 +1,4 @@
-import { generateRandomNumber, generateToken } from '../utils/_utils'
+import { generateJwt, generateRandomNumber } from '../utils/_utils'
 import { DrizzleError, eq } from 'drizzle-orm'
 import { users } from '../db/schemas/user'
 import { User } from '../utils/types'
@@ -61,14 +61,19 @@ class UserService {
       if (!email || !password)
         throw new Error('Missing email or password parameter')
 
-      const confirmToken = generateToken()
       const hashedPassword = await this.hashPassword(password)
       const result = await db
         .insert(users)
-        .values({ email, password: hashedPassword, confirmToken })
+        .values({ email, password: hashedPassword })
         .returning()
 
       if (result.length > 0) {
+        const payload = {
+          userId: result[0].id,
+          exp: Math.floor(Date.now() / 1000) + 60 * 15 // Token expires in 15 minutes
+        }
+        const token = await generateJwt(payload)
+
         const emailSender: EmailUser = {
           name: 'Gifts team',
           // eslint-disable-next-line no-undef
@@ -83,7 +88,7 @@ class UserService {
 
         // eslint-disable-next-line no-undef
         const API_URL = process.env.API_URL ?? ''
-        const confirmationUrl = `${API_URL}/auth/confirm-signup?token=${confirmToken}`
+        const confirmationUrl = `${API_URL}/auth/confirm-signup?token=${token}`
         const emailTemplate = generateSignUpEmailTemplate(confirmationUrl)
 
         const email: EmailServiceType = {
@@ -119,13 +124,13 @@ class UserService {
 
       const user: Pick<
         User,
-        'name' | 'email' | 'id' | 'imageUrl' | 'isConfirmed'
+        'name' | 'email' | 'id' | 'imageUrl' | 'verified'
       > = {
         id: res.id,
         name: res.name,
         email: res.email,
         imageUrl: res.imageUrl,
-        isConfirmed: res.isConfirmed
+        verified: res.verified
       }
 
       return user

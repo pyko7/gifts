@@ -4,7 +4,7 @@ import useAuthStore from "@store/auth/auth";
 
 const ProtectedRoute: FC<PropsWithChildren> = ({ children }) => {
   const { isAuthenticated, user } = useAuthStore();
-  return isAuthenticated && user?.isConfirmed ? (
+  return isAuthenticated && user?.verified ? (
     children
   ) : (
     <Navigate to="/login" replace />

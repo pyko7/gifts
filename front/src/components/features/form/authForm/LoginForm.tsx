@@ -32,7 +32,7 @@ const LoginForm: FC = () => {
       const user = {
         name: data?.name,
         userId: data.userId,
-        isConfirmed: data?.isConfirmed,
+        verified: data?.verified,
       };
 
       setUser(user);

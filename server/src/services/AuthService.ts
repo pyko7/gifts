@@ -77,20 +77,18 @@ class AuthService {
     await emailService.sendMail()
   }
 
-  static async confirmSignup(token: string) {
+  static async confirmSignup(userId: string) {
     try {
-      console.log({ token })
       const res: User | undefined = await db.query.users.findFirst({
-        where: eq(users.confirmToken, token)
+        where: eq(users.id, userId)
       })
-      console.log({ res })
 
       if (!res) {
         throw new Error('Token is invalid or has expired')
       }
 
       const userRes = await UserService.updateUser(
-        { ...res, isConfirmed: true, confirmToken: null },
+        { ...res, verified: true },
         res.id
       )
 

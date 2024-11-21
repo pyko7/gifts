@@ -12,11 +12,12 @@ export const confirmedMiddleware = createMiddleware(async (c, next) => {
     const user: User | undefined = await db.query.users.findFirst({
       where: eq(users.email, email)
     })
+
     if (!user) {
       console.log('[confirmedMiddleware] - Invalid userId')
       return c.text('Invalid userId', 400)
     }
-    if (!user.isConfirmed || user.confirmToken !== null) {
+    if (!user.verified) {
       console.log('[confirmedMiddleware] - Account not confirmed')
       return c.text(`Account not confirmed`, 400)
     }
