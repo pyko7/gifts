@@ -4,7 +4,7 @@ import { Hono } from 'hono'
 import { auth, user, gift, invitation } from './routes/index'
 import 'dotenv/config'
 import { jwtMiddleware } from './middlewares/jwtMiddleware'
-import { confirmedMiddleware } from './middlewares/confirmedMiddleware'
+import { confirmedMiddleware } from './middlewares/isUserVerifiedMiddleware'
 
 const app = new Hono()
 

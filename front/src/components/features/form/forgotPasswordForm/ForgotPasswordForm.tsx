@@ -13,7 +13,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useAuthFormContext } from "@context/authForm/authForm";
 
 const ForgotPasswordForm: FC = () => {
-  const { isSuccess } = useAuthFormContext();
+  const { isSuccess, setIsSuccess } = useAuthFormContext();
   const buttonName = text.auth.forgotPassword.button;
   const apiInvalidCredentialsError = text.api.error.login.invalidCredentials;
 
@@ -24,8 +24,8 @@ const ForgotPasswordForm: FC = () => {
 
   const mutation = useMutation({
     mutationFn: forgotPassword,
-    onSuccess(data) {
-      //display success
+    onSuccess() {
+      setIsSuccess(true);
     },
     onError(error) {
       if (error.message === apiInvalidCredentialsError) {
@@ -45,7 +45,6 @@ const ForgotPasswordForm: FC = () => {
   };
 
   if (isSuccess) {
-    //TODO DISPLAY SUCCESS MESSAGE
     return null;
   }
 

@@ -90,13 +90,20 @@ class AuthController {
 
   forgotPassword = async (c: Context) => {
     try {
-      const { email } = await c.req.json()
-      if (!email) {
-        throw new Error('No email provided')
+      const data = await c.req.json()
+      const { token } = c.req.query()
+      if (!token) {
+        return c.json({ error: 'Invalid or missing token' }, 400)
       }
-      await AuthService.forgotPassword(email)
+      const { payload } = decode(token)
+      const userId = payload.userId as string
 
-      return c.text('email sent', 200)
+      await AuthService.resetPassword(userId, data)
+
+      //EMAIL ALMOST DONE
+      // NEED TO HANDLE NOW HOW TO UPDATE USER PASSWORD FRONT SIDE AND SERVER SIDE
+
+      return c.text('Request handled')
     } catch (error) {
       console.log(`[AuthController - forgotPassword]: ${error}`)
       if (error instanceof Error || error instanceof DrizzleError) {
@@ -117,6 +124,24 @@ class AuthController {
       const userId = payload.userId as string
       await AuthService.confirmSignup(userId)
       return c.redirect('http://localhost:5173/login')
+    } catch (error) {
+      console.log(`[AuthController - confirmSignup]: ${error}`)
+      if (error instanceof Error || error instanceof DrizzleError) {
+        return c.text(error.message, 400)
+      }
+      return c.text('Error while signup confirmation', 400)
+    }
+  }
+
+  async handleResetPasswordRequest(c: Context) {
+    try {
+      const { email } = await c.req.json()
+      if (!email) {
+        throw new Error('No email provided')
+      }
+      AuthService.handleResetPasswordRequest(email)
+
+      return c.text('Password reset has been done')
     } catch (error) {
       console.log(`[AuthController - confirmSignup]: ${error}`)
       if (error instanceof Error || error instanceof DrizzleError) {

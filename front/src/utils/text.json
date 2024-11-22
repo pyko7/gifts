@@ -16,7 +16,7 @@
       "redirectLinkLabel": "Déjà un compte ? Connectez-vous ici",
       "buttonHelperText": "Se connecter",
       "successTitle": "Merci pour votre inscription",
-      "successSubtitle": "Vérifier votre boîte mail, vous recevrez un email de confirmation d'inscription"
+      "successSubtitle": "Nous venons de vous envoyer un email (pensez à regarder les spams), cliquer sur le lien pour confirmer votre inscription."
     },
     "forgotPassword": {
       "title": "Réinitialiser le mot de passe",
