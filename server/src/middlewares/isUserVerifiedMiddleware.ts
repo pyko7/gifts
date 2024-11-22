@@ -5,10 +5,11 @@ import { User } from '../utils/types'
 import { users } from '../db/schemas/user'
 import { getCookie } from 'hono/cookie'
 import { getUserId } from '../utils/user/_utils'
+import { Email } from './_types'
 
 export const isUserVerifiedMiddleware = createMiddleware(async (c, next) => {
   if (c.req.path.includes('/auth/login')) {
-    const { email } = await c.req.json()
+    const { email } = await c.req.json<Email>()
     const user: User | undefined = await db.query.users.findFirst({
       where: eq(users.email, email)
     })

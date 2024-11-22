@@ -6,6 +6,7 @@ import { Context } from 'hono'
 import UserService from '../services/UserService'
 import { getUserId } from '../utils/user/_utils'
 import { decode } from 'hono/jwt'
+import { Email, EmailAndPasswordReq, ResetPasswordDataReq } from './_types'
 
 class AuthController {
   constructor() {}
@@ -19,7 +20,7 @@ class AuthController {
       if (!JWT_SECRET) {
         throw new Error('No secret provided')
       }
-      const { email, password } = await c.req.json()
+      const { email, password } = await c.req.json<EmailAndPasswordReq>()
       const auth = new AuthService(email, password)
       const user = await auth.login()
 
@@ -90,7 +91,7 @@ class AuthController {
 
   forgotPassword = async (c: Context) => {
     try {
-      const data = await c.req.json()
+      const data = await c.req.json<ResetPasswordDataReq>()
       const { token } = c.req.query()
       if (!token) {
         return c.json({ error: 'Invalid or missing token' }, 400)
@@ -135,7 +136,7 @@ class AuthController {
 
   async handleResetPasswordRequest(c: Context) {
     try {
-      const { email } = await c.req.json()
+      const { email } = await c.req.json<Email>()
       if (!email) {
         throw new Error('No email provided')
       }

@@ -6,13 +6,14 @@ import { Context } from 'hono'
 import MediaService from '../services/mediaService/MediaService'
 import { UserFormData } from '../types/user'
 import { getContentType } from '../utils/api/getContentType'
+import { EmailAndPasswordReq } from './_types'
 
 class UserController {
   constructor() {}
 
   createUser = async (c: Context) => {
     try {
-      const { email, password } = await c.req.json()
+      const { email, password } = await c.req.json<EmailAndPasswordReq>()
       await UserService.createUser(email, password)
       return c.text('User successfully created', 201)
     } catch (error) {
