@@ -23,7 +23,8 @@ class InvitationService {
 
       await db.insert(friends).values({
         userId: this.userId,
-        friendId: this.userId
+        friendId: this.friendId,
+        state: 'pending'
       })
     } catch (error) {
       if (error instanceof Error || error instanceof DrizzleError) {

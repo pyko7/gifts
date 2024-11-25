@@ -1,6 +1,7 @@
 import { generateJwt, generateRandomNumber } from '../utils/_utils'
-import { DrizzleError, eq } from 'drizzle-orm'
+import { and, DrizzleError, eq } from 'drizzle-orm'
 import { users } from '../db/schemas/user'
+import { friends } from '../db/schemas/friend'
 import { User } from '../utils/types'
 import { db } from '../db/drizzle'
 import bcrypt from 'bcrypt'
@@ -132,7 +133,7 @@ class UserService {
         imageUrl: res.imageUrl,
         verified: res.verified
       }
-
+      console.log({ user })
       return user
     } catch (error) {
       console.log(`[UserService - getUserById]: ${error}`)
@@ -243,6 +244,14 @@ class UserService {
     }
 
     return newPassword
+  }
+  static async getUserFriends(userId: string) {
+    const friendsList = await db
+      .select()
+      .from(friends)
+      .where(and(eq(friends.userId, userId), eq(friends.friendId, userId)))
+
+    return friendsList
   }
 }
 

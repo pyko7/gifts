@@ -9,18 +9,10 @@ class InvitationController {
   sendInvitation = async (c: Context) => {
     try {
       const friendId = c.req.param('friendId')
-      if (!friendId)
-        return c.text(
-          '[InvitationController - sendInvitation]: Missing friendId param',
-          400
-        )
+      if (!friendId) throw new Error('Missing friendId param')
 
       const userId = getUserId(c)
-      if (!userId)
-        return c.text(
-          '[InvitationController - sendInvitation]: Missing userId param',
-          400
-        )
+      if (!userId) throw new Error('Missing userId param')
 
       const invitationService = new InvitationService(userId, friendId)
 
@@ -28,10 +20,11 @@ class InvitationController {
 
       return c.text('Friend invitation has been successfully sent', 200)
     } catch (error) {
+      console.log(`[InvitationController - sendInvitation]: ${error}`)
       if (error instanceof Error || error instanceof DrizzleError) {
         return c.text(error.message, 400)
       }
-      return c.text('[InvitationController - login]: Error while login', 400)
+      return c.text('Error while sending invitation', 400)
     }
   }
 
@@ -39,12 +32,12 @@ class InvitationController {
     try {
       const { userId, friendId } = c.req.param()
       if (!userId || !friendId)
-        return c.text(
-          '[InvitationController - sendInvitation]: Missing parameter',
-          400
+        throw new Error(
+          `Missing parameter, userId: ${userId}, friendId: ${friendId}`
         )
 
       const answer = await c.req.json()
+
       const invitationService = new InvitationService(
         userId,
         friendId,
@@ -55,10 +48,11 @@ class InvitationController {
 
       return c.text('Friendship answer has been successfully sent', 200)
     } catch (error) {
+      console.log(`[InvitationController - answer invitation]: ${error}`)
       if (error instanceof Error || error instanceof DrizzleError) {
         return c.text(error.message, 400)
       }
-      return c.text('[InvitationController - logout]: Error while logout', 500)
+      return c.text('Error while answering invitation', 400)
     }
   }
 }
