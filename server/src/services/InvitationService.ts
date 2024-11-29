@@ -42,6 +42,14 @@ class InvitationService {
       if (!this.userId || !this.friendId || !this.friendshipStatus)
         throw new Error('Missing parameter')
 
+      if (this.friendshipStatus === 'declined') {
+        await InvitationService.handleDeleteFriendship(
+          this.userId,
+          this.friendId
+        )
+        return
+      }
+
       const result = await db
         .update(friends)
         .set({ state: this.friendshipStatus })
@@ -62,6 +70,26 @@ class InvitationService {
       }
       throw new Error(
         '[InvitationService - sendInvitation]: An unexpected error has occurred'
+      )
+    }
+  }
+  static async handleDeleteFriendship(userId: string, friendId: string) {
+    try {
+      const result = await db
+        .delete(friends)
+        .where(and(eq(friends.userId, userId), eq(friends.friendId, friendId)))
+        .returning()
+      if (result.length === 0) {
+        throw new Error('Deletion failed, no friendship found ')
+      }
+    } catch (error) {
+      if (error instanceof Error || error instanceof DrizzleError) {
+        throw new Error(
+          `[InvitationService - handleDeleteFriendship]: ${error.message}`
+        )
+      }
+      throw new Error(
+        '[InvitationService - handleDeleteFriendship]: An unexpected error has occurred'
       )
     }
   }

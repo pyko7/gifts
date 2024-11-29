@@ -10,8 +10,8 @@ export const friendshipMiddleware = createMiddleware(async (c, next) => {
   const friendId = c.req.param('friendId')
 
   if (userId === friendId) {
-    console.log("[FriendshipMiddleware]: Can't invite himself")
-    return c.text("Can't invite himself", 400)
+    console.log("[FriendshipMiddleware]: Can't invite yourself")
+    return c.text("Can't invite yourself", 400)
   }
 
   if (!userId || !friendId) {
@@ -24,7 +24,18 @@ export const friendshipMiddleware = createMiddleware(async (c, next) => {
     .from(friends)
     .where(and(eq(friends.userId, userId), eq(friends.friendId, friendId)))
 
+  console.log({ result })
+
   if (result.length > 0) {
+    const friendshipInvitationState = result[0].state
+    if (friendshipInvitationState === 'pending') {
+      console.log('[FriendshipMiddleware]: Friendship invitation pending')
+      return c.text('Friendship invitation pending', 400)
+    }
+    if (friendshipInvitationState === 'blocked') {
+      console.log("[FriendshipMiddleware]: User's blocked")
+      return c.text("User's blocked", 400)
+    }
     console.log('[FriendshipMiddleware]: Friendship already exists')
     return c.text('Friendship already exists', 400)
   }
