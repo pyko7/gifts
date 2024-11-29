@@ -2,6 +2,7 @@ import { FriendshipStatusEnum } from '../types/invitations'
 import { and, DrizzleError, eq } from 'drizzle-orm'
 import { friends } from '../db/schemas/friend'
 import { db } from '../db/drizzle'
+import FriendService from './friendService'
 
 class InvitationService {
   userId: string | null
@@ -43,10 +44,12 @@ class InvitationService {
         throw new Error('Missing parameter')
 
       if (this.friendshipStatus === 'declined') {
-        await InvitationService.handleDeleteFriendship(
-          this.userId,
-          this.friendId
-        )
+        const friendService = new FriendService(this.userId, this.friendId)
+        await friendService.handleDeleteFriendship()
+        return
+      } else if (this.friendshipStatus === 'blocked') {
+        const friendService = new FriendService(this.userId, this.friendId)
+        await friendService.handleBlockUser()
         return
       }
 
@@ -70,26 +73,6 @@ class InvitationService {
       }
       throw new Error(
         '[InvitationService - sendInvitation]: An unexpected error has occurred'
-      )
-    }
-  }
-  static async handleDeleteFriendship(userId: string, friendId: string) {
-    try {
-      const result = await db
-        .delete(friends)
-        .where(and(eq(friends.userId, userId), eq(friends.friendId, friendId)))
-        .returning()
-      if (result.length === 0) {
-        throw new Error('Deletion failed, no friendship found ')
-      }
-    } catch (error) {
-      if (error instanceof Error || error instanceof DrizzleError) {
-        throw new Error(
-          `[InvitationService - handleDeleteFriendship]: ${error.message}`
-        )
-      }
-      throw new Error(
-        '[InvitationService - handleDeleteFriendship]: An unexpected error has occurred'
       )
     }
   }

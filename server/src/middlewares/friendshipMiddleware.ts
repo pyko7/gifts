@@ -24,8 +24,6 @@ export const friendshipMiddleware = createMiddleware(async (c, next) => {
     .from(friends)
     .where(and(eq(friends.userId, userId), eq(friends.friendId, friendId)))
 
-  console.log({ result })
-
   if (result.length > 0) {
     const friendshipInvitationState = result[0].state
     if (friendshipInvitationState === 'pending') {

@@ -12,6 +12,11 @@ invitation.post(
   friendshipMiddleware,
   invitationController.sendInvitation
 )
+invitation.post(
+  '/blocked/:userId/:friendId',
+  selfMiddleware,
+  invitationController.blockUser
+)
 invitation.put(
   '/answer/:userId/:friendId',
   selfMiddleware,
