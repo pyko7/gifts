@@ -163,12 +163,18 @@ class UserController {
       return c.text('Error while deleting the user', 500)
     }
   }
-  getUserFriends = async (c: Context) => {
+  getUserFriendById = async (c: Context) => {
     try {
       const userId = getUserId(c)
-      const friends = UserService.getUserFriends(userId ?? '')
 
-      return c.json(friends)
+      const { friendId } = c.req.param()
+
+      const friends = await UserService.getUserFriendById(
+        userId ?? '',
+        friendId ?? ''
+      )
+
+      return c.json(friends?.state)
     } catch (error) {
       console.log(`[UserController - getUserFriends]: ${error}`)
       if (error instanceof Error || error instanceof DrizzleError) {

@@ -133,7 +133,7 @@ class UserService {
         imageUrl: res.imageUrl,
         verified: res.verified
       }
-      console.log({ user })
+
       return user
     } catch (error) {
       console.log(`[UserService - getUserById]: ${error}`)
@@ -245,13 +245,13 @@ class UserService {
 
     return newPassword
   }
-  static async getUserFriends(userId: string) {
-    const friendsList = await db
+  static async getUserFriendById(userId: string, friendId: string) {
+    const friend = await db
       .select()
       .from(friends)
-      .where(and(eq(friends.userId, userId), eq(friends.friendId, userId)))
+      .where(and(eq(friends.userId, userId), eq(friends.friendId, friendId)))
 
-    return friendsList
+    return friend[0]
   }
 }
 

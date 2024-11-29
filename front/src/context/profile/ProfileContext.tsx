@@ -1,5 +1,11 @@
-import { createContext, FC, PropsWithChildren, useContext } from "react";
-import { getUserById } from "@utils/user";
+import {
+  createContext,
+  FC,
+  PropsWithChildren,
+  useContext,
+  useMemo,
+} from "react";
+import { checkUserFriendship, getUserById } from "@utils/user";
 import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "react-router-dom";
 import { ProfileContextValues } from "./_props";
@@ -10,6 +16,7 @@ const defaultValues: ProfileContextValues = {
   isLoading: false,
   isSelf: false,
   isError: false,
+  friendshipStatus: undefined,
 };
 
 const ProfileContext = createContext<ProfileContextValues>(defaultValues);
@@ -30,11 +37,27 @@ export const ProfileProvider: FC<PropsWithChildren> = ({ children }) => {
     ? user?.userId ?? ""
     : pathname.split("/")[2];
 
+  const {
+    data: friendshipStatus,
+    isLoading: friendIsLoading,
+    isError: friendIsError,
+  } = useQuery({
+    queryKey: ["userFriend", userId],
+    queryFn: () => checkUserFriendship(userId),
+    retry: 2,
+    enabled: !isSelf,
+  });
+
+  const isAllowed = useMemo(
+    () => friendshipStatus === "accepted",
+    [friendshipStatus]
+  );
+
   const { data, isLoading, isError } = useQuery({
     queryKey: ["user", userId],
     queryFn: () => getUserById(userId),
     retry: 2,
-    enabled: Boolean(userId),
+    enabled: Boolean(userId && isAllowed),
   });
 
   return (
@@ -44,6 +67,7 @@ export const ProfileProvider: FC<PropsWithChildren> = ({ children }) => {
         isLoading,
         isSelf,
         isError,
+        friendshipStatus,
       }}
     >
       {children}

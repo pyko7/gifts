@@ -20,3 +20,15 @@ export const getUserById = async (
   const data = await res.json();
   return data;
 };
+
+export const checkUserFriendship = async (friendId: string) => {
+  const res = await fetch(`${API_URL}/user/friends/${friendId}`, {
+    credentials: "include",
+  });
+  if (!res.ok) {
+    const errorMessage = await res.text();
+    throw new Error(errorMessage);
+  }
+  const data = await res.json();
+  return data;
+};
