@@ -44,6 +44,7 @@ export const useNavbarItems = () => {
     action: openModal,
   };
   const bellItem: NavbarItem = {
+    name: "notification",
     icon: BellIcon,
     list: [],
   };

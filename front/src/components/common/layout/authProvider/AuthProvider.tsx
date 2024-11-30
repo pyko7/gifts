@@ -3,6 +3,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import useAuthStore from "@store/auth/auth";
 import Main from "../main/Main";
 import { QrCodeModalContextProvider } from "@context/qrCodeModal/QrCodeModalContext";
+import { NotificationsContextProvider } from "@context/notificationsContext/NotificationsContext";
 import QrCodeModal from "@components/features/qrCodeModal/QrCodeModal";
 
 const AuthProvider: FC = () => {
@@ -22,12 +23,14 @@ const AuthProvider: FC = () => {
   }
 
   return (
-    <QrCodeModalContextProvider>
-      <Main>
-        <Outlet />
-        {isAuthenticated && <QrCodeModal />}
-      </Main>
-    </QrCodeModalContextProvider>
+    <NotificationsContextProvider>
+      <QrCodeModalContextProvider>
+        <Main>
+          <Outlet />
+          {isAuthenticated && <QrCodeModal />}
+        </Main>
+      </QrCodeModalContextProvider>
+    </NotificationsContextProvider>
   );
 };
 

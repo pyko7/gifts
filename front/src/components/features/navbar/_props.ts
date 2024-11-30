@@ -8,6 +8,7 @@ export type NavbarLink = {
 };
 
 export type NavbarItem = {
+  name?: string;
   icon: As;
   list?: NavbarItemMenuItem[];
   action?: () => void;
