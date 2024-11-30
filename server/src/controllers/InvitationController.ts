@@ -5,6 +5,8 @@ import InvitationService from '../services/InvitationService'
 import { getUserId } from '../utils/user/_utils'
 import { and, DrizzleError, eq } from 'drizzle-orm'
 import { Context } from 'hono'
+import NotificationService from '../services/NotificationService'
+import UserService from '../services/UserService'
 
 class InvitationController {
   constructor() {}
@@ -15,11 +17,16 @@ class InvitationController {
       if (!friendId) throw new Error('Missing friendId param')
 
       const userId = getUserId(c)
+      const { name } = await UserService.getUserById(userId ?? '')
+
       if (!userId) throw new Error('Missing userId param')
 
       const invitationService = new InvitationService(userId, friendId)
 
       await invitationService.sendInvitation()
+
+      const notificationService = new NotificationService(friendId, name ?? '')
+      notificationService.saveNotification()
 
       return c.text('Friend invitation has been successfully sent', 200)
     } catch (error) {

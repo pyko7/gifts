@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 import * as admin from 'firebase-admin'
+import { getFirestore } from 'firebase-admin/firestore'
 import 'dotenv/config'
 
 const {
@@ -19,3 +20,4 @@ admin.initializeApp({
 })
 
 export const bucket = admin.storage().bucket()
+export const db = getFirestore()
