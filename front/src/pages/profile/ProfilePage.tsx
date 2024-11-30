@@ -12,7 +12,7 @@ import { sendInvitation } from "@utils/invitation";
 import { useLocation } from "react-router-dom";
 
 const ProfilePage: FC = () => {
-  const { isError, friendshipStatus } = useProfileContext();
+  const { isError, friendshipStatus, isSelf } = useProfileContext();
   const { pathname } = useLocation();
   const userId = pathname.split("/")[2];
 
@@ -75,9 +75,9 @@ const ProfilePage: FC = () => {
     <GiftFormProvider>
       <Box sx={sxs.page}>
         <MobilePageHeader>
-          {isAllowed && <ProfileMenuButton />}
+          {(isAllowed || isSelf) && <ProfileMenuButton />}
         </MobilePageHeader>
-        {isAllowed ? (
+        {isAllowed || isSelf ? (
           <Profile />
         ) : (
           // TODO: CREATE GENERIC EMPTY STATE

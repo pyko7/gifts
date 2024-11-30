@@ -6,10 +6,13 @@ import QRCode from "react-qr-code";
 import sxs from "./_styles";
 import QrCodeModalText from "./qrCodeModalText/QrCodeModalText";
 import { API_URL } from "@utils/env";
+import useAuthStore from "@store/auth/auth";
 
 const QrCodeModal: FC = () => {
+  const { user } = useAuthStore();
   const { isOpen, onClose } = useQrCodeModalContext();
-  const endpoint = `${API_URL}/route`;
+  const profileUrl = `${API_URL}/profile/${user?.userId}`;
+
   return (
     <CommonModal isOpen={isOpen} onClose={onClose}>
       <Flex
@@ -25,7 +28,7 @@ const QrCodeModal: FC = () => {
             width: "100%",
             borderRadius: "2rem",
           }}
-          value={endpoint}
+          value={profileUrl}
         />
         <QrCodeModalText />
       </Flex>

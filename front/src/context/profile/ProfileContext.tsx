@@ -57,7 +57,7 @@ export const ProfileProvider: FC<PropsWithChildren> = ({ children }) => {
     queryKey: ["user", userId],
     queryFn: () => getUserById(userId),
     retry: 2,
-    enabled: Boolean(userId && isAllowed),
+    enabled: Boolean(userId && isAllowed) || Boolean(userId && isSelf),
   });
 
   return (

@@ -7,8 +7,10 @@ import { useGiftFormContext } from "@context/giftForm/GiftFormContext";
 import GiftModal from "../giftModal/GiftModal";
 import FloatingActionButton from "@components/common/floatingActionButton/FloatingActionButton";
 import { PlusIcon } from "@components/common/icons";
+import { useProfileContext } from "@context/profile/ProfileContext";
 
 const Profile: FC = () => {
+  const { isSelf } = useProfileContext();
   const { isModalOpen, openModal } = useGiftFormContext();
   return (
     <>
@@ -20,7 +22,7 @@ const Profile: FC = () => {
       >
         <ProfileHeader />
         <GiftCardContainer />
-        {!isModalOpen && (
+        {isSelf && !isModalOpen && (
           <FloatingActionButton
             icon={PlusIcon}
             onClick={() => openModal("CREATION")}
