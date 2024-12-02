@@ -13,13 +13,15 @@ const Navbar: FC = () => {
   return (
     <Flex flex={1} justifyContent="flex-end" gap="1rem">
       {navbarItems.map((item) => (
-        <Flex position="relative">
+        <Flex position="relative" key={generateUniqueId()}>
           <Badge
             value={count ?? ""}
-            invisible={item.name !== "notification" && Boolean(count)}
+            invisible={
+              item.name !== "notification" ||
+              (typeof count !== "undefined" && count < 1)
+            }
           />
           <NavbarItem
-            key={generateUniqueId()}
             icon={item.icon}
             list={item?.list}
             action={item?.action}

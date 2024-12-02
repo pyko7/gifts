@@ -1,29 +1,33 @@
-import { As, Flex, Icon, MenuItem } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import CommonMenu from "@components/common/menu/Menu";
 import { generateUniqueId } from "@utils/_utils";
 import { FC } from "react";
 import ButtonIcon from "@components/common/button/buttonIcon/ButtonIcon";
 import { NavbarItemProps } from "./_props";
+import CustomMenuItem from "@components/common/menuItem/MenuItem";
 
 const NavbarItem: FC<NavbarItemProps> = ({ icon, list, action }) => {
   if (!list) {
     // TODO: ADD ARIA-LABEL
     return (
       <Flex>
-        <ButtonIcon CustomIcon={icon as As} onClick={action} />
+        <ButtonIcon CustomIcon={icon} onClick={action} />
       </Flex>
     );
   }
   return (
-    <CommonMenu menuButtonIcon={icon as As}>
+    <CommonMenu menuButtonIcon={icon}>
       {list.map((el) => (
-        <MenuItem
-          icon={<Icon as={el.icon} sx={{ width: "1rem", height: "1rem" }} />}
+        <CustomMenuItem
           key={generateUniqueId()}
-          onClick={el.action}
-        >
-          {el.title}
-        </MenuItem>
+          icon={el.icon}
+          action={el.action}
+          title={el.title}
+          primaryAction={el.primaryAction}
+          primaryActionIcon={el.primaryActionIcon}
+          secondaryAction={el.secondaryAction}
+          secondaryActionIcon={el.secondaryActionIcon}
+        />
       ))}
     </CommonMenu>
   );

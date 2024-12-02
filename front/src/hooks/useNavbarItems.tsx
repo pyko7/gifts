@@ -4,6 +4,7 @@ import {
   FriendsIcon,
   QRIcon,
   UserIcon,
+  UserPlusIcon,
 } from "@components/common/icons";
 import {
   NavbarItem,
@@ -12,11 +13,23 @@ import {
 import { useQrCodeModalContext } from "@context/qrCodeModal/QrCodeModalContext";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "@store/auth/auth";
-
+import { useNotificationsContext } from "@context/notificationsContext/NotificationsContext";
+import { CheckIcon, CloseIcon } from "@components/common/icons";
 export const useNavbarItems = () => {
   const { openModal } = useQrCodeModalContext();
+  const { notifications } = useNotificationsContext();
   const { logout } = useAuthStore();
   const navigate = useNavigate();
+
+  const notificationsList: NavbarItemMenuItem[] | undefined =
+    notifications?.map((notification) => ({
+      title: notification.message,
+      primaryAction: () => console.log("hello"),
+      primaryActionIcon: CheckIcon,
+      secondaryAction: () => console.log("hello"),
+      secondaryActionIcon: CloseIcon,
+      icon: UserPlusIcon,
+    }));
 
   const profileList: NavbarItemMenuItem[] = [
     {
@@ -46,7 +59,7 @@ export const useNavbarItems = () => {
   const bellItem: NavbarItem = {
     name: "notification",
     icon: BellIcon,
-    list: [],
+    list: notificationsList,
   };
   const profileItem: NavbarItem = {
     icon: UserIcon,

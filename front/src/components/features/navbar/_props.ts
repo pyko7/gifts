@@ -12,6 +12,10 @@ export type NavbarItem = {
   icon: As;
   list?: NavbarItemMenuItem[];
   action?: () => void;
+  primaryAction?: () => void;
+  primaryActionIcon?: As;
+  secondaryAction?: () => void;
+  secondaryActionIcon?: As;
 };
 
 export type NavbarItemMenuItem = Omit<NavbarItem, "list"> & {
