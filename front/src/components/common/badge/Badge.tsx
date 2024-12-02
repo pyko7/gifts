@@ -7,7 +7,11 @@ const Badge: FC<BadgeProps> = ({ value, invisible = true }) => {
   if (invisible) return null;
 
   return (
-    <Flex justifyContent="center" alignItems="center" sx={sxs.badge}>
+    <Flex
+      justifyContent="center"
+      alignItems="center"
+      sx={invisible ? sxs.invisible : sxs.badge}
+    >
       {value}
     </Flex>
   );

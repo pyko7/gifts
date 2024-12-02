@@ -1,6 +1,9 @@
 import makeSx from "@utils/makeSx";
 
 export default makeSx({
+  invisible: {
+    display: "none",
+  },
   badge: {
     position: "absolute",
     top: -1,
