@@ -9,7 +9,7 @@ export const isPasswordValid = (password: string) => {
     return "Le mot de passe doit contenir au moins 8 caractères";
   }
   const regex = new RegExp(
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_]{8,}$/
   );
   const match = regex.test(password);
   return match
