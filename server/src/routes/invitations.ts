@@ -8,7 +8,7 @@ export const invitation = new Hono()
 const invitationController = new InvitationController()
 
 invitation.post(
-  '/send/:friendId',
+  '/send/:userId/:friendId',
   friendshipMiddleware,
   invitationController.sendInvitation
 )

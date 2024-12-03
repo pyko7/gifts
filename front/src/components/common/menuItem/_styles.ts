@@ -12,7 +12,7 @@ export default makeSx({
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "space-between",
-      gap: "1rem",
+      gap: "0.5rem",
     },
   },
 

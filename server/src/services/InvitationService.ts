@@ -58,8 +58,8 @@ class InvitationService {
         .set({ state: this.friendshipStatus })
         .where(
           and(
-            eq(friends.userId, this.userId),
-            eq(friends.friendId, this.friendId)
+            eq(friends.userId, this.friendId),
+            eq(friends.friendId, this.userId)
           )
         )
         .returning()
@@ -68,11 +68,11 @@ class InvitationService {
     } catch (error) {
       if (error instanceof Error || error instanceof DrizzleError) {
         throw new Error(
-          `[InvitationService - sendInvitation]: ${error.message}`
+          `[InvitationService - answerInvitation]: ${error.message}`
         )
       }
       throw new Error(
-        '[InvitationService - sendInvitation]: An unexpected error has occurred'
+        '[InvitationService - answerInvitation]: An unexpected error has occurred'
       )
     }
   }

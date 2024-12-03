@@ -7,6 +7,7 @@ import { and, DrizzleError, eq } from 'drizzle-orm'
 import { Context } from 'hono'
 import NotificationService from '../services/NotificationService'
 import UserService from '../services/UserService'
+import { updateNotificationState } from '../utils/notifications/notifications'
 
 class InvitationController {
   constructor() {}
@@ -17,7 +18,11 @@ class InvitationController {
       if (!friendId) throw new Error('Missing friendId param')
 
       const userId = getUserId(c)
-      const { name } = await UserService.getUserById(userId ?? '')
+      const { name } = await UserService.getUserById(friendId ?? '')
+      const friend = {
+        userId: friendId,
+        name: name ?? ''
+      }
 
       if (!userId) throw new Error('Missing userId param')
 
@@ -25,7 +30,7 @@ class InvitationController {
 
       await invitationService.sendInvitation()
 
-      const notificationService = new NotificationService(friendId, name ?? '')
+      const notificationService = new NotificationService(userId, friend)
       notificationService.saveNotification()
 
       return c.text('Friend invitation has been successfully sent', 200)
@@ -46,17 +51,17 @@ class InvitationController {
           `Missing parameter, userId: ${userId}, friendId: ${friendId}`
         )
 
-      const answer = await c.req.json()
+      const res = await c.req.json()
 
       const result = await db
         .select()
         .from(friends)
-        .where(and(eq(friends.userId, userId), eq(friends.friendId, friendId)))
+        .where(and(eq(friends.userId, friendId), eq(friends.friendId, userId)))
 
       const invitationService = new InvitationService(
         userId,
         friendId,
-        answer.friendshipStatus
+        res.answer
       )
 
       if (result[0].state === 'blocked') {
@@ -64,6 +69,7 @@ class InvitationController {
       }
 
       await invitationService.answerInvitation()
+      await updateNotificationState(res.notificationId)
 
       return c.text('Friendship answer has been successfully sent', 200)
     } catch (error) {

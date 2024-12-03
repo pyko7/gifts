@@ -15,18 +15,32 @@ import { useNavigate } from "react-router-dom";
 import useAuthStore from "@store/auth/auth";
 import { useNotificationsContext } from "@context/notificationsContext/NotificationsContext";
 import { CheckIcon, CloseIcon } from "@components/common/icons";
+
 export const useNavbarItems = () => {
+  const { user } = useAuthStore();
   const { openModal } = useQrCodeModalContext();
-  const { notifications } = useNotificationsContext();
+  const { notifications, handleClick } = useNotificationsContext();
   const { logout } = useAuthStore();
   const navigate = useNavigate();
 
   const notificationsList: NavbarItemMenuItem[] | undefined =
     notifications?.map((notification) => ({
       title: notification.message,
-      primaryAction: () => console.log("hello"),
+      primaryAction: () =>
+        handleClick({
+          userId: user?.userId ?? "",
+          friendId: notification.userId,
+          answer: "accepted",
+          notificationId: notification.id,
+        }),
       primaryActionIcon: CheckIcon,
-      secondaryAction: () => console.log("hello"),
+      secondaryAction: () =>
+        handleClick({
+          userId: user?.userId ?? "",
+          friendId: notification.userId,
+          answer: "declined",
+          notificationId: notification.id,
+        }),
       secondaryActionIcon: CloseIcon,
       icon: UserPlusIcon,
     }));

@@ -106,6 +106,7 @@ export const theme = extendTheme({
     Menu: {
       baseStyle: {
         list: {
+          maxWidth: "20rem",
           bg: "main.900",
           color: "white",
           border: "none",

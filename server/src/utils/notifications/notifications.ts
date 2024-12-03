@@ -5,7 +5,9 @@ export const getAllNotifications = async (userId: string) => {
   try {
     const notificationsRef = db.collection('notifications')
 
-    const snapshot = await notificationsRef.where('userId', '==', userId).get()
+    const snapshot = await notificationsRef
+      .where('friendId', '==', userId)
+      .get()
 
     if (snapshot.empty) {
       return []
@@ -22,6 +24,21 @@ export const getAllNotifications = async (userId: string) => {
     })
 
     return notifications
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const updateNotificationState = async (notificationId: string) => {
+  try {
+    const notificationsRef = db.collection('notifications').doc(notificationId)
+    console.log({ notificationsRef })
+    await notificationsRef.set(
+      {
+        isRead: true
+      },
+      { merge: true }
+    )
   } catch (error) {
     console.log(error)
   }

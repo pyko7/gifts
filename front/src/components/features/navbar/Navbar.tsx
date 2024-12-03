@@ -8,7 +8,7 @@ import { useNotificationsContext } from "@context/notificationsContext/Notificat
 
 const Navbar: FC = () => {
   const { navbarItems } = useNavbarItems();
-  const { count } = useNotificationsContext();
+  const { count, needToNotify } = useNotificationsContext();
 
   return (
     <Flex flex={1} justifyContent="flex-end" gap="1rem">
@@ -16,10 +16,7 @@ const Navbar: FC = () => {
         <Flex position="relative" key={generateUniqueId()}>
           <Badge
             value={count ?? ""}
-            invisible={
-              item.name !== "notification" ||
-              (typeof count !== "undefined" && count < 1)
-            }
+            invisible={item.name !== "notification" || !needToNotify}
           />
           <NavbarItem
             icon={item.icon}

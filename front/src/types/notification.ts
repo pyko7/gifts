@@ -1,6 +1,7 @@
 export type Notification = {
   id: string;
   userId: string;
+  friendId: string;
   message: string;
-  isReal: boolean;
+  isRead: boolean;
 };

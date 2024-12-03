@@ -10,11 +10,13 @@ import ErrorPage from "@pages/error/ErrorPage";
 import { useMutation } from "@tanstack/react-query";
 import { sendInvitation } from "@utils/invitation";
 import { useLocation } from "react-router-dom";
+import useAuthStore from "@store/auth/auth";
 
 const ProfilePage: FC = () => {
+  const { user } = useAuthStore();
   const { isError, friendshipStatus, isSelf } = useProfileContext();
   const { pathname } = useLocation();
-  const userId = pathname.split("/")[2];
+  const friendId = pathname.split("/")[2];
 
   const toast = useToast();
 
@@ -34,7 +36,7 @@ const ProfilePage: FC = () => {
     async onSuccess() {
       toast({
         title: "Invitation envoyée",
-        status: "error",
+        status: "success",
         duration: 9000,
         isClosable: true,
       });
@@ -58,7 +60,11 @@ const ProfilePage: FC = () => {
       return (
         <>
           <Text>Vous n'êtes pas ami.</Text>
-          <Button onClick={() => mutation.mutate(userId)}>
+          <Button
+            onClick={() =>
+              mutation.mutate({ userId: user?.userId ?? "", friendId })
+            }
+          >
             Demander en ami
           </Button>
         </>

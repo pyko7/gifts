@@ -16,8 +16,8 @@ class FriendService {
         .delete(friends)
         .where(
           and(
-            eq(friends.userId, this.userId ?? ''),
-            eq(friends.friendId, this.friendId ?? '')
+            eq(friends.userId, this.friendId ?? ''),
+            eq(friends.friendId, this.userId ?? '')
           )
         )
         .returning()
