@@ -68,3 +68,22 @@ export const deleteInvitation = async (ids: Ids) => {
   }
   return;
 };
+
+export const blockUser = async (ids: Ids) => {
+  const res = await fetch(
+    `${API_URL}/invitation/block/${ids.userId}/${ids.friendId}`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify(ids),
+      credentials: "include",
+    }
+  );
+  if (!res.ok) {
+    const errorMessage = await res.text();
+    throw new Error(errorMessage);
+  }
+  return;
+};

@@ -15,8 +15,9 @@ import ConfirmModal from "@components/common/confirmModal/ConfirmModal";
 import { useMutation } from "@tanstack/react-query";
 import { deleteUser } from "./_utils";
 import text from "../../../../utils/text.json";
-import { deleteInvitation } from "@utils/invitation";
+import { blockUser, deleteInvitation } from "@utils/invitation";
 import useAuthStore from "@store/auth/auth";
+import { queryClient } from "src/api";
 
 const ProfileMenuButton: FC = () => {
   const { user } = useAuthStore();
@@ -55,6 +56,7 @@ const ProfileMenuButton: FC = () => {
   const handleDeletion = () => {
     mutation.mutate();
   };
+
   const friendMutation = useMutation({
     mutationFn: deleteInvitation,
     onSuccess: () => {
@@ -64,6 +66,9 @@ const ProfileMenuButton: FC = () => {
         status: "success",
         duration: 9000,
         isClosable: true,
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["userFriend"],
       });
     },
     onError: () => {
@@ -83,6 +88,37 @@ const ProfileMenuButton: FC = () => {
     });
   };
 
+  const blockMutation = useMutation({
+    mutationFn: blockUser,
+    onSuccess: () => {
+      navigate("/");
+      toast({
+        title: "La relation a été supprimée",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["userFriend"],
+      });
+    },
+    onError: () => {
+      toast({
+        title: globalError,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    },
+  });
+
+  const handleBlockUser = () => {
+    blockMutation.mutate({
+      userId: user?.userId ?? "",
+      friendId: pathname.split("/")[2],
+    });
+  };
+
   if (!isSelf) {
     return (
       <CommonMenu menuButtonIcon={EllipsisVerticalIcon}>
@@ -94,6 +130,7 @@ const ProfileMenuButton: FC = () => {
           Supprimer la relation
         </MenuItem>
         <MenuItem
+          onClick={handleBlockUser}
           sx={sxs.menuTextImportant}
           icon={<Box sx={sxs.menuIconImportant}>{<NoSymbol />}</Box>}
         >

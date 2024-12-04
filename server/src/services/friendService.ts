@@ -1,4 +1,4 @@
-import { and, DrizzleError, eq } from 'drizzle-orm'
+import { and, DrizzleError, eq, or } from 'drizzle-orm'
 import { friends } from '../db/schemas/friend'
 import { db } from '../db/drizzle'
 
@@ -57,9 +57,15 @@ class FriendService {
           .update(friends)
           .set({ state: 'blocked' })
           .where(
-            and(
-              eq(friends.userId, this.userId ?? ''),
-              eq(friends.friendId, this.friendId ?? '')
+            or(
+              and(
+                eq(friends.userId, this.userId ?? ''),
+                eq(friends.friendId, this.friendId ?? '')
+              ),
+              and(
+                eq(friends.userId, this.friendId ?? ''),
+                eq(friends.friendId, this.userId ?? '')
+              )
             )
           )
       }

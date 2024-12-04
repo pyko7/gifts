@@ -13,7 +13,7 @@ invitation.post(
   invitationController.sendInvitation
 )
 invitation.post(
-  '/blocked/:userId/:friendId',
+  '/block/:userId/:friendId',
   selfMiddleware,
   invitationController.blockUser
 )
