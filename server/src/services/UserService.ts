@@ -1,5 +1,5 @@
 import { generateJwt, generateRandomNumber } from '../utils/_utils'
-import { and, DrizzleError, eq } from 'drizzle-orm'
+import { and, DrizzleError, eq, or } from 'drizzle-orm'
 import { users } from '../db/schemas/user'
 import { friends } from '../db/schemas/friend'
 import { User } from '../utils/types'
@@ -252,6 +252,37 @@ class UserService {
       .where(and(eq(friends.userId, userId), eq(friends.friendId, friendId)))
 
     return friend[0]
+  }
+  static async getAllFriends(userId: string) {
+    const res = await db
+      .select()
+      .from(friends)
+      .where(or(eq(friends.userId, userId), eq(friends.friendId, userId)))
+
+    const friendsList = []
+
+    for (let i = 0; i < res.length; i++) {
+      const friend = res[i]
+      if (friend.userId !== userId) {
+        const user = await UserService.getUserById(friend.userId)
+        const computedUser = {
+          id: user.id,
+          name: user.name,
+          imageUrl: user.imageUrl
+        }
+        friendsList.push(computedUser)
+      } else {
+        const user = await UserService.getUserById(friend.friendId)
+        const computedUser = {
+          id: user.id,
+          name: user.name,
+          imageUrl: user.imageUrl
+        }
+        friendsList.push(computedUser)
+      }
+    }
+
+    return friendsList
   }
 }
 

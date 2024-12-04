@@ -183,6 +183,19 @@ class UserController {
       return c.text('Error while getting user friends', 500)
     }
   }
+  getAllFriends = async (c: Context) => {
+    try {
+      const userId = getUserId(c)
+      const friends = await UserService.getAllFriends(userId ?? '')
+      return c.json(friends)
+    } catch (error) {
+      console.log(`[UserController - getUserFriends]: ${error}`)
+      if (error instanceof Error || error instanceof DrizzleError) {
+        return c.text(error.message, 400)
+      }
+      return c.text('Error while getting user friends', 500)
+    }
+  }
 }
 
 export default UserController
