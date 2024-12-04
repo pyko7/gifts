@@ -11,6 +11,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { getAllNotifications } from "@utils/notifications";
 import { AnswerInvitation, answerInvitation } from "@utils/invitation";
 import { useToast } from "@chakra-ui/react";
+import { queryClient } from "src/api";
 
 const defaultValues: NotificationsContextValues = {
   notifications: [],
@@ -56,6 +57,10 @@ export const NotificationsContextProvider: FC<PropsWithChildren> = ({
         status: "success",
         duration: 9000,
         isClosable: true,
+      });
+      // maybe should be updated by setQueryData
+      queryClient.invalidateQueries({
+        queryKey: ["notifications"],
       });
     },
     onError() {

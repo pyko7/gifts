@@ -11,6 +11,7 @@ import { useMutation } from "@tanstack/react-query";
 import { sendInvitation } from "@utils/invitation";
 import { useLocation } from "react-router-dom";
 import useAuthStore from "@store/auth/auth";
+import { queryClient } from "src/api";
 
 const ProfilePage: FC = () => {
   const { user } = useAuthStore();
@@ -39,6 +40,10 @@ const ProfilePage: FC = () => {
         status: "success",
         duration: 9000,
         isClosable: true,
+      });
+      // maybe should be updated by setQueryData
+      queryClient.invalidateQueries({
+        queryKey: ["userFriend"],
       });
     },
     onError() {
