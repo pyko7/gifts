@@ -8,6 +8,7 @@ import GiftFormProvider from "@context/giftForm/GiftFormContext";
 import UpdateProfilePage from "@pages/updateProfile/UpdateProfilePage";
 import UpdateProfileFormProvider from "@context/updateProfile/UpdateProfileContext";
 import ProtectedRoute from "@components/features/protectedRoute/ProtectedRoute";
+import FriendsPage from "@pages/friends/FriendsPage";
 
 export const mainRouter = [
   {
@@ -56,6 +57,10 @@ export const mainRouter = [
             <GiftPage />
           </GiftFormProvider>
         ),
+      },
+      {
+        path: "friends",
+        element: <FriendsPage />,
       },
     ],
   },

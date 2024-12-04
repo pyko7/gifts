@@ -15,7 +15,7 @@ export const profileList: NavbarLink[] = [
   profileLink,
   {
     title: "Amis",
-    url: "/",
+    url: "/friends",
     icon: <FriendsIcon />,
   },
   {

@@ -53,7 +53,7 @@ export const useNavbarItems = () => {
     },
     {
       title: "Amis",
-      action: () => navigate("/"),
+      action: () => navigate("/friends"),
       icon: FriendsIcon,
     },
     {
