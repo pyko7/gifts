@@ -10,13 +10,14 @@ import { completeProfile, defaultValues } from "./_utils";
 import Name from "../fields/Name";
 import text from "../../../../utils/text.json";
 import sxs from "../_styles";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "@store/auth/auth";
 import Picture from "../fields/profilePicture/ProfilePicture";
 import { getUserById } from "@utils/user";
 import { useUpdateProfileFormContext } from "@context/updateProfile/UpdateProfileContext";
 import ErrorPage from "@pages/error/ErrorPage";
+import { queryClient } from "src/api";
 
 const CompleteProfileForm: FC<CompleteProfileFormProps> = ({ mode }) => {
   const buttonName = text.auth.completeProfile.button;
@@ -29,7 +30,6 @@ const CompleteProfileForm: FC<CompleteProfileFormProps> = ({ mode }) => {
   const { onClose } = useUpdateProfileFormContext();
   const navigate = useNavigate();
   const toast = useToast();
-  const queryClient = useQueryClient();
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["user", user?.userId],

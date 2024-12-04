@@ -7,11 +7,12 @@ import Url from "./fields/Url";
 import WishRate from "./fields/WishRate";
 import Picture from "./fields/Picture";
 import { defaultValues, createGift, updateGift } from "./_utils";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useGiftFormContext } from "@context/giftForm/GiftFormContext";
 import { FC, useMemo } from "react";
 import { Button, useToast } from "@chakra-ui/react";
 import text from "../../../../utils/text.json";
+import { queryClient } from "src/api";
 
 const GiftForm: FC = () => {
   const {
@@ -26,7 +27,6 @@ const GiftForm: FC = () => {
     mode,
     onClose,
   } = useGiftFormContext();
-  const queryClient = useQueryClient();
   const toast = useToast();
   const globalErrorOnCreation = text.error.gift.creation.global;
   const globalErrorOnUpdate = text.error.gift.update.global;
