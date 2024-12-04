@@ -22,3 +22,8 @@ invitation.put(
   selfMiddleware,
   invitationController.answerInvitation
 )
+invitation.delete(
+  '/delete/:userId/:friendId',
+  selfMiddleware,
+  invitationController.deleteFriend
+)

@@ -20,3 +20,4 @@ export { default as GiftIcon } from "./GiftIcon";
 export { default as ArrowUpRight } from "./ArrowUpRight";
 export { default as CheckIcon } from "./CheckIcon";
 export { default as UserPlusIcon } from "./UserPlusIcon";
+export { default as NoSymbol } from "./NoSymbol";

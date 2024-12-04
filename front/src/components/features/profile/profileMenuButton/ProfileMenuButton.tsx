@@ -2,22 +2,27 @@ import { FC, useState } from "react";
 import { Box, Button, MenuItem, useToast } from "@chakra-ui/react";
 import {
   EllipsisVerticalIcon,
+  NoSymbol,
   PencilSquareIcon,
   TrashIcon,
 } from "@components/common/icons";
 import CommonMenu from "@components/common/menu/Menu";
 import sxs from "./_styles";
 import { useGiftFormContext } from "@context/giftForm/GiftFormContext";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useProfileContext } from "@context/profile/ProfileContext";
 import ConfirmModal from "@components/common/confirmModal/ConfirmModal";
 import { useMutation } from "@tanstack/react-query";
 import { deleteUser } from "./_utils";
 import text from "../../../../utils/text.json";
+import { deleteInvitation } from "@utils/invitation";
+import useAuthStore from "@store/auth/auth";
 
 const ProfileMenuButton: FC = () => {
+  const { user } = useAuthStore();
   const { isSelf } = useProfileContext();
   const { openModal } = useGiftFormContext();
+  const { pathname } = useLocation();
   const navigate = useNavigate();
   const toast = useToast();
   const [deleteModal, setDeleteModal] = useState(false);
@@ -50,15 +55,49 @@ const ProfileMenuButton: FC = () => {
   const handleDeletion = () => {
     mutation.mutate();
   };
+  const friendMutation = useMutation({
+    mutationFn: deleteInvitation,
+    onSuccess: () => {
+      navigate("/");
+      toast({
+        title: "La relation a été supprimée",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+    },
+    onError: () => {
+      toast({
+        title: globalError,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    },
+  });
+
+  const handleFriendDeletion = () => {
+    friendMutation.mutate({
+      userId: user?.userId ?? "",
+      friendId: pathname.split("/")[2],
+    });
+  };
 
   if (!isSelf) {
     return (
       <CommonMenu menuButtonIcon={EllipsisVerticalIcon}>
         <MenuItem
+          onClick={handleFriendDeletion}
           sx={sxs.menuTextImportant}
           icon={<Box sx={sxs.menuIconImportant}>{<TrashIcon />}</Box>}
         >
           Supprimer la relation
+        </MenuItem>
+        <MenuItem
+          sx={sxs.menuTextImportant}
+          icon={<Box sx={sxs.menuIconImportant}>{<NoSymbol />}</Box>}
+        >
+          Bloquer l'utilisateur
         </MenuItem>
       </CommonMenu>
     );

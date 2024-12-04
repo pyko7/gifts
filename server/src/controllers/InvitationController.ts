@@ -80,6 +80,26 @@ class InvitationController {
       return c.text('Error while answering invitation', 400)
     }
   }
+  deleteFriend = async (c: Context) => {
+    try {
+      const { userId, friendId } = c.req.param()
+      if (!userId || !friendId)
+        throw new Error(
+          `Missing parameter, userId: ${userId}, friendId: ${friendId}`
+        )
+
+      const friendService = new FriendService(friendId, userId)
+      await friendService.handleDeleteFriendship()
+
+      return c.text('Friendship has been successfully deleted', 200)
+    } catch (error) {
+      console.log(`[InvitationController - delete friend]: ${error}`)
+      if (error instanceof Error || error instanceof DrizzleError) {
+        return c.text(error.message, 400)
+      }
+      return c.text('Error while answering invitation', 400)
+    }
+  }
   blockUser = async (c: Context) => {
     try {
       const { userId, friendId } = c.req.param()

@@ -49,3 +49,22 @@ export const answerInvitation = async (answerData: AnswerInvitation) => {
   }
   return;
 };
+
+export const deleteInvitation = async (ids: Ids) => {
+  const res = await fetch(
+    `${API_URL}/invitation/delete/${ids.userId}/${ids.friendId}`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "DELETE",
+      body: JSON.stringify(ids),
+      credentials: "include",
+    }
+  );
+  if (!res.ok) {
+    const errorMessage = await res.text();
+    throw new Error(errorMessage);
+  }
+  return;
+};
