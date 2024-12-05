@@ -31,14 +31,20 @@ export const NotificationsContextProvider: FC<PropsWithChildren> = ({
   const { user } = useAuthStore();
   const toast = useToast();
 
-  const { data: notifications } = useQuery({
+  const { data } = useQuery({
     queryKey: ["notifications"],
     queryFn: () => getAllNotifications(user?.userId ?? ""),
     retry: 2,
     enabled: Boolean(user?.userId),
   });
 
-  const count = useMemo(() => notifications?.length, [notifications?.length]);
+  const notifications = useMemo(
+    () => data?.filter((notification) => !notification.isRead),
+    [data]
+  );
+
+  const count = notifications?.length;
+
   const needToNotify = useMemo(() => {
     let unreadNotifications = 0;
     notifications?.forEach((notification) => {
