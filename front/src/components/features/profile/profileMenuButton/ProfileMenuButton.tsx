@@ -93,7 +93,7 @@ const ProfileMenuButton: FC = () => {
     onSuccess: () => {
       navigate("/");
       toast({
-        title: "La relation a été supprimée",
+        title: "L'utilisateur a été bloqué",
         status: "success",
         duration: 9000,
         isClosable: true,

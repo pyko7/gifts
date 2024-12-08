@@ -32,7 +32,6 @@ export const getAllNotifications = async (userId: string) => {
 export const updateNotificationState = async (notificationId: string) => {
   try {
     const notificationsRef = db.collection('notifications').doc(notificationId)
-    console.log({ notificationsRef })
     await notificationsRef.set(
       {
         isRead: true
