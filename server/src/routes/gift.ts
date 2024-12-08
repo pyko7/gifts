@@ -10,7 +10,7 @@ const giftController = new GiftController()
 gift.get('/:userId/all', giftController.getUserGifts)
 
 // get user friends gifts list
-// gift.get('/:userId/friends', giftController.getUserGifts)
+gift.get('/:userId/friends', giftController.getFriendsGifts)
 
 // get gift by userId
 gift.get('/single/:giftId', giftController.getGiftById)

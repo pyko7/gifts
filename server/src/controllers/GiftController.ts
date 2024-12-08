@@ -42,6 +42,35 @@ class GiftController {
     }
   }
 
+  getFriendsGifts = async (c: Context) => {
+    try {
+      const userId = c.req.param('userId')
+
+      if (!userId || userId === 'undefined') {
+        return c.text('[GiftController - getUserGifts]: Missing parameter', 400)
+      }
+
+      const friends = await UserService.getAllFriends(userId)
+      const friendsGift = []
+
+      for (let i = 0; i < friends.length; i++) {
+        const gifts = await GiftService.getUserGifts(friends[i].id)
+        friendsGift.push(gifts)
+      }
+
+      c.text('Gift successfully retrieved', 200)
+      return c.json(friendsGift.flat())
+    } catch (error) {
+      if (error instanceof Error || error instanceof DrizzleError) {
+        return c.text(error.message, 400)
+      }
+      return c.text(
+        '[GiftController - getUserGifts]: Error while getting the gifts',
+        500
+      )
+    }
+  }
+
   getGiftById = async (c: Context) => {
     try {
       const giftId = c.req.param('giftId')
