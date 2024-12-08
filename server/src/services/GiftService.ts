@@ -34,7 +34,7 @@ class GiftService {
     this.wishRate = gift.wishRate
   }
 
-  static async getUserGifts(userId: string) {
+  static async getUserGifts(userId: string): Promise<Gift[]> {
     try {
       const result = await db
         .select()
@@ -42,7 +42,14 @@ class GiftService {
         .where(eq(gifts.userId, userId))
       return result
     } catch (error) {
-      return error
+      if (error instanceof Error) {
+        console.error(`[GiftService - getUserGifts] - ${error.message}`)
+      } else {
+        console.error(
+          '[GiftService - getUserGifts] - An unknown error occurred'
+        )
+      }
+      throw new Error('[GiftService - getUserGifts] - Failed to retrieve gifts')
     }
   }
 

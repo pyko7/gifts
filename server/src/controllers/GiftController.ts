@@ -54,7 +54,9 @@ class GiftController {
       const friendsGift = []
 
       for (let i = 0; i < friends.length; i++) {
-        const gifts = await GiftService.getUserGifts(friends[i].id)
+        let gifts = await GiftService.getUserGifts(friends[i].id)
+        const user = await UserService.getUserById(friends[i].id)
+        gifts = gifts.map((gift) => ({ ...gift, userName: user.name }))
         friendsGift.push(gifts)
       }
 
