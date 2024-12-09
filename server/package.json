@@ -15,7 +15,8 @@
     "firebase-admin": "^12.7.0",
     "hono": "^4.5.8",
     "postgres": "^3.4.4",
-    "uuid": "^11.0.3"
+    "uuid": "^11.0.3",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",
